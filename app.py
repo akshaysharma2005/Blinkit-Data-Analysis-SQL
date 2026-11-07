@@ -112,6 +112,30 @@ def initialize_database(csv_path=DEFAULT_CSV_PATH):
     cur.execute("CREATE INDEX IF NOT EXISTS idx_cleaned_fat ON blinkit_cleaned (\"Item Fat Content\");")
     cur.execute("CREATE INDEX IF NOT EXISTS idx_cleaned_size ON blinkit_cleaned (\"Outlet Size\");")
     cur.execute("CREATE INDEX IF NOT EXISTS idx_cleaned_location ON blinkit_cleaned (\"Outlet Location Type\");")
+
+    # Create suggestions table
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS user_suggestions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL,
+            role TEXT,
+            suggestion TEXT NOT NULL,
+            category TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    """)
+
+    # Pre-seed sample suggestions if table is empty
+    count = cur.execute("SELECT COUNT(*) FROM user_suggestions;").fetchone()[0]
+    if count == 0:
+        sample_suggestions = [
+            ("Akshay Sharma", "Lead BI Analyst", "Run Window Function to compute dynamic outlet size percentage contribution", "Window Functions"),
+            ("Aarav Mehta", "Supply Chain VP", "Analyze why Tier 3 regional centers deliver 40% higher GMV than metro Tier 1", "Geographic Analysis"),
+            ("Priya Patel", "Dark Store Operations", "Audit 1,463 imputed weights in Item Weight and verify sensor accuracy", "Data Cleansing"),
+            ("Rohan Gupta", "Merchandising Lead", "Review the 6 actionable business fixes to reduce cold storage spoilage in seafood", "Strategic Strategy")
+        ]
+        cur.executemany("INSERT INTO user_suggestions (username, role, suggestion, category) VALUES (?, ?, ?, ?);", sample_suggestions)
+
     conn.commit()
     conn.close()
 
@@ -701,6 +725,38 @@ def get_business_report():
         ]
     }
     return jsonify({"status": "success", "report": report_data})
+
+@app.route("/api/suggestions", methods=["GET", "POST"])
+def handle_suggestions():
+    conn = get_db_connection()
+    if request.method == "POST":
+        data = request.get_json() or {}
+        username = data.get("username", "Anonymous Analyst").strip() or "Anonymous Analyst"
+        role = data.get("role", "Data Analyst").strip() or "Data Analyst"
+        suggestion = data.get("suggestion", "").strip()
+        category = data.get("category", "General Inquiry").strip() or "General Inquiry"
+
+        if not suggestion:
+            conn.close()
+            return jsonify({"status": "error", "message": "Suggestion text is required"}), 400
+
+        cur = conn.cursor()
+        cur.execute("""
+            INSERT INTO user_suggestions (username, role, suggestion, category)
+            VALUES (?, ?, ?, ?);
+        """, (username, role, suggestion, category))
+        conn.commit()
+        conn.close()
+        return jsonify({"status": "success", "message": "Suggestion saved successfully!"})
+    else:
+        rows = conn.execute("""
+            SELECT id, username, role, suggestion, category, created_at
+            FROM user_suggestions
+            ORDER BY id DESC
+            LIMIT 15;
+        """).fetchall()
+        conn.close()
+        return jsonify({"status": "success", "suggestions": [dict(r) for r in rows]})
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5001, debug=True)

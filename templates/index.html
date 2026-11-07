@@ -32,1027 +32,961 @@
     }
   </script>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-amber-400 selection:text-slate-900">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-amber-400 selection:text-slate-900">
 
-  <!-- TOP HEADER -->
-  <header class="bg-slate-950/90 border-b border-slate-800 sticky top-0 z-50 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
-      <!-- Brand (Click to go to Overview & Intro) -->
-      <div onclick="switchTab('introTab')" class="flex items-center space-x-3 cursor-pointer group">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-400 to-yellow-300 flex items-center justify-center shadow-lg shadow-amber-500/20 text-slate-950 font-black text-xl group-hover:scale-105 transition">
-          ⚡
+  <!-- ========================================================================= -->
+  <!-- 1. INTRO LOGIN PAGE WITH GRAPHICS, USERNAME & SUGGESTION BOX              -->
+  <!-- ========================================================================= -->
+  <div id="loginPage" class="relative min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8 cyber-grid overflow-hidden">
+    
+    <!-- Ambient Glowing Orbs -->
+    <div class="absolute -top-32 -left-32 w-[500px] h-[500px] bg-amber-500/15 rounded-full blur-3xl pointer-events-none ambient-glow"></div>
+    <div class="absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-emerald-500/15 rounded-full blur-3xl pointer-events-none ambient-glow" style="animation-delay: -3.5s;"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative z-10 w-full max-w-2xl space-y-6">
+
+      <!-- Header Brand & Live Telemetry Banner -->
+      <div class="text-center space-y-3">
+        <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-amber-400/30 text-amber-300 text-xs font-semibold shadow-lg backdrop-blur-md">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>⚡ Blinkit Quick-Commerce BI & SQL Portal</span>
         </div>
-        <div>
-          <div class="flex items-center space-x-2">
-            <span class="text-xl font-black tracking-tight text-white group-hover:text-amber-400 transition">blink<span class="text-amber-400">it</span></span>
-            <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold tracking-wide">SQL BI & DIAGNOSTICS</span>
+
+        <div class="flex items-center justify-center space-x-3">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-400 to-yellow-300 flex items-center justify-center shadow-xl shadow-amber-500/25 text-slate-950 font-black text-2xl float-slow">
+            ⚡
           </div>
-          <p class="text-xs text-slate-400">Data Cleansing • Advanced SQL Studio • Visual Insights • Strategic Report</p>
+          <span class="text-3xl md:text-4xl font-black tracking-tight text-white">blink<span class="text-amber-400">it</span></span>
+        </div>
+
+        <p class="text-xs md:text-sm text-slate-400 max-w-lg mx-auto">
+          Enterprise Data Cleansing, Window Functions & Executive Strategy for 10 Dark Stores.
+        </p>
+
+        <!-- Live Telemetry Pill Bar -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-[11px] font-mono">
+          <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 text-slate-300">
+            <span class="text-slate-500 block text-[10px]">REVENUE</span>
+            <strong class="text-white">$1.20M GMV</strong>
+          </div>
+          <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 text-slate-300">
+            <span class="text-slate-500 block text-[10px]">DATASET</span>
+            <strong class="text-amber-300">8,523 Orders</strong>
+          </div>
+          <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 text-slate-300">
+            <span class="text-slate-500 block text-[10px]">FULFILLMENT</span>
+            <strong class="text-sky-300">10 Dark Stores</strong>
+          </div>
+          <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 text-slate-300">
+            <span class="text-slate-500 block text-[10px]">SQL ENGINE</span>
+            <strong class="text-emerald-300">SQLite 3.50</strong>
+          </div>
         </div>
       </div>
 
-      <!-- Action Buttons -->
-      <div class="flex items-center space-x-3">
-        <!-- File Upload Form -->
-        <label for="csvFileInput" class="cursor-pointer inline-flex items-center px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition shadow-sm">
-          <i class="fa-solid fa-cloud-arrow-up mr-2 text-amber-400"></i> Upload CSV
-        </label>
-        <input type="file" id="csvFileInput" accept=".csv" class="hidden">
-
-        <!-- Reset Button -->
-        <button id="resetDataBtn" class="inline-flex items-center px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
-          <i class="fa-solid fa-rotate-left mr-2 text-slate-400"></i> Reset Default
-        </button>
-
-        <!-- Print / Export Report -->
-        <button onclick="window.printReport()" class="inline-flex items-center px-4 py-1.5 rounded-lg text-xs font-bold bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-md shadow-amber-500/20 transition">
-          <i class="fa-solid fa-file-pdf mr-2"></i> Print / PDF Report
-        </button>
-      </div>
-    </div>
-
-    <!-- NAVIGATION TABS -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-800/60">
-      <nav class="flex space-x-2 sm:space-x-8 py-2 overflow-x-auto text-sm font-medium">
-        <button onclick="switchTab('introTab')" id="nav-introTab" class="tab-btn active-tab flex items-center px-3 py-2 rounded-lg border-b-2 font-medium transition text-xs sm:text-sm">
-          <i class="fa-solid fa-bolt mr-2 text-amber-400"></i> Overview & Intro
-        </button>
-        <button onclick="switchTab('cleaningTab')" id="nav-cleaningTab" class="tab-btn flex items-center px-3 py-2 rounded-lg border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition text-xs sm:text-sm">
-          <i class="fa-solid fa-broom mr-2 text-amber-400"></i> 1. Ingestion & Data Cleaning
-        </button>
-        <button onclick="switchTab('sqlTab')" id="nav-sqlTab" class="tab-btn flex items-center px-3 py-2 rounded-lg border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition text-xs sm:text-sm">
-          <i class="fa-solid fa-database mr-2 text-emerald-400"></i> 2. SQL Functions & Studio
-        </button>
-        <button onclick="switchTab('dashboardTab')" id="nav-dashboardTab" class="tab-btn flex items-center px-3 py-2 rounded-lg border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition text-xs sm:text-sm">
-          <i class="fa-solid fa-chart-line mr-2 text-sky-400"></i> 3. Visual Analytics Dashboard
-        </button>
-        <button onclick="switchTab('reportTab')" id="nav-reportTab" class="tab-btn flex items-center px-3 py-2 rounded-lg border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition text-xs sm:text-sm">
-          <i class="fa-solid fa-file-contract mr-2 text-indigo-400"></i> 4. Business Report & Recommendations
-        </button>
-      </nav>
-    </div>
-  </header>
-
-  <!-- MAIN BODY CONTAINER -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-
-    <!-- TAB 0: INTRO & GRAPHICAL OVERVIEW PAGE -->
-    <div id="introTab" class="tab-content space-y-8">
-
-      <!-- Hero Banner with Ambient Lighting & Quick-Commerce Graphic -->
-      <section class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-slate-900 via-slate-900/95 to-slate-950 border border-slate-800 p-6 md:p-10 shadow-2xl">
-        <!-- Ambient Glowing Orbs -->
-        <div class="absolute -top-24 -left-24 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none ambient-glow"></div>
-        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none ambient-glow" style="animation-delay: -3s;"></div>
-
-        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          
-          <!-- Left Hero Copy -->
-          <div class="lg:col-span-7 space-y-5">
-            <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-slate-800/90 border border-amber-400/30 text-amber-300 text-xs font-semibold shadow-inner">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-              <span>⚡ Blinkit Quick-Commerce Telemetry & Strategic Diagnostics</span>
-            </div>
-
-            <h1 class="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
-              Transform Raw Grocery Data into <span class="bg-gradient-to-r from-amber-400 via-yellow-300 to-emerald-400 bg-clip-text text-transparent">High-Velocity Business Decisions</span>
-            </h1>
-
-            <p class="text-sm md:text-base text-slate-300 leading-relaxed max-w-2xl">
-              An enterprise-grade analytical platform reading, standardizing, and diagnosing <strong>8,523 grocery transactions</strong> across <strong>10 fulfillment dark stores</strong>. We clean dirty category codes and missing weights, execute advanced SQL window functions and multi-table joins, visualize unit economics, and prescribe <strong>6 actionable business corrections</strong> to optimize store formats and scale GMV.
-            </p>
-
-            <!-- Quick Action Jump Buttons -->
-            <div class="flex flex-wrap items-center gap-3 pt-2">
-              <button onclick="switchTab('cleaningTab')" class="inline-flex items-center px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-lg shadow-amber-500/25 transition transform hover:-translate-y-0.5">
-                <i class="fa-solid fa-broom mr-2"></i> 1. Ingestion & Cleaning
-              </button>
-              <button onclick="switchTab('sqlTab')" class="inline-flex items-center px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-lg shadow-emerald-500/25 transition transform hover:-translate-y-0.5">
-                <i class="fa-solid fa-terminal mr-2"></i> 2. SQL Studio
-              </button>
-              <button onclick="switchTab('dashboardTab')" class="inline-flex items-center px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-sky-500 hover:bg-sky-400 text-slate-950 shadow-lg shadow-sky-500/25 transition transform hover:-translate-y-0.5">
-                <i class="fa-solid fa-chart-pie mr-2"></i> 3. Visual Charts
-              </button>
-              <button onclick="switchTab('reportTab')" class="inline-flex items-center px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg shadow-indigo-500/25 transition transform hover:-translate-y-0.5">
-                <i class="fa-solid fa-file-contract mr-2"></i> 4. Business Report
-              </button>
-            </div>
-          </div>
-
-          <!-- Right Graphical Illustration: 10-Minute Dark Store Fulfillment Telemetry -->
-          <div class="lg:col-span-5 relative flex justify-center">
-            <div class="w-full max-w-md bg-slate-950/80 rounded-2xl border border-slate-700/80 p-5 shadow-2xl relative overflow-hidden backdrop-blur-md">
-              <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
-                <div class="flex items-center space-x-2">
-                  <div class="w-3 h-3 rounded-full bg-rose-500"></div>
-                  <div class="w-3 h-3 rounded-full bg-amber-500"></div>
-                  <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
-                  <span class="text-xs text-slate-400 font-mono ml-2">darkstore-telemetry.sys</span>
-                </div>
-                <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono font-bold">LIVE METRICS</span>
-              </div>
-
-              <!-- Graphic Cards in Dashboard Mockup -->
-              <div class="space-y-3">
-                <!-- Delivery Pulse -->
-                <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
-                  <div class="flex items-center space-x-3">
-                    <div class="w-9 h-9 rounded-lg bg-amber-400/20 text-amber-300 flex items-center justify-center font-bold text-sm">
-                      <i class="fa-solid fa-motorcycle"></i>
-                    </div>
-                    <div>
-                      <div class="text-xs font-bold text-slate-200">10-Min Quick SLA</div>
-                      <div class="text-[11px] text-slate-400">Order-to-Doorstep dispatch</div>
-                    </div>
-                  </div>
-                  <div class="text-right">
-                    <div class="text-xs font-mono font-bold text-emerald-400">11.4 mins</div>
-                    <div class="text-[10px] text-slate-500">98.2% on-time</div>
-                  </div>
-                </div>
-
-                <!-- Catalog Velocity -->
-                <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
-                  <div class="flex items-center space-x-3">
-                    <div class="w-9 h-9 rounded-lg bg-emerald-400/20 text-emerald-300 flex items-center justify-center font-bold text-sm">
-                      <i class="fa-solid fa-basket-shopping"></i>
-                    </div>
-                    <div>
-                      <div class="text-xs font-bold text-slate-200">Low Fat Shift</div>
-                      <div class="text-[11px] text-slate-400">Consumer wellness demand</div>
-                    </div>
-                  </div>
-                  <div class="text-right">
-                    <div class="text-xs font-mono font-bold text-amber-400">64.7% Share</div>
-                    <div class="text-[10px] text-slate-500">$776.3k GMV</div>
-                  </div>
-                </div>
-
-                <!-- Tier 3 Dominance -->
-                <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
-                  <div class="flex items-center space-x-3">
-                    <div class="w-9 h-9 rounded-lg bg-sky-400/20 text-sky-300 flex items-center justify-center font-bold text-sm">
-                      <i class="fa-solid fa-map-pin"></i>
-                    </div>
-                    <div>
-                      <div class="text-xs font-bold text-slate-200">Tier 3 Dominance</div>
-                      <div class="text-[11px] text-slate-400">Regional dark store scale</div>
-                    </div>
-                  </div>
-                  <div class="text-right">
-                    <div class="text-xs font-mono font-bold text-sky-400">39.8% Volume</div>
-                    <div class="text-[10px] text-slate-500">$478.1k GMV</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Graphic status bar -->
-              <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
-                <span class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> SQLite 3.50 Engine Online</span>
-                <span class="font-mono text-amber-400">8,523 Records</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- 4-STEP ANALYTICAL ARCHITECTURE WORKFLOW (Visual Flowchart Graphic) -->
-      <section class="space-y-4">
-        <div class="text-center space-y-1">
-          <h2 class="text-xl md:text-2xl font-black text-white flex items-center justify-center">
-            <i class="fa-solid fa-diagram-project text-amber-400 mr-2"></i>
-            End-to-End Quick-Commerce Analytical Pipeline
-          </h2>
-          <p class="text-xs text-slate-400 max-w-xl mx-auto">
-            From raw data hygiene to SQL window math, diagnostic chart synthesis, and strategic executive corrections.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
-          <!-- Step 1 Node -->
-          <div onclick="switchTab('cleaningTab')" class="workflow-node bg-slate-800/80 p-5 rounded-2xl border border-slate-700/80 cursor-pointer hover:border-amber-400 space-y-3 relative group">
-            <div class="flex items-center justify-between">
-              <span class="w-8 h-8 rounded-xl bg-amber-400/20 text-amber-300 flex items-center justify-center font-black text-sm">01</span>
-              <span class="text-[10px] uppercase tracking-wider font-bold text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded">CLEANSE</span>
-            </div>
-            <h3 class="font-bold text-white text-sm group-hover:text-amber-400 transition">Data Ingestion & Hygiene</h3>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Standardizes 5 fragmented fat categories into 2 clean classes, imputes 1,463 missing item weights, and fixes 526 zero-visibility entry anomalies.
-            </p>
-            <div class="pt-2 text-[11px] font-semibold text-amber-400 flex items-center">
-              Explore Cleaning Rules <i class="fa-solid fa-arrow-right ml-1.5 text-[10px]"></i>
-            </div>
-          </div>
-
-          <!-- Step 2 Node -->
-          <div onclick="switchTab('sqlTab')" class="workflow-node bg-slate-800/80 p-5 rounded-2xl border border-slate-700/80 cursor-pointer hover:border-emerald-400 space-y-3 relative group">
-            <div class="flex items-center justify-between">
-              <span class="w-8 h-8 rounded-xl bg-emerald-400/20 text-emerald-300 flex items-center justify-center font-black text-sm">02</span>
-              <span class="text-[10px] uppercase tracking-wider font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded">QUERY</span>
-            </div>
-            <h3 class="font-bold text-white text-sm group-hover:text-emerald-400 transition">Advanced SQL Functions</h3>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Runs Window Functions (<code class="text-emerald-400">OVER</code>, <code class="text-emerald-400">RANK</code>, <code class="text-emerald-400">ROW_NUMBER</code>, <code class="text-emerald-400">NTILE</code>) and multi-table <code class="text-emerald-400">JOIN</code>s against category & hub benchmarks.
-            </p>
-            <div class="pt-2 text-[11px] font-semibold text-emerald-400 flex items-center">
-              Open SQL Console <i class="fa-solid fa-arrow-right ml-1.5 text-[10px]"></i>
-            </div>
-          </div>
-
-          <!-- Step 3 Node -->
-          <div onclick="switchTab('dashboardTab')" class="workflow-node bg-slate-800/80 p-5 rounded-2xl border border-slate-700/80 cursor-pointer hover:border-sky-400 space-y-3 relative group">
-            <div class="flex items-center justify-between">
-              <span class="w-8 h-8 rounded-xl bg-sky-400/20 text-sky-300 flex items-center justify-center font-black text-sm">03</span>
-              <span class="text-[10px] uppercase tracking-wider font-bold text-sky-400 bg-sky-400/10 px-2 py-0.5 rounded">VISUALIZE</span>
-            </div>
-            <h3 class="font-bold text-white text-sm group-hover:text-sky-400 transition">Visual Diagnostics Suite</h3>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Synthesizes 6 Chart.js dimensions: category Pareto curves, outlet size market share, location tiers, vintage curves, and screen clutter scatter.
-            </p>
-            <div class="pt-2 text-[11px] font-semibold text-sky-400 flex items-center">
-              View Dynamic Charts <i class="fa-solid fa-arrow-right ml-1.5 text-[10px]"></i>
-            </div>
-          </div>
-
-          <!-- Step 4 Node -->
-          <div onclick="switchTab('reportTab')" class="workflow-node bg-slate-800/80 p-5 rounded-2xl border border-slate-700/80 cursor-pointer hover:border-indigo-400 space-y-3 relative group">
-            <div class="flex items-center justify-between">
-              <span class="w-8 h-8 rounded-xl bg-indigo-400/20 text-indigo-300 flex items-center justify-center font-black text-sm">04</span>
-              <span class="text-[10px] uppercase tracking-wider font-bold text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded">PRESCRIBE</span>
-            </div>
-            <h3 class="font-bold text-white text-sm group-hover:text-indigo-400 transition">Strategic Business Report</h3>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Prescribes 6 prioritized corrective actions with root causes, expected ROI roadmap, and interactive revenue uplift simulator.
-            </p>
-            <div class="pt-2 text-[11px] font-semibold text-indigo-400 flex items-center">
-              Read Executive Report <i class="fa-solid fa-arrow-right ml-1.5 text-[10px]"></i>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 4 CRITICAL BUSINESS PROBLEMS IDENTIFIED & RESOLVED -->
-      <section class="space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-          <div>
-            <h2 class="text-lg md:text-xl font-bold text-white flex items-center">
-              <i class="fa-solid fa-magnifying-glass-chart text-rose-400 mr-2"></i>
-              Core Strategic Dilemmas Uncovered by the Analytics
+      <!-- Main Login & Suggestion Card -->
+      <div class="bg-slate-900/90 rounded-3xl border border-slate-800 p-6 md:p-8 shadow-2xl backdrop-blur-xl space-y-6">
+        
+        <!-- Login Form Fields -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h2 class="text-base md:text-lg font-bold text-white flex items-center">
+              <i class="fa-solid fa-user-shield text-amber-400 mr-2.5"></i> Analyst Sign In
             </h2>
-            <p class="text-xs text-slate-400">Key business anomalies discovered across the 8,523 orders and 10 dark stores.</p>
-          </div>
-          <button onclick="switchTab('reportTab')" class="text-xs text-amber-400 hover:text-amber-300 font-semibold hidden sm:inline-block">
-            See all 6 corrections <i class="fa-solid fa-arrow-right ml-1"></i>
-          </button>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <!-- Dilemma 1 -->
-          <div class="p-5 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-rose-400 flex items-center">
-                <i class="fa-solid fa-store-slash mr-1.5"></i> Format Inefficiency
-              </span>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold">8.7% SALES SHARE</span>
-            </div>
-            <h4 class="font-bold text-white text-sm">Grocery Store Catalog Bloat (OUT010 & OUT019)</h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Traditional grocery storefronts attempt to carry the full Supermarket catalog (>5,000 SKUs), causing high stockouts and slow picking. <em>Correction:</em> Pivot them to 10-minute micro dark stores holding only top 1,200 fast-moving items.
-            </p>
+            <span class="text-[11px] text-slate-400">Select persona or type your name</span>
           </div>
 
-          <!-- Dilemma 2 -->
-          <div class="p-5 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-sky-400 flex items-center">
-                <i class="fa-solid fa-city mr-1.5"></i> Regional Expansion
-              </span>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-bold">39.8% SALES SHARE</span>
-            </div>
-            <h4 class="font-bold text-white text-sm">Tier 3 City Demand Outpaces Metro Tier 1</h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Tier 3 regional hubs generate $478.1k, beating Tier 1 metro hubs ($336.4k) due to lower organized retail competition. <em>Correction:</em> Allocate 60% of new dark store Capex into Tier 2 & Tier 3 regional centers with 35% lower commercial leases.
-            </p>
-          </div>
-
-          <!-- Dilemma 3 -->
-          <div class="p-5 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-amber-400 flex items-center">
-                <i class="fa-solid fa-snowflake mr-1.5"></i> Cold Storage Spoilage
-              </span>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold">&lt;2.0% TURNOVER</span>
-            </div>
-            <h4 class="font-bold text-white text-sm">Low-Velocity Seafood & Breakfast Spoilage Risk</h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Seafood and Breakfast occupy expensive refrigerated dark store volume but generate less than $22k combined. <em>Correction:</em> Trim low-moving seafood SKUs by 50% and reassign cold storage to high-margin Snacks and Fresh Produce.
-            </p>
-          </div>
-
-          <!-- Dilemma 4 -->
-          <div class="p-5 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-emerald-400 flex items-center">
-                <i class="fa-solid fa-mobile-screen mr-1.5"></i> App Merchandising
-              </span>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">500+ CLUTTER SKUs</span>
-            </div>
-            <h4 class="font-bold text-white text-sm">High-Visibility Cannibalization on Digital Shelves</h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Scatter diagnostics reveal 500+ items with high UI visibility (>0.12) generating below-average sales. <em>Correction:</em> Implement conversion-weighted feed ranking to demote duds and prioritize high-velocity Low Fat snacks.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- CALL TO ACTION BANNER: "DIVE INTO THE MATTER" -->
-      <section class="p-6 md:p-8 rounded-3xl bg-gradient-to-r from-amber-500/10 via-slate-900 to-emerald-500/10 border border-amber-500/30 flex flex-col md:flex-row items-center justify-between gap-6">
-        <div class="space-y-1">
-          <h3 class="text-xl font-bold text-white">Ready to Dive into the Analytics & Code?</h3>
-          <p class="text-xs text-slate-400">Switch tabs above or click below to inspect raw cleaning data, execute SQL queries, or review the strategic report.</p>
-        </div>
-        <div class="flex items-center space-x-3 shrink-0">
-          <button onclick="switchTab('cleaningTab')" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-md shadow-amber-500/20 transition">
-            Explore Matter Now <i class="fa-solid fa-arrow-right ml-1.5"></i>
-          </button>
-        </div>
-      </section>
-
-    </div>
-
-    <!-- TOP KPI BAR (Persists across dashboard) -->
-    <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5">
-
-      <div class="kpi-card bg-slate-800/80 p-4 rounded-xl border border-slate-700/70 hover:border-amber-400/50 transition">
-        <div class="flex items-center justify-between text-slate-400 text-xs">
-          <span>Total Revenue</span>
-          <i class="fa-solid fa-sack-dollar text-amber-400"></i>
-        </div>
-        <div class="mt-2 text-2xl font-black text-white" id="kpi-total-sales">$1.20M</div>
-        <div class="text-[11px] text-emerald-400 mt-0.5"><i class="fa-solid fa-arrow-trend-up"></i> 8,523 Transactions</div>
-      </div>
-
-      <div class="kpi-card bg-slate-800/80 p-4 rounded-xl border border-slate-700/70 hover:border-amber-400/50 transition">
-        <div class="flex items-center justify-between text-slate-400 text-xs">
-          <span>Avg Sale / Item</span>
-          <i class="fa-solid fa-cart-shopping text-sky-400"></i>
-        </div>
-        <div class="mt-2 text-2xl font-black text-white" id="kpi-avg-sales">$140.99</div>
-        <div class="text-[11px] text-slate-400 mt-0.5">Mean transaction value</div>
-      </div>
-
-      <div class="kpi-card bg-slate-800/80 p-4 rounded-xl border border-slate-700/70 hover:border-amber-400/50 transition">
-        <div class="flex items-center justify-between text-slate-400 text-xs">
-          <span>Customer Rating</span>
-          <i class="fa-solid fa-star text-yellow-400"></i>
-        </div>
-        <div class="mt-2 text-2xl font-black text-white flex items-center">
-          <span id="kpi-avg-rating">3.97</span><span class="text-xs text-slate-400 font-normal ml-1">/ 5.0</span>
-        </div>
-        <div class="text-[11px] text-amber-400 mt-0.5"><i class="fa-solid fa-face-smile"></i> High satisfaction</div>
-      </div>
-
-      <div class="kpi-card bg-slate-800/80 p-4 rounded-xl border border-slate-700/70 hover:border-amber-400/50 transition">
-        <div class="flex items-center justify-between text-slate-400 text-xs">
-          <span>Est. Gross Profit</span>
-          <i class="fa-solid fa-coins text-emerald-400"></i>
-        </div>
-        <div class="mt-2 text-2xl font-black text-emerald-400" id="kpi-gross-profit">$281.88k</div>
-        <div class="text-[11px] text-slate-400 mt-0.5"><span id="kpi-margin-pct">23.5%</span> avg margin</div>
-      </div>
-
-      <div class="kpi-card bg-slate-800/80 p-4 rounded-xl border border-slate-700/70 hover:border-amber-400/50 transition">
-        <div class="flex items-center justify-between text-slate-400 text-xs">
-          <span>Active Hubs</span>
-          <i class="fa-solid fa-warehouse text-purple-400"></i>
-        </div>
-        <div class="mt-2 text-2xl font-black text-white" id="kpi-outlets">10</div>
-        <div class="text-[11px] text-slate-400 mt-0.5">Across 3 location tiers</div>
-      </div>
-
-      <div class="kpi-card bg-slate-800/80 p-4 rounded-xl border border-slate-700/70 hover:border-amber-400/50 transition">
-        <div class="flex items-center justify-between text-slate-400 text-xs">
-          <span>Data Quality Score</span>
-          <i class="fa-solid fa-shield-halved text-emerald-400"></i>
-        </div>
-        <div class="mt-2 text-2xl font-black text-emerald-400">100%</div>
-        <div class="text-[11px] text-emerald-400 mt-0.5"><i class="fa-solid fa-circle-check"></i> Post-Clean Ready</div>
-      </div>
-    </section>
-
-    <!-- TAB 1: DATA INGESTION & CLEANING PIPELINE -->
-    <div id="cleaningTab" class="tab-content hidden space-y-6">
-      <div class="bg-slate-800/70 rounded-2xl border border-slate-700 p-6 space-y-6">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-700/70 pb-5">
+          <!-- Username Input -->
           <div>
-            <h2 class="text-xl font-bold text-white flex items-center">
-              <i class="fa-solid fa-wand-magic-sparkles text-amber-400 mr-2.5"></i>
-              Data Cleaning & Normalization Pipeline
-            </h2>
-            <p class="text-sm text-slate-400 mt-1">
-              Automated ingestion, inconsistency resolution, null imputation, and data hygiene audit trail.
-            </p>
-          </div>
-          <div class="flex items-center space-x-2">
-            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-              <i class="fa-solid fa-check mr-1.5"></i> Clean Table: <code>blinkit_cleaned</code>
-            </span>
-            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-700 text-slate-300">
-              Raw Table: <code>blinkit_raw</code>
-            </span>
-          </div>
-        </div>
-
-        <!-- 3 Critical Cleaning Pillars Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <!-- Rule 1 -->
-          <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-700/80 relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-24 h-24 bg-amber-400/5 rounded-bl-full pointer-events-none"></div>
-            <div class="flex items-center justify-between">
-              <span class="text-xs uppercase tracking-wider font-bold text-amber-400">Standardization</span>
-              <span class="px-2 py-0.5 text-[10px] font-bold rounded bg-amber-400/20 text-amber-300">RULE 1</span>
-            </div>
-            <h3 class="font-bold text-slate-200 mt-2 text-base">Item Fat Content Discrepancy</h3>
-            <p class="text-xs text-slate-400 mt-1 leading-relaxed">
-              Standardized fragmented categorical codes <code>'LF'</code> (316 rows), <code>'low fat'</code> (112 rows) into <code>'Low Fat'</code>, and <code>'reg'</code> (117 rows) into <code>'Regular'</code>.
-            </p>
-            <div class="mt-4 pt-3 border-t border-slate-800 text-xs flex justify-between items-center text-slate-300">
-              <span class="text-slate-500">Categories Unified:</span>
-              <span class="font-mono font-semibold text-emerald-400">5 → 2 Clean Classes</span>
-            </div>
-          </div>
-
-          <!-- Rule 2 -->
-          <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-700/80 relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-24 h-24 bg-sky-400/5 rounded-bl-full pointer-events-none"></div>
-            <div class="flex items-center justify-between">
-              <span class="text-xs uppercase tracking-wider font-bold text-sky-400">Imputation</span>
-              <span class="px-2 py-0.5 text-[10px] font-bold rounded bg-sky-400/20 text-sky-300">RULE 2</span>
-            </div>
-            <h3 class="font-bold text-slate-200 mt-2 text-base">Missing Item Weight Imputation</h3>
-            <p class="text-xs text-slate-400 mt-1 leading-relaxed">
-              Found 1,463 missing values in <code>Item Weight</code>. Imputed null values using conditional category-wise mean weight based on <code>Item Type</code> and product group.
-            </p>
-            <div class="mt-4 pt-3 border-t border-slate-800 text-xs flex justify-between items-center text-slate-300">
-              <span class="text-slate-500">Nulls Remaining:</span>
-              <span class="font-mono font-semibold text-emerald-400" id="audit-missing-weight">0 / 8,523 (0%)</span>
-            </div>
-          </div>
-
-          <!-- Rule 3 -->
-          <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-700/80 relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-24 h-24 bg-purple-400/5 rounded-bl-full pointer-events-none"></div>
-            <div class="flex items-center justify-between">
-              <span class="text-xs uppercase tracking-wider font-bold text-purple-400">Anomaly Correction</span>
-              <span class="px-2 py-0.5 text-[10px] font-bold rounded bg-purple-400/20 text-purple-300">RULE 3</span>
-            </div>
-            <h3 class="font-bold text-slate-200 mt-2 text-base">Zero Visibility Metric Repair</h3>
-            <p class="text-xs text-slate-400 mt-1 leading-relaxed">
-              526 active items recorded <code>Item Visibility = 0</code> despite positive sales. Items physically displayed cannot have zero visibility. Imputed with category mean visibility.
-            </p>
-            <div class="mt-4 pt-3 border-t border-slate-800 text-xs flex justify-between items-center text-slate-300">
-              <span class="text-slate-500">Zero Visibility Rows:</span>
-              <span class="font-mono font-semibold text-emerald-400" id="audit-zero-vis">0 Anomalies Left</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Before & After Comparison Inspection Table -->
-        <div class="space-y-3">
-          <div class="flex items-center justify-between">
-            <h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider flex items-center">
-              <i class="fa-solid fa-code-compare text-amber-400 mr-2"></i>
-              Live Sample Inspection: Raw vs Cleaned Records
-            </h3>
-            <span class="text-xs text-slate-400">First 5 records from SQLite tables</span>
-          </div>
-
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <!-- Raw Table View -->
-            <div class="bg-slate-950 p-4 rounded-xl border border-rose-900/40">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-rose-400 flex items-center">
-                  <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Raw Ingested Data (<code>blinkit_raw</code>)
-                </span>
-                <span class="text-[11px] text-slate-400">Contains dirty values & nulls</span>
-              </div>
-              <div class="overflow-x-auto max-h-56">
-                <table class="w-full text-[11px] text-left text-slate-300 divide-y divide-slate-800" id="rawSampleTable">
-                  <thead class="text-slate-400 bg-slate-900/60 sticky top-0">
-                    <tr>
-                      <th class="py-2 px-2">Item ID</th>
-                      <th class="py-2 px-2">Fat Content</th>
-                      <th class="py-2 px-2">Weight</th>
-                      <th class="py-2 px-2">Visibility</th>
-                      <th class="py-2 px-2">Sales</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-slate-800/50 font-mono" id="rawSampleBody">
-                    <!-- Populated via JS -->
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- Cleaned Table View -->
-            <div class="bg-slate-950 p-4 rounded-xl border border-emerald-900/40">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-emerald-400 flex items-center">
-                  <i class="fa-solid fa-circle-check mr-1.5"></i> Cleaned & Standardized (<code>blinkit_cleaned</code>)
-                </span>
-                <span class="text-[11px] text-slate-400">Ready for SQL joins & analytics</span>
-              </div>
-              <div class="overflow-x-auto max-h-56">
-                <table class="w-full text-[11px] text-left text-slate-300 divide-y divide-slate-800" id="cleanSampleTable">
-                  <thead class="text-slate-400 bg-slate-900/60 sticky top-0">
-                    <tr>
-                      <th class="py-2 px-2">Item ID</th>
-                      <th class="py-2 px-2">Fat Content</th>
-                      <th class="py-2 px-2">Weight</th>
-                      <th class="py-2 px-2">Visibility</th>
-                      <th class="py-2 px-2">Sales</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-slate-800/50 font-mono" id="cleanSampleBody">
-                    <!-- Populated via JS -->
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- TAB 2: SQL FUNCTIONS & INTERACTIVE STUDIO -->
-    <div id="sqlTab" class="tab-content hidden space-y-6">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-
-        <!-- Left Column: Pre-built SQL Catalog & Schema -->
-        <div class="lg:col-span-4 space-y-4">
-          <div class="bg-slate-800/80 rounded-2xl border border-slate-700 p-5 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-700 pb-3">
-              <h3 class="font-bold text-white text-sm flex items-center">
-                <i class="fa-solid fa-list-check text-amber-400 mr-2"></i> SQL Function Catalog
-              </h3>
-              <span class="text-[11px] text-slate-400">Click to load</span>
-            </div>
-
-            <!-- Query Categories -->
-            <div class="space-y-2 max-h-[460px] overflow-y-auto pr-1" id="queryTemplateList">
-              <!-- Dynamically populated with Window Functions, Joins, Aggregations -->
-            </div>
-          </div>
-
-          <!-- SQLite Schema Guide -->
-          <div class="bg-slate-800/80 rounded-2xl border border-slate-700 p-5 text-xs space-y-2">
-            <h4 class="font-bold text-slate-300 flex items-center">
-              <i class="fa-solid fa-table-cells text-sky-400 mr-2"></i> Available Tables & Schema
-            </h4>
-            <div class="space-y-1.5 text-slate-400 font-mono text-[11px]">
-              <div><strong class="text-emerald-400">blinkit_cleaned</strong> (Item Fat Content, Item Identifier, Item Type, Outlet Establishment Year, Outlet Identifier, Outlet Location Type, Outlet Size, Outlet Type, Item Visibility, Item Weight, Sales, Rating)</div>
-              <div><strong class="text-sky-400">category_benchmarks</strong> (Item Type, Category Code, Target Margin Pct, Perishability Tier, Strategic Priority)</div>
-              <div><strong class="text-purple-400">outlet_benchmarks</strong> (Outlet Identifier, Hub Name, Target Sales Monthly, Operating Cost Tier, Quick Commerce SLA Mins, Cold Storage Capacity CuFt)</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Column: Interactive SQL Runner & Results -->
-        <div class="lg:col-span-8 space-y-4">
-          <div class="bg-slate-800/80 rounded-2xl border border-slate-700 p-5 space-y-4">
-            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-700 pb-3">
-              <div>
-                <h3 class="font-bold text-white text-base flex items-center">
-                  <i class="fa-solid fa-terminal text-emerald-400 mr-2"></i> Interactive SQL Console
-                </h3>
-                <p class="text-xs text-slate-400">Execute Window functions, Joins, CTEs, and aggregations live against SQLite 3.50 engine.</p>
-              </div>
-              <div class="flex items-center space-x-2">
-                <button id="runSqlBtn" class="inline-flex items-center px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-md shadow-emerald-500/20 transition">
-                  <i class="fa-solid fa-play mr-1.5"></i> Run SQL Query
-                </button>
-                <button id="copySqlBtn" class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-semibold bg-slate-700 hover:bg-slate-600 text-slate-200 transition">
-                  <i class="fa-regular fa-copy"></i>
-                </button>
-              </div>
-            </div>
-
-            <!-- SQL Text Area Editor -->
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">
+              Username / Analyst Name <span class="text-amber-400">*</span>
+            </label>
             <div class="relative">
-              <textarea id="sqlQueryInput" rows="7" class="w-full bg-slate-950 text-emerald-300 font-mono text-xs sm:text-sm p-4 rounded-xl border border-slate-700/80 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none resize-y" placeholder="Write any SQL query here..."></textarea>
+              <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                <i class="fa-regular fa-user"></i>
+              </div>
+              <input type="text" id="loginUsername" value="Akshay Sharma" class="w-full bg-slate-950 text-white text-xs sm:text-sm pl-10 pr-4 py-2.5 rounded-xl border border-slate-700/80 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none transition" placeholder="Enter your name or analyst handle...">
+            </div>
+            <input type="hidden" id="loginRole" value="Lead BI Analyst">
+          </div>
+
+          <!-- Quick Select Persona Chips -->
+          <div class="space-y-1.5">
+            <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Quick Persona Selection:</span>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <button type="button" onclick="selectPersona('Akshay Sharma', 'Lead BI Analyst', this)" class="role-chip active-chip px-3 py-1 rounded-lg border border-emerald-500/40 bg-emerald-500/20 text-emerald-300">
+                <i class="fa-solid fa-user-check mr-1.5 text-[10px]"></i> Akshay (Lead Analyst)
+              </button>
+              <button type="button" onclick="selectPersona('Aarav Mehta', 'VP Supply Chain', this)" class="role-chip px-3 py-1 rounded-lg border border-slate-700 bg-slate-800 text-slate-300">
+                <i class="fa-solid fa-briefcase mr-1.5 text-[10px]"></i> Aarav (VP Supply Chain)
+              </button>
+              <button type="button" onclick="selectPersona('Priya Patel', 'Dark Store Operations', this)" class="role-chip px-3 py-1 rounded-lg border border-slate-700 bg-slate-800 text-slate-300">
+                <i class="fa-solid fa-warehouse mr-1.5 text-[10px]"></i> Priya (Store Ops)
+              </button>
+              <button type="button" onclick="selectPersona('Guest Auditor', 'Guest Analyst', this)" class="role-chip px-3 py-1 rounded-lg border border-slate-700 bg-slate-800 text-slate-300">
+                <i class="fa-solid fa-user-astronaut mr-1.5 text-[10px]"></i> Guest Auditor
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- USER SUGGESTION & INQUIRY BOX (Core Requirement) -->
+        <div class="p-4 md:p-5 rounded-2xl bg-slate-950/80 border border-amber-500/30 space-y-3.5">
+          <div class="flex items-center justify-between border-b border-slate-800/80 pb-2.5">
+            <h3 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center">
+              <i class="fa-solid fa-lightbulb text-amber-400 mr-2"></i> User Suggestion & Inquiry Box
+            </h3>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-amber-400/10 text-amber-400 border border-amber-400/20 font-bold">INTERACTIVE</span>
+          </div>
+
+          <p class="text-xs text-slate-400 leading-relaxed">
+            What would you like to explore or suggest to correct in the business? Pick a suggestion below to auto-fill or type your custom hypothesis:
+          </p>
+
+          <!-- Quick Suggestion Clickable Chips -->
+          <div class="flex flex-wrap gap-1.5 text-[11px]">
+            <button type="button" onclick="selectSuggestion('Run Window Function to compute dynamic outlet size percentage contribution', 'Window Functions', this)" class="suggestion-chip px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-slate-300">
+              ⚡ Window Function % Share
+            </button>
+            <button type="button" onclick="selectSuggestion('Analyze why Tier 3 regional centers deliver 40% higher GMV than metro Tier 1', 'Geographic Analysis', this)" class="suggestion-chip px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-slate-300">
+              🗺️ Tier 3 vs Tier 1 GMV
+            </button>
+            <button type="button" onclick="selectSuggestion('Audit 1,463 imputed weights in Item Weight and verify sensor accuracy', 'Data Cleansing', this)" class="suggestion-chip px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-slate-300">
+              🧹 Audit 1,463 Missing Weights
+            </button>
+            <button type="button" onclick="selectSuggestion('Review the 6 actionable business fixes to optimize dark store profitability', 'Strategic Strategy', this)" class="suggestion-chip px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-slate-300">
+              🏪 Review 6 Business Fixes
+            </button>
+            <button type="button" onclick="selectSuggestion('Examine consumer wellness shift towards 64.7% Low Fat grocery spending', 'Category Insights', this)" class="suggestion-chip px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-slate-300">
+              🥦 64.7% Low Fat Shift
+            </button>
+          </div>
+
+          <!-- Suggestion Input Area -->
+          <div class="space-y-2">
+            <textarea id="loginSuggestionInput" rows="2" class="w-full bg-slate-900 text-amber-200 text-xs p-3 rounded-xl border border-slate-700/80 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none resize-none transition" placeholder="Write your suggestion, inquiry, or question for the data analytics team..."></textarea>
+            
+            <div class="flex items-center justify-between text-[11px] text-slate-400">
+              <span>Category:</span>
+              <select id="loginSuggestionCategory" class="bg-slate-900 border border-slate-700 text-slate-300 text-[11px] rounded-lg px-2.5 py-1 outline-none">
+                <option value="Window Functions">Window Functions</option>
+                <option value="Data Cleansing">Data Cleansing</option>
+                <option value="Geographic Analysis">Geographic Analysis</option>
+                <option value="Strategic Strategy">Strategic Strategy</option>
+                <option value="Category Insights">Category Insights</option>
+                <option value="General Inquiry">General Inquiry</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Submit Buttons -->
+        <div class="space-y-2.5 pt-1">
+          <button type="button" onclick="submitLoginAndEnter()" class="w-full py-3.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-300 hover:from-amber-300 hover:to-yellow-200 text-slate-950 shadow-xl shadow-amber-500/25 transition transform hover:-translate-y-0.5 flex items-center justify-center space-x-2">
+            <span>🚀 Enter Analytics Portal & Submit Suggestion</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+          <button type="button" onclick="quickGuestLogin()" class="w-full py-2 rounded-xl text-xs text-slate-400 hover:text-slate-200 transition">
+            Or bypass with 1-click Guest Access →
+          </button>
+        </div>
+
+        <!-- Community Suggestions Feed Preview -->
+        <div class="pt-2 border-t border-slate-800 text-xs space-y-2">
+          <div class="flex items-center justify-between text-slate-500 text-[11px]">
+            <span class="flex items-center"><i class="fa-solid fa-comments text-amber-400 mr-1.5"></i> Recent User Suggestions:</span>
+            <span id="suggestionCountBadge" class="font-mono text-emerald-400">4 recorded</span>
+          </div>
+          <div class="max-h-20 overflow-y-auto space-y-1.5 pr-1 font-sans" id="loginRecentSuggestions">
+            <!-- Dynamically populated from SQLite -->
+          </div>
+        </div>
+
+      </div>
+
+      <div class="text-center text-xs text-slate-500">
+        Blinkit Business Intelligence & Analytics Engine • Powered by SQLite 3.50 & Flask
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================= -->
+  <!-- 2. MAIN ANALYTICS DASHBOARD CONTAINER (Visible Post-Login)                -->
+  <!-- ========================================================================= -->
+  <div id="appView" class="hidden flex-1 flex flex-col min-h-screen">
+
+    <!-- TOP HEADER -->
+    <header class="bg-slate-950/90 border-b border-slate-800 sticky top-0 z-50 backdrop-blur-md">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+        <!-- Brand -->
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-400 to-yellow-300 flex items-center justify-center shadow-lg shadow-amber-500/20 text-slate-950 font-black text-xl">
+            ⚡
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="text-xl font-black tracking-tight text-white">blink<span class="text-amber-400">it</span></span>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold tracking-wide">SQL BI & DIAGNOSTICS</span>
+            </div>
+            <p class="text-xs text-slate-400">Data Cleansing • Advanced SQL Studio • Visual Insights • Strategic Report</p>
+          </div>
+        </div>
+
+        <!-- User Profile & Action Buttons -->
+        <div class="flex items-center space-x-3">
+          <!-- Active Logged User Chip -->
+          <div class="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs">
+            <div class="w-6 h-6 rounded-full bg-amber-400/20 text-amber-300 flex items-center justify-center font-bold text-[10px]">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <div>
+              <span id="topLoggedUser" class="font-bold text-slate-200 block text-[11px]">Akshay Sharma</span>
+              <span id="topLoggedRole" class="text-[9px] text-slate-400 block -mt-0.5">Lead BI Analyst</span>
+            </div>
+          </div>
+
+          <!-- Switch User Button -->
+          <button onclick="logoutToLoginPage()" title="Return to Login Page" class="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
+            <i class="fa-solid fa-arrow-right-from-bracket mr-1.5 text-rose-400"></i> Switch User
+          </button>
+
+          <!-- File Upload Form -->
+          <label for="csvFileInput" class="cursor-pointer inline-flex items-center px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition shadow-sm">
+            <i class="fa-solid fa-cloud-arrow-up mr-2 text-amber-400"></i> Upload CSV
+          </label>
+          <input type="file" id="csvFileInput" accept=".csv" class="hidden">
+
+          <!-- Reset Button -->
+          <button id="resetDataBtn" class="inline-flex items-center px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
+            <i class="fa-solid fa-rotate-left mr-2 text-slate-400"></i> Reset Default
+          </button>
+
+          <!-- Print / Export Report -->
+          <button onclick="window.printReport()" class="inline-flex items-center px-4 py-1.5 rounded-lg text-xs font-bold bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-md shadow-amber-500/20 transition">
+            <i class="fa-solid fa-file-pdf mr-2"></i> Print / PDF Report
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 ANALYTICAL NAVIGATION TABS (Intro section removed completely) -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-800/60">
+        <nav class="flex space-x-2 sm:space-x-8 py-2 overflow-x-auto text-sm font-medium">
+          <button onclick="switchTab('cleaningTab')" id="nav-cleaningTab" class="tab-btn active-tab flex items-center px-3 py-2 rounded-lg border-b-2 font-medium transition text-xs sm:text-sm">
+            <i class="fa-solid fa-broom mr-2 text-amber-400"></i> 1. Ingestion & Data Cleaning
+          </button>
+          <button onclick="switchTab('sqlTab')" id="nav-sqlTab" class="tab-btn flex items-center px-3 py-2 rounded-lg border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition text-xs sm:text-sm">
+            <i class="fa-solid fa-database mr-2 text-emerald-400"></i> 2. SQL Functions & Studio
+          </button>
+          <button onclick="switchTab('dashboardTab')" id="nav-dashboardTab" class="tab-btn flex items-center px-3 py-2 rounded-lg border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition text-xs sm:text-sm">
+            <i class="fa-solid fa-chart-line mr-2 text-sky-400"></i> 3. Visual Analytics Dashboard
+          </button>
+          <button onclick="switchTab('reportTab')" id="nav-reportTab" class="tab-btn flex items-center px-3 py-2 rounded-lg border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition text-xs sm:text-sm">
+            <i class="fa-solid fa-file-contract mr-2 text-indigo-400"></i> 4. Business Report & Recommendations
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Welcome Notification Banner for Logged User -->
+    <div id="welcomeBanner" class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4 transition-all duration-300">
+      <div class="p-3.5 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-850 to-slate-900 border border-amber-500/30 flex items-center justify-between text-xs">
+        <div class="flex items-center space-x-2.5">
+          <span class="w-7 h-7 rounded-lg bg-amber-400/20 text-amber-300 flex items-center justify-center font-bold text-xs">
+            <i class="fa-solid fa-bolt"></i>
+          </span>
+          <div>
+            <span class="font-bold text-slate-100">Welcome, <span id="bannerUserName">Akshay Sharma</span>!</span>
+            <span class="text-slate-400 ml-1">You are accessing the Blinkit SQL Analytics & Business Correction Engine.</span>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3">
+          <span id="activeSuggestionPill" class="hidden md:inline-flex items-center px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[10px] border border-emerald-500/30">
+            <i class="fa-solid fa-check mr-1"></i> Suggestion Logged
+          </span>
+          <button onclick="document.getElementById('welcomeBanner').classList.add('hidden')" class="text-slate-500 hover:text-white">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN BODY CONTAINER -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-6">
+
+      <!-- TOP KPI BAR (Persists across dashboard) -->
+      <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5">
+        <div class="kpi-card bg-slate-800/80 p-4 rounded-xl border border-slate-700/70 hover:border-amber-400/50 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
+            <span>Total Revenue</span>
+            <i class="fa-solid fa-sack-dollar text-amber-400"></i>
+          </div>
+          <div class="mt-2 text-2xl font-black text-white" id="kpi-total-sales">$1.20M</div>
+          <div class="text-[11px] text-emerald-400 mt-0.5"><i class="fa-solid fa-arrow-trend-up"></i> 8,523 Transactions</div>
+        </div>
+
+        <div class="kpi-card bg-slate-800/80 p-4 rounded-xl border border-slate-700/70 hover:border-amber-400/50 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
+            <span>Avg Sale / Item</span>
+            <i class="fa-solid fa-cart-shopping text-sky-400"></i>
+          </div>
+          <div class="mt-2 text-2xl font-black text-white" id="kpi-avg-sales">$140.99</div>
+          <div class="text-[11px] text-slate-400 mt-0.5">Mean transaction value</div>
+        </div>
+
+        <div class="kpi-card bg-slate-800/80 p-4 rounded-xl border border-slate-700/70 hover:border-amber-400/50 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
+            <span>Customer Rating</span>
+            <i class="fa-solid fa-star text-yellow-400"></i>
+          </div>
+          <div class="mt-2 text-2xl font-black text-white flex items-center">
+            <span id="kpi-avg-rating">3.97</span><span class="text-xs text-slate-400 font-normal ml-1">/ 5.0</span>
+          </div>
+          <div class="text-[11px] text-amber-400 mt-0.5"><i class="fa-solid fa-face-smile"></i> High satisfaction</div>
+        </div>
+
+        <div class="kpi-card bg-slate-800/80 p-4 rounded-xl border border-slate-700/70 hover:border-amber-400/50 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
+            <span>Est. Gross Profit</span>
+            <i class="fa-solid fa-coins text-emerald-400"></i>
+          </div>
+          <div class="mt-2 text-2xl font-black text-emerald-400" id="kpi-gross-profit">$281.88k</div>
+          <div class="text-[11px] text-slate-400 mt-0.5"><span id="kpi-margin-pct">23.5%</span> avg margin</div>
+        </div>
+
+        <div class="kpi-card bg-slate-800/80 p-4 rounded-xl border border-slate-700/70 hover:border-amber-400/50 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
+            <span>Active Hubs</span>
+            <i class="fa-solid fa-warehouse text-purple-400"></i>
+          </div>
+          <div class="mt-2 text-2xl font-black text-white" id="kpi-outlets">10</div>
+          <div class="text-[11px] text-slate-400 mt-0.5">Across 3 location tiers</div>
+        </div>
+
+        <div class="kpi-card bg-slate-800/80 p-4 rounded-xl border border-slate-700/70 hover:border-amber-400/50 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
+            <span>Data Quality Score</span>
+            <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+          </div>
+          <div class="mt-2 text-2xl font-black text-emerald-400">100%</div>
+          <div class="text-[11px] text-emerald-400 mt-0.5"><i class="fa-solid fa-circle-check"></i> Post-Clean Ready</div>
+        </div>
+      </section>
+
+      <!-- TAB 1: DATA INGESTION & CLEANING PIPELINE -->
+      <div id="cleaningTab" class="tab-content space-y-6">
+        <div class="bg-slate-800/70 rounded-2xl border border-slate-700 p-6 space-y-6">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-700/70 pb-5">
+            <div>
+              <h2 class="text-xl font-bold text-white flex items-center">
+                <i class="fa-solid fa-wand-magic-sparkles text-amber-400 mr-2.5"></i>
+                Data Cleaning & Normalization Pipeline
+              </h2>
+              <p class="text-sm text-slate-400 mt-1">
+                Automated ingestion, inconsistency resolution, null imputation, and data hygiene audit trail.
+              </p>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                <i class="fa-solid fa-check mr-1.5"></i> Clean Table: <code>blinkit_cleaned</code>
+              </span>
+              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-700 text-slate-300">
+                Raw Table: <code>blinkit_raw</code>
+              </span>
+            </div>
+          </div>
+
+          <!-- 3 Critical Cleaning Pillars Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <!-- Rule 1 -->
+            <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-700/80 relative overflow-hidden">
+              <div class="absolute top-0 right-0 w-24 h-24 bg-amber-400/5 rounded-bl-full pointer-events-none"></div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs uppercase tracking-wider font-bold text-amber-400">Standardization</span>
+                <span class="px-2 py-0.5 text-[10px] font-bold rounded bg-amber-400/20 text-amber-300">RULE 1</span>
+              </div>
+              <h3 class="font-bold text-slate-200 mt-2 text-base">Item Fat Content Discrepancy</h3>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                Standardized fragmented categorical codes <code>'LF'</code> (316 rows), <code>'low fat'</code> (112 rows) into <code>'Low Fat'</code>, and <code>'reg'</code> (117 rows) into <code>'Regular'</code>.
+              </p>
+              <div class="mt-4 pt-3 border-t border-slate-800 text-xs flex justify-between items-center text-slate-300">
+                <span class="text-slate-500">Categories Unified:</span>
+                <span class="font-mono font-semibold text-emerald-400">5 → 2 Clean Classes</span>
+              </div>
             </div>
 
-            <!-- Query Metadata & Stats -->
-            <div class="flex items-center justify-between text-xs text-slate-400 px-1">
-              <span id="queryStatusText">Ready to execute</span>
-              <span id="queryTimingText" class="font-mono text-slate-500">0.00 ms</span>
+            <!-- Rule 2 -->
+            <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-700/80 relative overflow-hidden">
+              <div class="absolute top-0 right-0 w-24 h-24 bg-sky-400/5 rounded-bl-full pointer-events-none"></div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs uppercase tracking-wider font-bold text-sky-400">Imputation</span>
+                <span class="px-2 py-0.5 text-[10px] font-bold rounded bg-sky-400/20 text-sky-300">RULE 2</span>
+              </div>
+              <h3 class="font-bold text-slate-200 mt-2 text-base">Missing Item Weight Imputation</h3>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                Found 1,463 missing values in <code>Item Weight</code>. Imputed null values using conditional category-wise mean weight based on <code>Item Type</code> and product group.
+              </p>
+              <div class="mt-4 pt-3 border-t border-slate-800 text-xs flex justify-between items-center text-slate-300">
+                <span class="text-slate-500">Nulls Remaining:</span>
+                <span class="font-mono font-semibold text-emerald-400" id="audit-missing-weight">0 / 8,523 (0%)</span>
+              </div>
             </div>
 
-            <!-- Results Table Container -->
-            <div class="border border-slate-700/80 rounded-xl overflow-hidden bg-slate-950">
-              <div class="flex items-center justify-between px-4 py-2 bg-slate-900 border-b border-slate-800 text-xs">
-                <span class="font-semibold text-slate-300 flex items-center">
-                  <i class="fa-solid fa-table mr-2 text-amber-400"></i> Query Output
-                </span>
-                <div class="flex items-center space-x-3">
-                  <span id="resultRowCount" class="text-slate-400">0 rows</span>
-                  <button id="exportCsvBtn" class="text-amber-400 hover:text-amber-300 font-medium">
-                    <i class="fa-solid fa-download mr-1"></i> Export CSV
+            <!-- Rule 3 -->
+            <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-700/80 relative overflow-hidden">
+              <div class="absolute top-0 right-0 w-24 h-24 bg-purple-400/5 rounded-bl-full pointer-events-none"></div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs uppercase tracking-wider font-bold text-purple-400">Anomaly Correction</span>
+                <span class="px-2 py-0.5 text-[10px] font-bold rounded bg-purple-400/20 text-purple-300">RULE 3</span>
+              </div>
+              <h3 class="font-bold text-slate-200 mt-2 text-base">Zero Visibility Metric Repair</h3>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                526 active items recorded <code>Item Visibility = 0</code> despite positive sales. Items physically displayed cannot have zero visibility. Imputed with category mean visibility.
+              </p>
+              <div class="mt-4 pt-3 border-t border-slate-800 text-xs flex justify-between items-center text-slate-300">
+                <span class="text-slate-500">Zero Visibility Rows:</span>
+                <span class="font-mono font-semibold text-emerald-400" id="audit-zero-vis">0 Anomalies Left</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Before & After Comparison Inspection Table -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider flex items-center">
+                <i class="fa-solid fa-code-compare text-amber-400 mr-2"></i>
+                Live Sample Inspection: Raw vs Cleaned Records
+              </h3>
+              <span class="text-xs text-slate-400">First 5 records from SQLite tables</span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <!-- Raw Table View -->
+              <div class="bg-slate-950 p-4 rounded-xl border border-rose-900/40">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-rose-400 flex items-center">
+                    <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Raw Ingested Data (<code>blinkit_raw</code>)
+                  </span>
+                  <span class="text-[11px] text-slate-400">Contains dirty values & nulls</span>
+                </div>
+                <div class="overflow-x-auto max-h-56">
+                  <table class="w-full text-[11px] text-left text-slate-300 divide-y divide-slate-800" id="rawSampleTable">
+                    <thead class="text-slate-400 bg-slate-900/60 sticky top-0">
+                      <tr>
+                        <th class="py-2 px-2">Item ID</th>
+                        <th class="py-2 px-2">Fat Content</th>
+                        <th class="py-2 px-2">Weight</th>
+                        <th class="py-2 px-2">Visibility</th>
+                        <th class="py-2 px-2">Sales</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/50 font-mono" id="rawSampleBody">
+                      <!-- Populated via JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Cleaned Table View -->
+              <div class="bg-slate-950 p-4 rounded-xl border border-emerald-900/40">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-emerald-400 flex items-center">
+                    <i class="fa-solid fa-circle-check mr-1.5"></i> Cleaned & Standardized (<code>blinkit_cleaned</code>)
+                  </span>
+                  <span class="text-[11px] text-slate-400">Ready for SQL joins & analytics</span>
+                </div>
+                <div class="overflow-x-auto max-h-56">
+                  <table class="w-full text-[11px] text-left text-slate-300 divide-y divide-slate-800" id="cleanSampleTable">
+                    <thead class="text-slate-400 bg-slate-900/60 sticky top-0">
+                      <tr>
+                        <th class="py-2 px-2">Item ID</th>
+                        <th class="py-2 px-2">Fat Content</th>
+                        <th class="py-2 px-2">Weight</th>
+                        <th class="py-2 px-2">Visibility</th>
+                        <th class="py-2 px-2">Sales</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/50 font-mono" id="cleanSampleBody">
+                      <!-- Populated via JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB 2: SQL FUNCTIONS & INTERACTIVE STUDIO -->
+      <div id="sqlTab" class="tab-content hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+          <!-- Left Column: Pre-built SQL Catalog & Schema -->
+          <div class="lg:col-span-4 space-y-4">
+            <div class="bg-slate-800/80 rounded-2xl border border-slate-700 p-5 space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+                <h3 class="font-bold text-white text-sm flex items-center">
+                  <i class="fa-solid fa-list-check text-amber-400 mr-2"></i> SQL Function Catalog
+                </h3>
+                <span class="text-[11px] text-slate-400">Click to load</span>
+              </div>
+
+              <!-- Query Categories -->
+              <div class="space-y-2 max-h-[460px] overflow-y-auto pr-1" id="queryTemplateList">
+                <!-- Dynamically populated with Window Functions, Joins, Aggregations -->
+              </div>
+            </div>
+
+            <!-- SQLite Schema Guide -->
+            <div class="bg-slate-800/80 rounded-2xl border border-slate-700 p-5 text-xs space-y-2">
+              <h4 class="font-bold text-slate-300 flex items-center">
+                <i class="fa-solid fa-table-cells text-sky-400 mr-2"></i> Available Tables & Schema
+              </h4>
+              <div class="space-y-1.5 text-slate-400 font-mono text-[11px]">
+                <div><strong class="text-emerald-400">blinkit_cleaned</strong> (Item Fat Content, Item Identifier, Item Type, Outlet Establishment Year, Outlet Identifier, Outlet Location Type, Outlet Size, Outlet Type, Item Visibility, Item Weight, Sales, Rating)</div>
+                <div><strong class="text-sky-400">category_benchmarks</strong> (Item Type, Category Code, Target Margin Pct, Perishability Tier, Strategic Priority)</div>
+                <div><strong class="text-purple-400">outlet_benchmarks</strong> (Outlet Identifier, Hub Name, Target Sales Monthly, Operating Cost Tier, Quick Commerce SLA Mins, Cold Storage Capacity CuFt)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive SQL Runner & Results -->
+          <div class="lg:col-span-8 space-y-4">
+            <div class="bg-slate-800/80 rounded-2xl border border-slate-700 p-5 space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-700 pb-3">
+                <div>
+                  <h3 class="font-bold text-white text-base flex items-center">
+                    <i class="fa-solid fa-terminal text-emerald-400 mr-2"></i> Interactive SQL Console
+                  </h3>
+                  <p class="text-xs text-slate-400">Execute Window functions, Joins, CTEs, and aggregations live against SQLite 3.50 engine.</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <button id="runSqlBtn" class="inline-flex items-center px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-md shadow-emerald-500/20 transition">
+                    <i class="fa-solid fa-play mr-1.5"></i> Run SQL Query
+                  </button>
+                  <button id="copySqlBtn" class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-semibold bg-slate-700 hover:bg-slate-600 text-slate-200 transition">
+                    <i class="fa-regular fa-copy"></i>
                   </button>
                 </div>
               </div>
 
-              <div class="overflow-x-auto max-h-[380px] p-2">
-                <table class="w-full text-left text-xs text-slate-300 divide-y divide-slate-800" id="sqlResultsTable">
-                  <thead class="text-slate-400 bg-slate-900 sticky top-0" id="sqlResultsHead">
-                    <tr><th class="py-2 px-3">Execute a query above to see results</th></tr>
-                  </thead>
-                  <tbody class="divide-y divide-slate-800/60 font-mono text-[11px]" id="sqlResultsBody">
-                    <tr><td class="py-3 px-3 text-slate-500 italic">No query executed yet. Select a template on the left or type SQL.</td></tr>
-                  </tbody>
-                </table>
+              <!-- SQL Text Area Editor -->
+              <div class="relative">
+                <textarea id="sqlQueryInput" rows="7" class="w-full bg-slate-950 text-emerald-300 font-mono text-xs sm:text-sm p-4 rounded-xl border border-slate-700/80 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none resize-y" placeholder="Write any SQL query here..."></textarea>
               </div>
+
+              <!-- Query Metadata & Stats -->
+              <div class="flex items-center justify-between text-xs text-slate-400 px-1">
+                <span id="queryStatusText">Ready to execute</span>
+                <span id="queryTimingText" class="font-mono text-slate-500">0.00 ms</span>
+              </div>
+
+              <!-- Results Table Container -->
+              <div class="border border-slate-700/80 rounded-xl overflow-hidden bg-slate-950">
+                <div class="flex items-center justify-between px-4 py-2 bg-slate-900 border-b border-slate-800 text-xs">
+                  <span class="font-semibold text-slate-300 flex items-center">
+                    <i class="fa-solid fa-table mr-2 text-amber-400"></i> Query Output
+                  </span>
+                  <div class="flex items-center space-x-3">
+                    <span id="resultRowCount" class="text-slate-400">0 rows</span>
+                    <button id="exportCsvBtn" class="text-amber-400 hover:text-amber-300 font-medium">
+                      <i class="fa-solid fa-download mr-1"></i> Export CSV
+                    </button>
+                  </div>
+                </div>
+
+                <div class="overflow-x-auto max-h-[380px] p-2">
+                  <table class="w-full text-left text-xs text-slate-300 divide-y divide-slate-800" id="sqlResultsTable">
+                    <thead class="text-slate-400 bg-slate-900 sticky top-0" id="sqlResultsHead">
+                      <tr><th class="py-2 px-3">Execute a query above to see results</th></tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/60 font-mono text-[11px]" id="sqlResultsBody">
+                      <tr><td class="py-3 px-3 text-slate-500 italic">No query executed yet. Select a template on the left or type SQL.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
             </div>
-
           </div>
-        </div>
 
+        </div>
       </div>
-    </div>
 
-    <!-- TAB 3: VISUAL ANALYTICS & BUSINESS INSIGHTS DASHBOARD -->
-    <div id="dashboardTab" class="tab-content hidden space-y-6">
+      <!-- TAB 3: VISUAL ANALYTICS & BUSINESS INSIGHTS DASHBOARD -->
+      <div id="dashboardTab" class="tab-content hidden space-y-6">
 
-      <!-- Header & Filter Bar -->
-      <div class="bg-slate-800/80 rounded-2xl border border-slate-700 p-5 flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h2 class="text-xl font-bold text-white flex items-center">
-            <i class="fa-solid fa-chart-pie text-sky-400 mr-2.5"></i>
-            Visual Analytics & Multi-Dimensional Charts
-          </h2>
-          <p class="text-xs text-slate-400 mt-1">Deep visualization of sales drivers, consumer preferences, outlet efficiency, and assortment mix.</p>
-        </div>
-        <div class="flex items-center space-x-2 text-xs">
-          <span class="text-slate-400"><i class="fa-solid fa-circle-info text-amber-400 mr-1"></i> Charts dynamically generated from SQL aggregations</span>
-        </div>
-      </div>
-
-      <!-- Grid of Charts -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-        <!-- Chart 1: Sales by Item Type (Horizontal Bar) -->
-        <div class="chart-card bg-slate-800/80 rounded-2xl border border-slate-700 p-5 flex flex-col justify-between">
+        <!-- Header & Filter Bar -->
+        <div class="bg-slate-800/80 rounded-2xl border border-slate-700 p-5 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <div class="flex items-center justify-between mb-2">
-              <h3 class="font-bold text-slate-200 text-sm flex items-center">
-                <i class="fa-solid fa-chart-bar text-amber-400 mr-2"></i> 1. Sales & Revenue by Item Type
-              </h3>
-              <span class="text-[11px] px-2 py-0.5 rounded bg-amber-400/10 text-amber-300 font-semibold">Pareto Drivers</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-3">Identifies top-earning grocery categories (Fruits, Snacks, Household) vs underperforming niches.</p>
-            <div class="h-64 relative">
-              <canvas id="itemTypeChart"></canvas>
-            </div>
-          </div>
-          <!-- Chart Business Insight Callout -->
-          <div class="mt-4 p-3 rounded-xl bg-slate-900/90 border border-amber-500/30 text-xs">
-            <span class="font-bold text-amber-400 flex items-center mb-1">
-              <i class="fa-solid fa-lightbulb mr-1.5"></i> Business Diagram Insight:
-            </span>
-            <p class="text-slate-300 text-[11px] leading-relaxed">
-              <strong>Fruits & Veg ($178k)</strong> and <strong>Snack Foods ($172k)</strong> account for nearly 30% of entire gross revenue. Meanwhile, <strong>Seafood ($9k)</strong> and <strong>Breakfast ($15k)</strong> exhibit lowest turnover, representing prime targets for shelf-space rationalization.
-            </p>
-          </div>
-        </div>
-
-        <!-- Chart 2: Percentage of Sales by Outlet Size (Donut - Window Function) -->
-        <div class="chart-card bg-slate-800/80 rounded-2xl border border-slate-700 p-5 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <h3 class="font-bold text-slate-200 text-sm flex items-center">
-                <i class="fa-solid fa-chart-pie text-emerald-400 mr-2"></i> 2. Sales Share by Outlet Size (SQL Window OVER)
-              </h3>
-              <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-400/10 text-emerald-300 font-semibold">Window % Share</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-3">Reveals revenue contribution by store layout footprint: Medium (42.3%), Small (37.0%), High (20.7%).</p>
-            <div class="h-64 relative flex items-center justify-center">
-              <canvas id="outletSizeChart"></canvas>
-            </div>
-          </div>
-          <!-- Chart Business Insight Callout -->
-          <div class="mt-4 p-3 rounded-xl bg-slate-900/90 border border-emerald-500/30 text-xs">
-            <span class="font-bold text-emerald-400 flex items-center mb-1">
-              <i class="fa-solid fa-lightbulb mr-1.5"></i> Business Diagram Insight:
-            </span>
-            <p class="text-slate-300 text-[11px] leading-relaxed">
-              <strong>Medium Outlets</strong> are the most productive format, capturing <strong>42.27% ($507.9k)</strong> of total sales. High/Mega stores generate only 20.72%, demonstrating diminishing returns for oversized footprints in quick commerce.
-            </p>
-          </div>
-        </div>
-
-        <!-- Chart 3: Fat Content Demand & Sales Preference (Bar / Pie) -->
-        <div class="chart-card bg-slate-800/80 rounded-2xl border border-slate-700 p-5 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <h3 class="font-bold text-slate-200 text-sm flex items-center">
-                <i class="fa-solid fa-heart-pulse text-rose-400 mr-2"></i> 3. Consumer Preference: Fat Content Distribution
-              </h3>
-              <span class="text-[11px] px-2 py-0.5 rounded bg-rose-400/10 text-rose-300 font-semibold">Health Shift</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-3">Post-cleaning comparison of Low Fat ($776k) vs Regular ($425k) grocery sales.</p>
-            <div class="h-64 relative">
-              <canvas id="fatContentChart"></canvas>
-            </div>
-          </div>
-          <!-- Chart Business Insight Callout -->
-          <div class="mt-4 p-3 rounded-xl bg-slate-900/90 border border-rose-500/30 text-xs">
-            <span class="font-bold text-rose-400 flex items-center mb-1">
-              <i class="fa-solid fa-lightbulb mr-1.5"></i> Business Diagram Insight:
-            </span>
-            <p class="text-slate-300 text-[11px] leading-relaxed">
-              <strong>Low Fat items generate 64.6% of overall sales volume</strong>. Consumers overwhelmingly prefer healthier grocery options across all locations, signaling strong profitability for expanding organic and low-calorie private labels.
-            </p>
-          </div>
-        </div>
-
-        <!-- Chart 4: Sales by Outlet Location Type (Grouped Bar) -->
-        <div class="chart-card bg-slate-800/80 rounded-2xl border border-slate-700 p-5 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <h3 class="font-bold text-slate-200 text-sm flex items-center">
-                <i class="fa-solid fa-map-location-dot text-sky-400 mr-2"></i> 4. Geographic Distribution: Sales by Location Tier
-              </h3>
-              <span class="text-[11px] px-2 py-0.5 rounded bg-sky-400/10 text-sky-300 font-semibold">Tier 1 vs 2 vs 3</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-3">Compares revenue generated across Tier 1 (Metro), Tier 2 (Developing), and Tier 3 (Regional) hubs.</p>
-            <div class="h-64 relative">
-              <canvas id="locationChart"></canvas>
-            </div>
-          </div>
-          <!-- Chart Business Insight Callout -->
-          <div class="mt-4 p-3 rounded-xl bg-slate-900/90 border border-sky-500/30 text-xs">
-            <span class="font-bold text-sky-400 flex items-center mb-1">
-              <i class="fa-solid fa-lightbulb mr-1.5"></i> Business Diagram Insight:
-            </span>
-            <p class="text-slate-300 text-[11px] leading-relaxed">
-              <strong>Tier 3 cities generate the highest volume ($478k / 39.8%)</strong>, outperforming Tier 1 ($336k / 28.0%). Quick-commerce delivery has lower brick-and-mortar superstore competition in Tier 3, presenting massive scale potential.
-            </p>
-          </div>
-        </div>
-
-        <!-- Chart 5: Establishment Vintage Curve (Line Chart) -->
-        <div class="chart-card bg-slate-800/80 rounded-2xl border border-slate-700 p-5 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <h3 class="font-bold text-slate-200 text-sm flex items-center">
-                <i class="fa-solid fa-timeline text-indigo-400 mr-2"></i> 5. Establishment Vintage & Longevity Curve
-              </h3>
-              <span class="text-[11px] px-2 py-0.5 rounded bg-indigo-400/10 text-indigo-300 font-semibold">Vintage Cohort</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-3">Tracks revenue performance by outlet launch year (from legacy 2011 hubs to newer 2022 centers).</p>
-            <div class="h-64 relative">
-              <canvas id="vintageChart"></canvas>
-            </div>
-          </div>
-          <!-- Chart Business Insight Callout -->
-          <div class="mt-4 p-3 rounded-xl bg-slate-900/90 border border-indigo-500/30 text-xs">
-            <span class="font-bold text-indigo-400 flex items-center mb-1">
-              <i class="fa-solid fa-lightbulb mr-1.5"></i> Business Diagram Insight:
-            </span>
-            <p class="text-slate-300 text-[11px] leading-relaxed">
-              Mature outlets established in 2018 (including Supermarket Type 3 OUT027) generated peak sales ($345k). Newer stores opened in 2020-2022 require accelerated local customer acquisition and dispatch tuning to reach maturity.
-            </p>
-          </div>
-        </div>
-
-        <!-- Chart 6: Visibility vs Sales Scatter (Quadrant Diagnostics) -->
-        <div class="chart-card bg-slate-800/80 rounded-2xl border border-slate-700 p-5 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <h3 class="font-bold text-slate-200 text-sm flex items-center">
-                <i class="fa-solid fa-eye text-teal-400 mr-2"></i> 6. Merchandising Quadrant: Item Visibility vs Sales
-              </h3>
-              <span class="text-[11px] px-2 py-0.5 rounded bg-teal-400/10 text-teal-300 font-semibold">Digital Shelf Efficiency</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-3">Scatter plot isolating over-promoted low-sales items vs under-promoted cash cows.</p>
-            <div class="h-64 relative">
-              <canvas id="scatterChart"></canvas>
-            </div>
-          </div>
-          <!-- Chart Business Insight Callout -->
-          <div class="mt-4 p-3 rounded-xl bg-slate-900/90 border border-teal-500/30 text-xs">
-            <span class="font-bold text-teal-400 flex items-center mb-1">
-              <i class="fa-solid fa-lightbulb mr-1.5"></i> Business Diagram Insight:
-            </span>
-            <p class="text-slate-300 text-[11px] leading-relaxed">
-              Identifies <strong>"Screen Clutter" anomalies</strong>: Items with visibility >0.15 yielding less than $100 in sales take valuable screen estate away from high-converting products. Algorithmic ranking needs conversion-weighting.
-            </p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- TAB 4: EXECUTIVE BUSINESS REPORT & ACTIONABLE CORRECTIONS -->
-    <div id="reportTab" class="tab-content hidden space-y-6">
-      
-      <!-- Printable Report Container -->
-      <div id="printableReport" class="bg-slate-800/90 rounded-2xl border border-slate-700 p-6 md:p-8 space-y-8 print:p-0 print:border-none print:bg-white print:text-black">
-
-        <!-- Report Header -->
-        <div class="border-b border-slate-700 pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <div class="flex items-center space-x-2">
-              <span class="text-2xl font-black text-white print:text-black">blink<span class="text-amber-400">it</span></span>
-              <span class="text-xs px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 font-bold border border-amber-400/30">EXECUTIVE STRATEGY DOSSIER</span>
-            </div>
-            <h1 class="text-2xl font-black text-slate-100 print:text-slate-900 mt-2">
-              Blinkit Sales & Supply-Chain Optimization Report
-            </h1>
-            <p class="text-xs text-slate-400 print:text-slate-600 mt-1">
-              Data-Driven Diagnostics, SQL Function Analytics, and 6 Strategic Points to Correct in the Business
-            </p>
-          </div>
-          <div class="text-left md:text-right text-xs text-slate-400 print:text-slate-600 space-y-1">
-            <div><strong>Report Date:</strong> <span id="reportDate">November 2026</span></div>
-            <div><strong>Scope:</strong> 8,523 Transactions • 10 Outlets • 16 Product Categories</div>
-            <div><strong>Evaluation:</strong> SQL Window Functions, Multi-Table Joins & Cross-Tabulations</div>
-          </div>
-        </div>
-
-        <!-- Executive Summary Section -->
-        <div class="bg-slate-900/90 print:bg-slate-100 p-6 rounded-xl border border-slate-700 print:border-slate-300 space-y-3">
-          <h2 class="text-base font-bold text-amber-400 print:text-amber-700 flex items-center">
-            <i class="fa-solid fa-compass text-amber-400 mr-2"></i> Executive Summary & Core Diagnosis
-          </h2>
-          <p class="text-xs md:text-sm text-slate-300 print:text-slate-800 leading-relaxed">
-            Our comprehensive SQL analytics across <strong>$1.20M in total gross sales</strong> reveal robust top-line traction (average rating <strong>3.97 / 5.0</strong>), but significant structural inefficiencies in <strong>outlet format productivity</strong>, <strong>shelf-space allocation</strong>, and <strong>digital merchandising</strong>. By leveraging window functions, category margin joins, and scatter quadrant diagnostics, we have uncovered that <strong>42% of revenue is concentrated in medium outlets</strong>, <strong>Tier 3 cities outpace metro Tier 1 by 42% in total volume</strong>, and <strong>low-fat goods generate nearly double the revenue of regular items</strong>.
-          </p>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-xs">
-            <div class="p-3 bg-slate-800/80 print:bg-white rounded-lg border border-slate-700 print:border-slate-300">
-              <span class="text-slate-400 print:text-slate-600 block">Total Sales Volume</span>
-              <span class="text-base font-black text-white print:text-black">$1,201,681.72</span>
-            </div>
-            <div class="p-3 bg-slate-800/80 print:bg-white rounded-lg border border-slate-700 print:border-slate-300">
-              <span class="text-slate-400 print:text-slate-600 block">Est. Gross Margin</span>
-              <span class="text-base font-black text-emerald-400 print:text-emerald-700">$281,879 (23.5%)</span>
-            </div>
-            <div class="p-3 bg-slate-800/80 print:bg-white rounded-lg border border-slate-700 print:border-slate-300">
-              <span class="text-slate-400 print:text-slate-600 block">Low Fat Market Share</span>
-              <span class="text-base font-black text-amber-400 print:text-amber-700">64.7% ($776.3k)</span>
-            </div>
-            <div class="p-3 bg-slate-800/80 print:bg-white rounded-lg border border-slate-700 print:border-slate-300">
-              <span class="text-slate-400 print:text-slate-600 block">Tier 3 Sales Dominance</span>
-              <span class="text-base font-black text-sky-400 print:text-sky-700">39.8% ($478.1k)</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 6 STRATEGIC POINTS TO CORRECT IN THE BUSINESS (Core Deliverable) -->
-        <div class="space-y-4">
-          <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold text-white print:text-black flex items-center">
-              <i class="fa-solid fa-triangle-exclamation text-rose-400 mr-2"></i>
-              6 Strategic Points to Correct in the Business
+            <h2 class="text-xl font-bold text-white flex items-center">
+              <i class="fa-solid fa-chart-pie text-sky-400 mr-2.5"></i>
+              Visual Analytics & Multi-Dimensional Charts
             </h2>
-            <span class="text-xs text-slate-400 print:text-slate-600">Synthesized from charts, window functions & SQL joins</span>
+            <p class="text-xs text-slate-400 mt-1">Deep visualization of sales drivers, consumer preferences, outlet efficiency, and assortment mix.</p>
           </div>
-
-          <div class="space-y-4" id="pointsToCorrectContainer">
-            <!-- Dynamically populated via report API with high-detail breakdown -->
-          </div>
-        </div>
-
-        <!-- Prioritized Strategic Action Matrix Table -->
-        <div class="space-y-3">
-          <h2 class="text-base font-bold text-white print:text-black flex items-center">
-            <i class="fa-solid fa-table-list text-emerald-400 mr-2"></i>
-            Business Corrective Action Plan & ROI Roadmap
-          </h2>
-          <div class="overflow-x-auto rounded-xl border border-slate-700 print:border-slate-300">
-            <table class="w-full text-left text-xs text-slate-300 print:text-slate-800 divide-y divide-slate-700 print:divide-slate-300">
-              <thead class="bg-slate-900 print:bg-slate-200 text-slate-300 print:text-slate-900 font-bold">
-                <tr>
-                  <th class="py-3 px-3">#</th>
-                  <th class="py-3 px-3">Business Area</th>
-                  <th class="py-3 px-3">Severity</th>
-                  <th class="py-3 px-3">Recommended Correction</th>
-                  <th class="py-3 px-3">Chart / SQL Proof</th>
-                  <th class="py-3 px-3">Target KPI Uplift</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-800 print:divide-slate-200 bg-slate-900/40 print:bg-white text-[11px] font-sans">
-                <tr>
-                  <td class="py-3 px-3 font-bold text-amber-400">1</td>
-                  <td class="py-3 px-3 font-semibold text-white print:text-black">Retail Format Strategy</td>
-                  <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold">HIGH</span></td>
-                  <td class="py-3 px-3">Transform low-performing Grocery Stores into 10-Min Micro Dark Stores with curated top 1,200 SKUs.</td>
-                  <td class="py-3 px-3 text-slate-400">Outlet Type Bar Chart & Benchmark JOIN</td>
-                  <td class="py-3 px-3 text-emerald-400 font-bold">+24% Sales Density & 11 min SLA</td>
-                </tr>
-                <tr>
-                  <td class="py-3 px-3 font-bold text-amber-400">2</td>
-                  <td class="py-3 px-3 font-semibold text-white print:text-black">Geographic Expansion</td>
-                  <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold">HIGH</span></td>
-                  <td class="py-3 px-3">Shift 60% of new hub expansion Capex to Tier 2 & Tier 3 cities where consumer demand is highest.</td>
-                  <td class="py-3 px-3 text-slate-400">Location Tier Chart ($478k in Tier 3)</td>
-                  <td class="py-3 px-3 text-emerald-400 font-bold">+$180,000 ARR & lower rent costs</td>
-                </tr>
-                <tr>
-                  <td class="py-3 px-3 font-bold text-amber-400">3</td>
-                  <td class="py-3 px-3 font-semibold text-white print:text-black">Category & Cold Chain</td>
-                  <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold">MEDIUM</span></td>
-                  <td class="py-3 px-3">Trim low-turnover Seafood & Breakfast by 50%; reallocate cold storage to high-margin Snacks & Produce.</td>
-                  <td class="py-3 px-3 text-slate-400">Item Type Pareto & Margin JOIN</td>
-                  <td class="py-3 px-3 text-emerald-400 font-bold">+$35k Net Margin & 12% lower spoilage</td>
-                </tr>
-                <tr>
-                  <td class="py-3 px-3 font-bold text-amber-400">4</td>
-                  <td class="py-3 px-3 font-semibold text-white print:text-black">App Merchandising</td>
-                  <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold">HIGH</span></td>
-                  <td class="py-3 px-3">Demote low-converting high-visibility items (>0.12); elevate high-velocity Low Fat snacks in app UI.</td>
-                  <td class="py-3 px-3 text-slate-400">Visibility vs Sales Scatter Plot</td>
-                  <td class="py-3 px-3 text-emerald-400 font-bold">+8.5% Checkout Conversion & +$60k GMV</td>
-                </tr>
-                <tr>
-                  <td class="py-3 px-3 font-bold text-amber-400">5</td>
-                  <td class="py-3 px-3 font-semibold text-white print:text-black">Assortment & Private Label</td>
-                  <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold">MEDIUM</span></td>
-                  <td class="py-3 px-3">Launch Blinkit Private Label in Low Fat dry snacks, clean dairy, and breakfast essentials.</td>
-                  <td class="py-3 px-3 text-slate-400">Fat Content Preference (64.7% share)</td>
-                  <td class="py-3 px-3 text-emerald-400 font-bold">Margin expansion from 23.5% to 26.2%</td>
-                </tr>
-                <tr>
-                  <td class="py-3 px-3 font-bold text-amber-400">6</td>
-                  <td class="py-3 px-3 font-semibold text-white print:text-black">Operational Blueprint</td>
-                  <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-bold">MEDIUM</span></td>
-                  <td class="py-3 px-3">Replicate warehouse layout and batch-picking routing of flagship OUT027 ($345k) across all outlets.</td>
-                  <td class="py-3 px-3 text-slate-400">Establishment Vintage & Hub Ranking</td>
-                  <td class="py-3 px-3 text-emerald-400 font-bold">+19% Pick-Pack Dispatch Efficiency</td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="flex items-center space-x-2 text-xs">
+            <span class="text-slate-400"><i class="fa-solid fa-circle-info text-amber-400 mr-1"></i> Charts dynamically generated from SQL aggregations</span>
           </div>
         </div>
 
-        <!-- Interactive ROI Uplift Calculator -->
-        <div class="bg-gradient-to-r from-slate-900 to-slate-950 p-6 rounded-xl border border-amber-500/30 print:hidden space-y-4">
-          <div class="flex items-center justify-between">
-            <h3 class="font-bold text-white text-sm flex items-center">
-              <i class="fa-solid fa-calculator text-amber-400 mr-2"></i>
-              Interactive Revenue Uplift & Correction Impact Simulator
-            </h3>
-            <span class="text-xs text-amber-400 font-semibold">Simulate business growth</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-5 items-center">
+        <!-- Grid of Charts -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+          <!-- Chart 1: Sales by Item Type (Horizontal Bar) -->
+          <div class="chart-card bg-slate-800/80 rounded-2xl border border-slate-700 p-5 flex flex-col justify-between">
             <div>
-              <label class="text-xs text-slate-400 block mb-1">Estimated Conversion & Assortment Uplift: <span id="upliftPctLabel" class="text-amber-400 font-bold">12%</span></label>
-              <input type="range" id="upliftRange" min="5" max="30" value="12" class="w-full accent-amber-400 cursor-pointer">
-              <div class="flex justify-between text-[10px] text-slate-500 mt-1">
-                <span>Conservative (5%)</span>
-                <span>Target (12%)</span>
-                <span>Aggressive (30%)</span>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-bold text-slate-200 text-sm flex items-center">
+                  <i class="fa-solid fa-chart-bar text-amber-400 mr-2"></i> 1. Sales & Revenue by Item Type
+                </h3>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-amber-400/10 text-amber-300 font-semibold">Pareto Drivers</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-3">Identifies top-earning grocery categories (Fruits, Snacks, Household) vs underperforming niches.</p>
+              <div class="h-64 relative">
+                <canvas id="itemTypeChart"></canvas>
               </div>
             </div>
-            <div class="p-3 bg-slate-800 rounded-lg border border-slate-700 text-center">
-              <span class="text-xs text-slate-400 block">Projected Incremental GMV</span>
-              <span class="text-xl font-black text-emerald-400" id="simGmvUplift">+$144,201.80</span>
-            </div>
-            <div class="p-3 bg-slate-800 rounded-lg border border-slate-700 text-center">
-              <span class="text-xs text-slate-400 block">Projected Net Gross Profit Uplift</span>
-              <span class="text-xl font-black text-amber-400" id="simProfitUplift">+$38,213.48</span>
+            <!-- Chart Business Insight Callout -->
+            <div class="mt-4 p-3 rounded-xl bg-slate-900/90 border border-amber-500/30 text-xs">
+              <span class="font-bold text-amber-400 flex items-center mb-1">
+                <i class="fa-solid fa-lightbulb mr-1.5"></i> Business Diagram Insight:
+              </span>
+              <p class="text-slate-300 text-[11px] leading-relaxed">
+                <strong>Fruits & Veg ($178k)</strong> and <strong>Snack Foods ($172k)</strong> account for nearly 30% of entire gross revenue. Meanwhile, <strong>Seafood ($9k)</strong> and <strong>Breakfast ($15k)</strong> exhibit lowest turnover, representing prime targets for shelf-space rationalization.
+              </p>
             </div>
           </div>
+
+          <!-- Chart 2: Percentage of Sales by Outlet Size (Donut - Window Function) -->
+          <div class="chart-card bg-slate-800/80 rounded-2xl border border-slate-700 p-5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-bold text-slate-200 text-sm flex items-center">
+                  <i class="fa-solid fa-chart-pie text-emerald-400 mr-2"></i> 2. Sales Share by Outlet Size (SQL Window OVER)
+                </h3>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-400/10 text-emerald-300 font-semibold">Window % Share</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-3">Reveals revenue contribution by store layout footprint: Medium (42.3%), Small (37.0%), High (20.7%).</p>
+              <div class="h-64 relative flex items-center justify-center">
+                <canvas id="outletSizeChart"></canvas>
+              </div>
+            </div>
+            <!-- Chart Business Insight Callout -->
+            <div class="mt-4 p-3 rounded-xl bg-slate-900/90 border border-emerald-500/30 text-xs">
+              <span class="font-bold text-emerald-400 flex items-center mb-1">
+                <i class="fa-solid fa-lightbulb mr-1.5"></i> Business Diagram Insight:
+              </span>
+              <p class="text-slate-300 text-[11px] leading-relaxed">
+                <strong>Medium Outlets</strong> are the most productive format, capturing <strong>42.27% ($507.9k)</strong> of total sales. High/Mega stores generate only 20.72%, demonstrating diminishing returns for oversized footprints in quick commerce.
+              </p>
+            </div>
+          </div>
+
+          <!-- Chart 3: Fat Content Demand & Sales Preference (Bar / Pie) -->
+          <div class="chart-card bg-slate-800/80 rounded-2xl border border-slate-700 p-5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-bold text-slate-200 text-sm flex items-center">
+                  <i class="fa-solid fa-heart-pulse text-rose-400 mr-2"></i> 3. Consumer Preference: Fat Content Distribution
+                </h3>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-rose-400/10 text-rose-300 font-semibold">Health Shift</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-3">Post-cleaning comparison of Low Fat ($776k) vs Regular ($425k) grocery sales.</p>
+              <div class="h-64 relative">
+                <canvas id="fatContentChart"></canvas>
+              </div>
+            </div>
+            <!-- Chart Business Insight Callout -->
+            <div class="mt-4 p-3 rounded-xl bg-slate-900/90 border border-rose-500/30 text-xs">
+              <span class="font-bold text-rose-400 flex items-center mb-1">
+                <i class="fa-solid fa-lightbulb mr-1.5"></i> Business Diagram Insight:
+              </span>
+              <p class="text-slate-300 text-[11px] leading-relaxed">
+                <strong>Low Fat items generate 64.6% of overall sales volume</strong>. Consumers overwhelmingly prefer healthier grocery options across all locations, signaling strong profitability for expanding organic and low-calorie private labels.
+              </p>
+            </div>
+          </div>
+
+          <!-- Chart 4: Sales by Outlet Location Type (Grouped Bar) -->
+          <div class="chart-card bg-slate-800/80 rounded-2xl border border-slate-700 p-5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-bold text-slate-200 text-sm flex items-center">
+                  <i class="fa-solid fa-map-location-dot text-sky-400 mr-2"></i> 4. Geographic Distribution: Sales by Location Tier
+                </h3>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-sky-400/10 text-sky-300 font-semibold">Tier 1 vs 2 vs 3</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-3">Compares revenue generated across Tier 1 (Metro), Tier 2 (Developing), and Tier 3 (Regional) hubs.</p>
+              <div class="h-64 relative">
+                <canvas id="locationChart"></canvas>
+              </div>
+            </div>
+            <!-- Chart Business Insight Callout -->
+            <div class="mt-4 p-3 rounded-xl bg-slate-900/90 border border-sky-500/30 text-xs">
+              <span class="font-bold text-sky-400 flex items-center mb-1">
+                <i class="fa-solid fa-lightbulb mr-1.5"></i> Business Diagram Insight:
+              </span>
+              <p class="text-slate-300 text-[11px] leading-relaxed">
+                <strong>Tier 3 cities generate the highest volume ($478k / 39.8%)</strong>, outperforming Tier 1 ($336k / 28.0%). Quick-commerce delivery has lower brick-and-mortar superstore competition in Tier 3, presenting massive scale potential.
+              </p>
+            </div>
+          </div>
+
+          <!-- Chart 5: Establishment Vintage Curve (Line Chart) -->
+          <div class="chart-card bg-slate-800/80 rounded-2xl border border-slate-700 p-5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-bold text-slate-200 text-sm flex items-center">
+                  <i class="fa-solid fa-timeline text-indigo-400 mr-2"></i> 5. Establishment Vintage & Longevity Curve
+                </h3>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-indigo-400/10 text-indigo-300 font-semibold">Vintage Cohort</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-3">Tracks revenue performance by outlet launch year (from legacy 2011 hubs to newer 2022 centers).</p>
+              <div class="h-64 relative">
+                <canvas id="vintageChart"></canvas>
+              </div>
+            </div>
+            <!-- Chart Business Insight Callout -->
+            <div class="mt-4 p-3 rounded-xl bg-slate-900/90 border border-indigo-500/30 text-xs">
+              <span class="font-bold text-indigo-400 flex items-center mb-1">
+                <i class="fa-solid fa-lightbulb mr-1.5"></i> Business Diagram Insight:
+              </span>
+              <p class="text-slate-300 text-[11px] leading-relaxed">
+                Mature outlets established in 2018 (including Supermarket Type 3 OUT027) generated peak sales ($345k). Newer stores opened in 2020-2022 require accelerated local customer acquisition and dispatch tuning to reach maturity.
+              </p>
+            </div>
+          </div>
+
+          <!-- Chart 6: Visibility vs Sales Scatter (Quadrant Diagnostics) -->
+          <div class="chart-card bg-slate-800/80 rounded-2xl border border-slate-700 p-5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-bold text-slate-200 text-sm flex items-center">
+                  <i class="fa-solid fa-eye text-teal-400 mr-2"></i> 6. Merchandising Quadrant: Item Visibility vs Sales
+                </h3>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-teal-400/10 text-teal-300 font-semibold">Digital Shelf Efficiency</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-3">Scatter plot isolating over-promoted low-sales items vs under-promoted cash cows.</p>
+              <div class="h-64 relative">
+                <canvas id="scatterChart"></canvas>
+              </div>
+            </div>
+            <!-- Chart Business Insight Callout -->
+            <div class="mt-4 p-3 rounded-xl bg-slate-900/90 border border-teal-500/30 text-xs">
+              <span class="font-bold text-teal-400 flex items-center mb-1">
+                <i class="fa-solid fa-lightbulb mr-1.5"></i> Business Diagram Insight:
+              </span>
+              <p class="text-slate-300 text-[11px] leading-relaxed">
+                Identifies <strong>"Screen Clutter" anomalies</strong>: Items with visibility >0.15 yielding less than $100 in sales take valuable screen estate away from high-converting products. Algorithmic ranking needs conversion-weighting.
+              </p>
+            </div>
+          </div>
+
         </div>
+      </div>
 
-        <!-- Report Sign-off Footer -->
-        <div class="pt-6 border-t border-slate-700/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 print:text-slate-600 gap-2">
-          <div>Prepared by: <strong>Blinkit Business Intelligence & Analytics Engine</strong></div>
-          <div>Powered by: SQLite 3.50 Window Functions, Joins & Advanced Aggregations</div>
+      <!-- TAB 4: EXECUTIVE BUSINESS REPORT & ACTIONABLE CORRECTIONS -->
+      <div id="reportTab" class="tab-content hidden space-y-6">
+        
+        <!-- Printable Report Container -->
+        <div id="printableReport" class="bg-slate-800/90 rounded-2xl border border-slate-700 p-6 md:p-8 space-y-8 print:p-0 print:border-none print:bg-white print:text-black">
+
+          <!-- Report Header -->
+          <div class="border-b border-slate-700 pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="text-2xl font-black text-white print:text-black">blink<span class="text-amber-400">it</span></span>
+                <span class="text-xs px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 font-bold border border-amber-400/30">EXECUTIVE STRATEGY DOSSIER</span>
+              </div>
+              <h1 class="text-2xl font-black text-slate-100 print:text-slate-900 mt-2">
+                Blinkit Sales & Supply-Chain Optimization Report
+              </h1>
+              <p class="text-xs text-slate-400 print:text-slate-600 mt-1">
+                Data-Driven Diagnostics, SQL Function Analytics, and 6 Strategic Points to Correct in the Business
+              </p>
+            </div>
+            <div class="text-left md:text-right text-xs text-slate-400 print:text-slate-600 space-y-1">
+              <div><strong>Report Date:</strong> <span id="reportDate">November 2026</span></div>
+              <div><strong>Scope:</strong> 8,523 Transactions • 10 Outlets • 16 Product Categories</div>
+              <div><strong>Evaluation:</strong> SQL Window Functions, Multi-Table Joins & Cross-Tabulations</div>
+            </div>
+          </div>
+
+          <!-- Executive Summary Section -->
+          <div class="bg-slate-900/90 print:bg-slate-100 p-6 rounded-xl border border-slate-700 print:border-slate-300 space-y-3">
+            <h2 class="text-base font-bold text-amber-400 print:text-amber-700 flex items-center">
+              <i class="fa-solid fa-compass text-amber-400 mr-2"></i> Executive Summary & Core Diagnosis
+            </h2>
+            <p class="text-xs md:text-sm text-slate-300 print:text-slate-800 leading-relaxed">
+              Our comprehensive SQL analytics across <strong>$1.20M in total gross sales</strong> reveal robust top-line traction (average rating <strong>3.97 / 5.0</strong>), but significant structural inefficiencies in <strong>outlet format productivity</strong>, <strong>shelf-space allocation</strong>, and <strong>digital merchandising</strong>. By leveraging window functions, category margin joins, and scatter quadrant diagnostics, we have uncovered that <strong>42% of revenue is concentrated in medium outlets</strong>, <strong>Tier 3 cities outpace metro Tier 1 by 42% in total volume</strong>, and <strong>low-fat goods generate nearly double the revenue of regular items</strong>.
+            </p>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-xs">
+              <div class="p-3 bg-slate-800/80 print:bg-white rounded-lg border border-slate-700 print:border-slate-300">
+                <span class="text-slate-400 print:text-slate-600 block">Total Sales Volume</span>
+                <span class="text-base font-black text-white print:text-black">$1,201,681.72</span>
+              </div>
+              <div class="p-3 bg-slate-800/80 print:bg-white rounded-lg border border-slate-700 print:border-slate-300">
+                <span class="text-slate-400 print:text-slate-600 block">Est. Gross Margin</span>
+                <span class="text-base font-black text-emerald-400 print:text-emerald-700">$281,879 (23.5%)</span>
+              </div>
+              <div class="p-3 bg-slate-800/80 print:bg-white rounded-lg border border-slate-700 print:border-slate-300">
+                <span class="text-slate-400 print:text-slate-600 block">Low Fat Market Share</span>
+                <span class="text-base font-black text-amber-400 print:text-amber-700">64.7% ($776.3k)</span>
+              </div>
+              <div class="p-3 bg-slate-800/80 print:bg-white rounded-lg border border-slate-700 print:border-slate-300">
+                <span class="text-slate-400 print:text-slate-600 block">Tier 3 Sales Dominance</span>
+                <span class="text-base font-black text-sky-400 print:text-sky-700">39.8% ($478.1k)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6 STRATEGIC POINTS TO CORRECT IN THE BUSINESS (Core Deliverable) -->
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <h2 class="text-lg font-bold text-white print:text-black flex items-center">
+                <i class="fa-solid fa-triangle-exclamation text-rose-400 mr-2"></i>
+                6 Strategic Points to Correct in the Business
+              </h2>
+              <span class="text-xs text-slate-400 print:text-slate-600">Synthesized from charts, window functions & SQL joins</span>
+            </div>
+
+            <div class="space-y-4" id="pointsToCorrectContainer">
+              <!-- Dynamically populated via report API with high-detail breakdown -->
+            </div>
+          </div>
+
+          <!-- Prioritized Strategic Action Matrix Table -->
+          <div class="space-y-3">
+            <h2 class="text-base font-bold text-white print:text-black flex items-center">
+              <i class="fa-solid fa-table-list text-emerald-400 mr-2"></i>
+              Business Corrective Action Plan & ROI Roadmap
+            </h2>
+            <div class="overflow-x-auto rounded-xl border border-slate-700 print:border-slate-300">
+              <table class="w-full text-left text-xs text-slate-300 print:text-slate-800 divide-y divide-slate-700 print:divide-slate-300">
+                <thead class="bg-slate-900 print:bg-slate-200 text-slate-300 print:text-slate-900 font-bold">
+                  <tr>
+                    <th class="py-3 px-3">#</th>
+                    <th class="py-3 px-3">Business Area</th>
+                    <th class="py-3 px-3">Severity</th>
+                    <th class="py-3 px-3">Recommended Correction</th>
+                    <th class="py-3 px-3">Chart / SQL Proof</th>
+                    <th class="py-3 px-3">Target KPI Uplift</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800 print:divide-slate-200 bg-slate-900/40 print:bg-white text-[11px] font-sans">
+                  <tr>
+                    <td class="py-3 px-3 font-bold text-amber-400">1</td>
+                    <td class="py-3 px-3 font-semibold text-white print:text-black">Retail Format Strategy</td>
+                    <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold">HIGH</span></td>
+                    <td class="py-3 px-3">Transform low-performing Grocery Stores into 10-Min Micro Dark Stores with curated top 1,200 SKUs.</td>
+                    <td class="py-3 px-3 text-slate-400">Outlet Type Bar Chart & Benchmark JOIN</td>
+                    <td class="py-3 px-3 text-emerald-400 font-bold">+24% Sales Density & 11 min SLA</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 px-3 font-bold text-amber-400">2</td>
+                    <td class="py-3 px-3 font-semibold text-white print:text-black">Geographic Expansion</td>
+                    <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold">HIGH</span></td>
+                    <td class="py-3 px-3">Shift 60% of new hub expansion Capex to Tier 2 & Tier 3 cities where consumer demand is highest.</td>
+                    <td class="py-3 px-3 text-slate-400">Location Tier Chart ($478k in Tier 3)</td>
+                    <td class="py-3 px-3 text-emerald-400 font-bold">+$180,000 ARR & lower rent costs</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 px-3 font-bold text-amber-400">3</td>
+                    <td class="py-3 px-3 font-semibold text-white print:text-black">Category & Cold Chain</td>
+                    <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold">MEDIUM</span></td>
+                    <td class="py-3 px-3">Trim low-turnover Seafood & Breakfast by 50%; reallocate cold storage to high-margin Snacks & Produce.</td>
+                    <td class="py-3 px-3 text-slate-400">Item Type Pareto & Margin JOIN</td>
+                    <td class="py-3 px-3 text-emerald-400 font-bold">+$35k Net Margin & 12% lower spoilage</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 px-3 font-bold text-amber-400">4</td>
+                    <td class="py-3 px-3 font-semibold text-white print:text-black">App Merchandising</td>
+                    <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold">HIGH</span></td>
+                    <td class="py-3 px-3">Demote low-converting high-visibility items (>0.12); elevate high-velocity Low Fat snacks in app UI.</td>
+                    <td class="py-3 px-3 text-slate-400">Visibility vs Sales Scatter Plot</td>
+                    <td class="py-3 px-3 text-emerald-400 font-bold">+8.5% Checkout Conversion & +$60k GMV</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 px-3 font-bold text-amber-400">5</td>
+                    <td class="py-3 px-3 font-semibold text-white print:text-black">Assortment & Private Label</td>
+                    <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold">MEDIUM</span></td>
+                    <td class="py-3 px-3">Launch Blinkit Private Label in Low Fat dry snacks, clean dairy, and breakfast essentials.</td>
+                    <td class="py-3 px-3 text-slate-400">Fat Content Preference (64.7% share)</td>
+                    <td class="py-3 px-3 text-emerald-400 font-bold">Margin expansion from 23.5% to 26.2%</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 px-3 font-bold text-amber-400">6</td>
+                    <td class="py-3 px-3 font-semibold text-white print:text-black">Operational Blueprint</td>
+                    <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-bold">MEDIUM</span></td>
+                    <td class="py-3 px-3">Replicate warehouse layout and batch-picking routing of flagship OUT027 ($345k) across all outlets.</td>
+                    <td class="py-3 px-3 text-slate-400">Establishment Vintage & Hub Ranking</td>
+                    <td class="py-3 px-3 text-emerald-400 font-bold">+19% Pick-Pack Dispatch Efficiency</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Interactive ROI Uplift Calculator -->
+          <div class="bg-gradient-to-r from-slate-900 to-slate-950 p-6 rounded-xl border border-amber-500/30 print:hidden space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-white text-sm flex items-center">
+                <i class="fa-solid fa-calculator text-amber-400 mr-2"></i>
+                Interactive Revenue Uplift & Correction Impact Simulator
+              </h3>
+              <span class="text-xs text-amber-400 font-semibold">Simulate business growth</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 items-center">
+              <div>
+                <label class="text-xs text-slate-400 block mb-1">Estimated Conversion & Assortment Uplift: <span id="upliftPctLabel" class="text-amber-400 font-bold">12%</span></label>
+                <input type="range" id="upliftRange" min="5" max="30" value="12" class="w-full accent-amber-400 cursor-pointer">
+                <div class="flex justify-between text-[10px] text-slate-500 mt-1">
+                  <span>Conservative (5%)</span>
+                  <span>Target (12%)</span>
+                  <span>Aggressive (30%)</span>
+                </div>
+              </div>
+              <div class="p-3 bg-slate-800 rounded-lg border border-slate-700 text-center">
+                <span class="text-xs text-slate-400 block">Projected Incremental GMV</span>
+                <span class="text-xl font-black text-emerald-400" id="simGmvUplift">+$144,201.80</span>
+              </div>
+              <div class="p-3 bg-slate-800 rounded-lg border border-slate-700 text-center">
+                <span class="text-xs text-slate-400 block">Projected Net Gross Profit Uplift</span>
+                <span class="text-xl font-black text-amber-400" id="simProfitUplift">+$38,213.48</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Report Sign-off Footer -->
+          <div class="pt-6 border-t border-slate-700/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 print:text-slate-600 gap-2">
+            <div>Prepared by: <strong>Blinkit Business Intelligence & Analytics Engine</strong></div>
+            <div>Powered by: SQLite 3.50 Window Functions, Joins & Advanced Aggregations</div>
+          </div>
+
         </div>
-
       </div>
-    </div>
 
-  </main>
+    </main>
 
-  <!-- FOOTER -->
-  <footer class="bg-slate-950 border-t border-slate-800 py-4 text-center text-xs text-slate-500 print:hidden">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-      <div>Blinkit Data Analysis & SQL Intelligence System • All algorithms operational</div>
-      <div class="flex items-center space-x-4">
-        <span>SQLite 3.50.4</span>
-        <span>•</span>
-        <span>Python Flask REST API</span>
-        <span>•</span>
-        <span>Chart.js Visualization</span>
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-4 text-center text-xs text-slate-500 print:hidden mt-auto">
+      <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div>Blinkit Data Analysis & SQL Intelligence System • All algorithms operational</div>
+        <div class="flex items-center space-x-4">
+          <span>SQLite 3.50.4</span>
+          <span>•</span>
+          <span>Python Flask REST API</span>
+          <span>•</span>
+          <span>Chart.js Visualization</span>
+        </div>
       </div>
-    </div>
-  </footer>
+    </footer>
+
+  </div>
 
   <script src="/static/js/app.js"></script>
 </body>
 </html>
-

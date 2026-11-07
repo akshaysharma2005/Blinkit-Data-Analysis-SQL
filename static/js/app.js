@@ -4,10 +4,16 @@ let charts = {};
 let currentSqlResult = null;
 let currentTotalSales = 1201681.72;
 let currentGrossProfit = 281879.12;
+let currentUser = {
+  username: "Akshay Sharma",
+  role: "Lead BI Analyst"
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   initApp();
   setupEventListeners();
+  loadRecentSuggestions();
+  checkLoginState();
 });
 
 async function initApp() {
@@ -23,6 +29,13 @@ async function initApp() {
 function setupEventListeners() {
   // Tab buttons
   window.switchTab = switchTab;
+
+  // Login functions
+  window.selectPersona = selectPersona;
+  window.selectSuggestion = selectSuggestion;
+  window.submitLoginAndEnter = submitLoginAndEnter;
+  window.quickGuestLogin = quickGuestLogin;
+  window.logoutToLoginPage = logoutToLoginPage;
 
   // SQL buttons
   document.getElementById("runSqlBtn")?.addEventListener("click", runCurrentSql);
@@ -48,6 +61,180 @@ function setupEventListeners() {
       window.print();
     }, 250);
   };
+}
+
+// -------------------------------------------------------------
+// 0. INTRO LOGIN & USER SUGGESTION HANDLERS
+// -------------------------------------------------------------
+function checkLoginState() {
+  const saved = localStorage.getItem("blinkit_bi_user");
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      if (parsed.username) {
+        currentUser = parsed;
+        updateHeaderUserBadge(currentUser.username, currentUser.role);
+        // User is already logged in, enter portal
+        enterDashboardView(false);
+        return;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  // Default: show login page
+  document.getElementById("loginPage")?.classList.remove("hidden");
+  document.getElementById("appView")?.classList.add("hidden");
+}
+
+function selectPersona(name, role, el) {
+  const usernameInput = document.getElementById("loginUsername");
+  const roleInput = document.getElementById("loginRole");
+  if (usernameInput) usernameInput.value = name;
+  if (roleInput) roleInput.value = role;
+
+  document.querySelectorAll(".role-chip").forEach(c => {
+    c.classList.remove("active-chip", "border-emerald-500/40", "bg-emerald-500/20", "text-emerald-300");
+    c.classList.add("border-slate-700", "bg-slate-800", "text-slate-300");
+  });
+
+  if (el) {
+    el.classList.add("active-chip", "border-emerald-500/40", "bg-emerald-500/20", "text-emerald-300");
+    el.classList.remove("border-slate-700", "bg-slate-800", "text-slate-300");
+  }
+}
+
+function selectSuggestion(text, category, el) {
+  const input = document.getElementById("loginSuggestionInput");
+  const catSelect = document.getElementById("loginSuggestionCategory");
+  if (input) input.value = text;
+  if (catSelect && category) catSelect.value = category;
+
+  document.querySelectorAll(".suggestion-chip").forEach(c => c.classList.remove("active-chip"));
+  if (el) el.classList.add("active-chip");
+}
+
+async function loadRecentSuggestions() {
+  try {
+    const res = await fetch("/api/suggestions");
+    const data = await res.json();
+    if (data.status === "success") {
+      const suggestions = data.suggestions || [];
+      const badge = document.getElementById("suggestionCountBadge");
+      if (badge) badge.innerText = `${suggestions.length} recorded`;
+
+      const container = document.getElementById("loginRecentSuggestions");
+      if (container) {
+        container.innerHTML = "";
+        suggestions.slice(0, 3).forEach(s => {
+          const div = document.createElement("div");
+          div.className = "p-2 rounded-lg bg-slate-950 border border-slate-800 text-[11px] flex items-center justify-between gap-2";
+          div.innerHTML = `
+            <div class="truncate">
+              <strong class="text-amber-300">${s.username}:</strong> 
+              <span class="text-slate-300">${s.suggestion}</span>
+            </div>
+            <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono shrink-0">${s.category || 'Inquiry'}</span>
+          `;
+          container.appendChild(div);
+        });
+      }
+    }
+  } catch (err) {
+    console.error("Failed to load suggestions:", err);
+  }
+}
+
+async function submitLoginAndEnter() {
+  const username = document.getElementById("loginUsername")?.value.trim() || "Akshay Sharma";
+  const role = document.getElementById("loginRole")?.value || "Lead BI Analyst";
+  const suggestion = document.getElementById("loginSuggestionInput")?.value.trim() || "";
+  const category = document.getElementById("loginSuggestionCategory")?.value || "General Inquiry";
+
+  currentUser = { username, role };
+  localStorage.setItem("blinkit_bi_user", JSON.stringify(currentUser));
+
+  // If suggestion was provided, submit it to API
+  let hasSuggestion = false;
+  if (suggestion) {
+    hasSuggestion = true;
+    try {
+      await fetch("/api/suggestions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username,
+          role,
+          suggestion,
+          category
+        })
+      });
+      loadRecentSuggestions();
+    } catch (err) {
+      console.error("Failed to save suggestion:", err);
+    }
+  }
+
+  updateHeaderUserBadge(username, role);
+  enterDashboardView(hasSuggestion, category);
+}
+
+function quickGuestLogin() {
+  currentUser = { username: "Guest Analyst", role: "Auditor" };
+  localStorage.setItem("blinkit_bi_user", JSON.stringify(currentUser));
+  updateHeaderUserBadge("Guest Analyst", "Auditor");
+  enterDashboardView(false);
+}
+
+function updateHeaderUserBadge(username, role) {
+  const nameEl = document.getElementById("topLoggedUser");
+  const roleEl = document.getElementById("topLoggedRole");
+  const bannerName = document.getElementById("bannerUserName");
+
+  if (nameEl) nameEl.innerText = username;
+  if (roleEl) roleEl.innerText = role;
+  if (bannerName) bannerName.innerText = username;
+}
+
+function enterDashboardView(hasSuggestion, category = "") {
+  const loginPage = document.getElementById("loginPage");
+  const appView = document.getElementById("appView");
+
+  if (loginPage) loginPage.classList.add("hidden");
+  if (appView) appView.classList.remove("hidden");
+
+  // Show suggestion logged pill if submitted
+  const pill = document.getElementById("activeSuggestionPill");
+  if (pill) {
+    if (hasSuggestion) {
+      pill.classList.remove("hidden");
+    } else {
+      pill.classList.add("hidden");
+    }
+  }
+
+  // Smart Navigation based on suggestion category
+  if (category === "Window Functions" || category === "SQL") {
+    switchTab("sqlTab");
+  } else if (category === "Strategic Strategy") {
+    switchTab("reportTab");
+  } else if (category === "Category Insights" || category === "Geographic Analysis") {
+    switchTab("dashboardTab");
+  } else {
+    switchTab("cleaningTab");
+  }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function logoutToLoginPage() {
+  localStorage.removeItem("blinkit_bi_user");
+  const loginPage = document.getElementById("loginPage");
+  const appView = document.getElementById("appView");
+
+  if (appView) appView.classList.add("hidden");
+  if (loginPage) loginPage.classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function switchTab(tabId) {
