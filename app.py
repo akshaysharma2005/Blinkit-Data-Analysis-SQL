@@ -238,6 +238,10 @@ except Exception as e:
 def index():
     return render_template("index.html")
 
+@app.route("/static/<path:filename>")
+def serve_static(filename):
+    return send_from_directory(STATIC_DIR, filename)
+
 @app.route("/api/cleaning-stats", methods=["GET"])
 def get_cleaning_stats():
     conn = get_db_connection()
