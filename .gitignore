@@ -4,6 +4,7 @@ __pycache__/
 .DS_Store
 *.db
 data/custom_uploaded_data.csv
+reactjs18-3d-portfolio-main/
 .env
 .venv/
 venv/

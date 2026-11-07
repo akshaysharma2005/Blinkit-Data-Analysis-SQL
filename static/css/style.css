@@ -1,4 +1,34 @@
-/* Custom Styling for Blinkit SQL BI Platform */
+/* ========================================================================= */
+/* BLINKIT ANALYTICS - LUXURY 3D SPACE DESIGN SYSTEM (Inspired by ReactJS18) */
+/* ========================================================================= */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+
+:root {
+  --primary: #050816;
+  --secondary: #aaa6c3;
+  --tertiary: #151030;
+  --black-100: #100d25;
+  --black-200: #090325;
+  --white-100: #f3f3f3;
+  --violet: #915eff;
+  --cyan: #00cea8;
+  --gold: #f8cb46;
+  --border-subtle: #2e265c;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #050816;
+  color: #f3f3f3;
+  overflow-x: hidden;
+}
 
 /* Custom Scrollbars */
 ::-webkit-scrollbar {
@@ -6,24 +36,93 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #050816;
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: #2e265c;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: #915eff;
+}
+
+/* Gradients from ReactJS18 */
+.green-pink-gradient {
+  background: linear-gradient(90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
+}
+
+.violet-gradient {
+  background: linear-gradient(-90deg, #804dee 0%, rgba(60, 51, 80, 0) 100%);
+}
+
+.golden-violet-gradient {
+  background: linear-gradient(90deg, #f8cb46 0%, #915eff 100%);
+}
+
+.card-gradient-border {
+  background: linear-gradient(135deg, rgba(145, 94, 255, 0.4) 0%, rgba(0, 206, 168, 0.2) 50%, rgba(248, 203, 70, 0.3) 100%);
+  padding: 1px;
+  border-radius: 20px;
+}
+
+.orange-text-gradient {
+  background: linear-gradient(to top, #f12711, #f5af19);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.green-text-gradient {
+  background: linear-gradient(to top, #11998e, #38ef7d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.blue-text-gradient {
+  background: linear-gradient(to top, #2f80ed, #56ccf2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.violet-text-gradient {
+  background: linear-gradient(to right, #915eff, #bf61ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-text-gradient {
+  background: linear-gradient(to right, #f8cb46, #fde047);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 3D Glassmorphic Cards */
+.glass-card {
+  background-color: #151030;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0px 35px 120px -15px #211e35;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(145, 94, 255, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0px 40px 140px -10px rgba(145, 94, 255, 0.2);
+}
+
+.glass-card-inner {
+  background-color: #100d25;
+  border: 1px solid #2e265c;
 }
 
 /* Tab buttons */
 .tab-btn {
-  color: #94a3b8;
+  color: #aaa6c3;
   border-bottom: 2px solid transparent;
   transition: all 0.2s ease-in-out;
+  font-weight: 500;
 }
 .tab-btn:hover {
-  color: #f8fafc;
+  color: #ffffff;
 }
 .tab-btn.active-tab {
   color: #f8cb46;
@@ -31,23 +130,14 @@
   background-color: rgba(248, 203, 70, 0.08);
 }
 
-/* Card hover transitions */
-.kpi-card, .chart-card, .feature-card, .login-glass-card {
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-}
-.kpi-card:hover, .chart-card:hover, .feature-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 30px -8px rgba(0, 0, 0, 0.4);
-}
-
 /* Ambient glow & pulse animations */
 @keyframes pulseGlow {
   0%, 100% {
-    opacity: 0.4;
+    opacity: 0.35;
     transform: scale(1);
   }
   50% {
-    opacity: 0.8;
+    opacity: 0.75;
     transform: scale(1.08);
   }
 }
@@ -69,56 +159,41 @@
   animation: floatSlow 4s infinite ease-in-out;
 }
 
-/* Cyber Grid Pattern Background for Login */
-.cyber-grid {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+/* Canvas background for 3D Stars */
+#starsCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
 }
 
-/* Quick User & Suggestion Chips */
-.suggestion-chip {
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.suggestion-chip:hover {
-  background-color: rgba(248, 203, 70, 0.15);
-  border-color: #f8cb46;
-  transform: translateY(-1px);
-  color: #fef08a;
-}
-.suggestion-chip.active-chip {
-  background-color: rgba(248, 203, 70, 0.25);
-  border-color: #f8cb46;
-  color: #f8cb46;
-  font-weight: 700;
-}
-
+/* Persona Chips */
 .role-chip {
   cursor: pointer;
   transition: all 0.2s ease;
+  background-color: #100d25;
+  border: 1px solid #2e265c;
+  color: #aaa6c3;
 }
 .role-chip:hover {
-  background-color: rgba(16, 185, 129, 0.2);
-  border-color: #10b981;
-  color: #a7f3d0;
+  border-color: #915eff;
+  color: #ffffff;
   transform: translateY(-1px);
 }
 .role-chip.active-chip {
-  background-color: rgba(16, 185, 129, 0.3);
-  border-color: #10b981;
-  color: #34d399;
-  font-weight: 700;
+  background-color: rgba(145, 94, 255, 0.2);
+  border-color: #915eff;
+  color: #c4b5fd;
+  font-weight: 600;
+  box-shadow: 0 0 15px rgba(145, 94, 255, 0.3);
 }
 
-/* Query item in catalog */
-.query-card {
-  transition: all 0.15s ease;
-}
-.query-card:hover {
-  background-color: #1e293b;
-  border-color: #f8cb46;
+/* Code & font styles */
+code, pre, .font-mono {
+  font-family: "JetBrains Mono", monospace !important;
 }
 
 /* Print Styles for Executive Report */
@@ -127,7 +202,7 @@
     background-color: #ffffff !important;
     color: #111827 !important;
   }
-  header, footer, nav, #loginPage, #cleaningTab, #sqlTab, #dashboardTab, .kpi-card, button, input, .print\:hidden {
+  header, footer, nav, #loginPage, #cleaningTab, #sqlTab, #dashboardTab, .kpi-card, button, input, .print\:hidden, #starsCanvas {
     display: none !important;
   }
   #appView {

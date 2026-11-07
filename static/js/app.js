@@ -1,4 +1,6 @@
-// Blinkit Analytics & SQL Studio JavaScript Engine
+// =========================================================================
+// BLINKIT ANALYTICS - LUXURY 3D SPACE DESIGN SYSTEM (Inspired by ReactJS18)
+// =========================================================================
 
 let charts = {};
 let currentSqlResult = null;
@@ -12,7 +14,7 @@ let currentUser = {
 document.addEventListener("DOMContentLoaded", () => {
   initApp();
   setupEventListeners();
-  loadRecentSuggestions();
+  initStarsCanvas(); // 3D Floating Starfield Particle Engine
   checkLoginState();
 });
 
@@ -30,9 +32,8 @@ function setupEventListeners() {
   // Tab buttons
   window.switchTab = switchTab;
 
-  // Login functions
+  // Login functions (Only Username)
   window.selectPersona = selectPersona;
-  window.selectSuggestion = selectSuggestion;
   window.submitLoginAndEnter = submitLoginAndEnter;
   window.quickGuestLogin = quickGuestLogin;
   window.logoutToLoginPage = logoutToLoginPage;
@@ -64,7 +65,97 @@ function setupEventListeners() {
 }
 
 // -------------------------------------------------------------
-// 0. INTRO LOGIN & USER SUGGESTION HANDLERS
+// 0. 3D STARS CANVAS ENGINE (Inspired by ReactJS18 Stars.tsx)
+// -------------------------------------------------------------
+function initStarsCanvas() {
+  const canvas = document.getElementById("starsCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  let width = (canvas.width = window.innerWidth);
+  let height = (canvas.height = window.innerHeight);
+
+  window.addEventListener("resize", () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+
+  const starCount = 320;
+  const stars = [];
+  const colors = ["#ffffff", "#f8cb46", "#00cea8", "#915eff", "#f272c8"];
+
+  for (let i = 0; i < starCount; i++) {
+    stars.push({
+      x: (Math.random() - 0.5) * width * 1.5,
+      y: (Math.random() - 0.5) * height * 1.5,
+      z: Math.random() * width,
+      size: Math.random() * 1.5 + 0.5,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      baseAlpha: Math.random() * 0.7 + 0.3,
+      twinkleSpeed: Math.random() * 0.03 + 0.01
+    });
+  }
+
+  let mouseX = 0;
+  let mouseY = 0;
+  window.addEventListener("mousemove", (e) => {
+    mouseX = (e.clientX - width / 2) * 0.05;
+    mouseY = (e.clientY - height / 2) * 0.05;
+  });
+
+  let angle = 0;
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+
+    const cx = width / 2;
+    const cy = height / 2;
+    angle += 0.0006;
+
+    const cosA = Math.cos(angle);
+    const sinA = Math.sin(angle);
+
+    for (let i = 0; i < stars.length; i++) {
+      const s = stars[i];
+
+      // Depth movement
+      s.z -= 0.35;
+      if (s.z <= 0) s.z = width;
+
+      // 3D rotation
+      const rx = s.x * cosA - s.y * sinA;
+      const ry = s.x * sinA + s.y * cosA;
+
+      const fov = 350;
+      const k = fov / (s.z + fov);
+      const px = rx * k + cx + mouseX * (1 - k);
+      const py = ry * k + cy + mouseY * (1 - k);
+
+      if (px >= 0 && px <= width && py >= 0 && py <= height) {
+        const alpha = Math.sin(Date.now() * s.twinkleSpeed) * 0.3 + s.baseAlpha;
+        const currentSize = s.size * k * 2.2;
+
+        ctx.beginPath();
+        ctx.arc(px, py, Math.max(0.6, currentSize), 0, Math.PI * 2);
+        ctx.fillStyle = s.color;
+        ctx.globalAlpha = Math.min(1, Math.max(0.1, alpha));
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = s.color;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    ctx.globalAlpha = 1.0;
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+}
+
+// -------------------------------------------------------------
+// 1. LOGIN & PERSONA HANDLERS (ONLY USERNAME)
 // -------------------------------------------------------------
 function checkLoginState() {
   const saved = localStorage.getItem("blinkit_bi_user");
@@ -74,15 +165,14 @@ function checkLoginState() {
       if (parsed.username) {
         currentUser = parsed;
         updateHeaderUserBadge(currentUser.username, currentUser.role);
-        // User is already logged in, enter portal
-        enterDashboardView(false);
+        enterDashboardView();
         return;
       }
     } catch (e) {
       console.error(e);
     }
   }
-  // Default: show login page
+  // Default: Show Login Page
   document.getElementById("loginPage")?.classList.remove("hidden");
   document.getElementById("appView")?.classList.add("hidden");
 }
@@ -94,96 +184,30 @@ function selectPersona(name, role, el) {
   if (roleInput) roleInput.value = role;
 
   document.querySelectorAll(".role-chip").forEach(c => {
-    c.classList.remove("active-chip", "border-emerald-500/40", "bg-emerald-500/20", "text-emerald-300");
-    c.classList.add("border-slate-700", "bg-slate-800", "text-slate-300");
+    c.classList.remove("active-chip");
   });
 
   if (el) {
-    el.classList.add("active-chip", "border-emerald-500/40", "bg-emerald-500/20", "text-emerald-300");
-    el.classList.remove("border-slate-700", "bg-slate-800", "text-slate-300");
+    el.classList.add("active-chip");
   }
 }
 
-function selectSuggestion(text, category, el) {
-  const input = document.getElementById("loginSuggestionInput");
-  const catSelect = document.getElementById("loginSuggestionCategory");
-  if (input) input.value = text;
-  if (catSelect && category) catSelect.value = category;
-
-  document.querySelectorAll(".suggestion-chip").forEach(c => c.classList.remove("active-chip"));
-  if (el) el.classList.add("active-chip");
-}
-
-async function loadRecentSuggestions() {
-  try {
-    const res = await fetch("/api/suggestions");
-    const data = await res.json();
-    if (data.status === "success") {
-      const suggestions = data.suggestions || [];
-      const badge = document.getElementById("suggestionCountBadge");
-      if (badge) badge.innerText = `${suggestions.length} recorded`;
-
-      const container = document.getElementById("loginRecentSuggestions");
-      if (container) {
-        container.innerHTML = "";
-        suggestions.slice(0, 3).forEach(s => {
-          const div = document.createElement("div");
-          div.className = "p-2 rounded-lg bg-slate-950 border border-slate-800 text-[11px] flex items-center justify-between gap-2";
-          div.innerHTML = `
-            <div class="truncate">
-              <strong class="text-amber-300">${s.username}:</strong> 
-              <span class="text-slate-300">${s.suggestion}</span>
-            </div>
-            <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono shrink-0">${s.category || 'Inquiry'}</span>
-          `;
-          container.appendChild(div);
-        });
-      }
-    }
-  } catch (err) {
-    console.error("Failed to load suggestions:", err);
-  }
-}
-
-async function submitLoginAndEnter() {
+function submitLoginAndEnter() {
   const username = document.getElementById("loginUsername")?.value.trim() || "Akshay Sharma";
   const role = document.getElementById("loginRole")?.value || "Lead BI Analyst";
-  const suggestion = document.getElementById("loginSuggestionInput")?.value.trim() || "";
-  const category = document.getElementById("loginSuggestionCategory")?.value || "General Inquiry";
 
   currentUser = { username, role };
   localStorage.setItem("blinkit_bi_user", JSON.stringify(currentUser));
 
-  // If suggestion was provided, submit it to API
-  let hasSuggestion = false;
-  if (suggestion) {
-    hasSuggestion = true;
-    try {
-      await fetch("/api/suggestions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username,
-          role,
-          suggestion,
-          category
-        })
-      });
-      loadRecentSuggestions();
-    } catch (err) {
-      console.error("Failed to save suggestion:", err);
-    }
-  }
-
   updateHeaderUserBadge(username, role);
-  enterDashboardView(hasSuggestion, category);
+  enterDashboardView();
 }
 
 function quickGuestLogin() {
-  currentUser = { username: "Guest Analyst", role: "Auditor" };
+  currentUser = { username: "Guest Auditor", role: "Public Sandbox" };
   localStorage.setItem("blinkit_bi_user", JSON.stringify(currentUser));
-  updateHeaderUserBadge("Guest Analyst", "Auditor");
-  enterDashboardView(false);
+  updateHeaderUserBadge("Guest Auditor", "Public Sandbox");
+  enterDashboardView();
 }
 
 function updateHeaderUserBadge(username, role) {
@@ -196,34 +220,14 @@ function updateHeaderUserBadge(username, role) {
   if (bannerName) bannerName.innerText = username;
 }
 
-function enterDashboardView(hasSuggestion, category = "") {
+function enterDashboardView() {
   const loginPage = document.getElementById("loginPage");
   const appView = document.getElementById("appView");
 
   if (loginPage) loginPage.classList.add("hidden");
   if (appView) appView.classList.remove("hidden");
 
-  // Show suggestion logged pill if submitted
-  const pill = document.getElementById("activeSuggestionPill");
-  if (pill) {
-    if (hasSuggestion) {
-      pill.classList.remove("hidden");
-    } else {
-      pill.classList.add("hidden");
-    }
-  }
-
-  // Smart Navigation based on suggestion category
-  if (category === "Window Functions" || category === "SQL") {
-    switchTab("sqlTab");
-  } else if (category === "Strategic Strategy") {
-    switchTab("reportTab");
-  } else if (category === "Category Insights" || category === "Geographic Analysis") {
-    switchTab("dashboardTab");
-  } else {
-    switchTab("cleaningTab");
-  }
-
+  switchTab("cleaningTab");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -241,7 +245,7 @@ function switchTab(tabId) {
   document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
   document.querySelectorAll(".tab-btn").forEach(el => {
     el.classList.remove("active-tab");
-    el.classList.add("border-transparent", "text-slate-400");
+    el.classList.add("border-transparent", "text-[#aaa6c3]");
   });
 
   const targetTab = document.getElementById(tabId);
@@ -252,7 +256,7 @@ function switchTab(tabId) {
   const activeBtn = document.getElementById(`nav-${tabId}`);
   if (activeBtn) {
     activeBtn.classList.add("active-tab");
-    activeBtn.classList.remove("border-transparent", "text-slate-400");
+    activeBtn.classList.remove("border-transparent", "text-[#aaa6c3]");
   }
 
   // Trigger chart resize if switching to dashboard
@@ -264,7 +268,7 @@ function switchTab(tabId) {
 }
 
 // -------------------------------------------------------------
-// 1. KPI LOADER
+// 2. KPI LOADER
 // -------------------------------------------------------------
 async function loadKpis() {
   try {
@@ -299,7 +303,7 @@ function formatCurrency(val) {
 }
 
 // -------------------------------------------------------------
-// 2. DATA CLEANING STATS & LIVE COMPARISON
+// 3. DATA CLEANING STATS & LIVE COMPARISON
 // -------------------------------------------------------------
 async function loadCleaningStats() {
   try {
@@ -335,20 +339,20 @@ function populateSampleTable(tbodyId, rows) {
 
   rows.forEach(r => {
     const tr = document.createElement("tr");
-    tr.className = "hover:bg-slate-900/50 transition";
+    tr.className = "hover:bg-[#151030]/60 transition";
     tr.innerHTML = `
-      <td class="py-2 px-2 text-amber-300">${r['Item Identifier'] || '-'}</td>
-      <td class="py-2 px-2">${r['Item Fat Content'] || '-'}</td>
-      <td class="py-2 px-2 text-slate-300">${r['Item Weight'] !== null ? r['Item Weight'] : '<span class="text-rose-400 font-bold">NULL</span>'}</td>
-      <td class="py-2 px-2 ${Number(r['Item Visibility']) === 0 ? 'text-rose-400 font-bold' : ''}">${r['Item Visibility'] !== null ? r['Item Visibility'] : '-'}</td>
-      <td class="py-2 px-2 font-semibold text-emerald-400">$${Number(r['Sales'] || 0).toFixed(2)}</td>
+      <td class="py-2.5 px-2 text-[#f8cb46] font-mono">${r['Item Identifier'] || '-'}</td>
+      <td class="py-2.5 px-2 text-white">${r['Item Fat Content'] || '-'}</td>
+      <td class="py-2.5 px-2 text-[#aaa6c3]">${r['Item Weight'] !== null ? r['Item Weight'] : '<span class="text-rose-400 font-bold">NULL</span>'}</td>
+      <td class="py-2.5 px-2 ${Number(r['Item Visibility']) === 0 ? 'text-rose-400 font-bold' : 'text-[#aaa6c3]'}">${r['Item Visibility'] !== null ? r['Item Visibility'] : '-'}</td>
+      <td class="py-2.5 px-2 font-semibold text-[#00cea8] font-mono">$${Number(r['Sales'] || 0).toFixed(2)}</td>
     `;
     tbody.appendChild(tr);
   });
 }
 
 // -------------------------------------------------------------
-// 3. SQL TEMPLATES & CONSOLE
+// 4. SQL TEMPLATES & CONSOLE
 // -------------------------------------------------------------
 let queryTemplates = [];
 
@@ -377,21 +381,21 @@ function renderQueryTemplates(templates) {
 
   templates.forEach(t => {
     const div = document.createElement("div");
-    div.className = "query-card p-3 rounded-xl bg-slate-900 border border-slate-800 cursor-pointer text-xs space-y-1";
+    div.className = "query-card p-3 rounded-2xl bg-[#100d25] border border-[#2e265c] cursor-pointer text-xs space-y-1";
     div.onclick = () => selectQueryTemplate(t.id);
 
-    let badgeColor = "bg-emerald-500/10 text-emerald-300 border-emerald-500/20";
-    if (t.category.includes("Window")) badgeColor = "bg-amber-400/10 text-amber-300 border-amber-400/20";
-    if (t.category.includes("Join")) badgeColor = "bg-sky-400/10 text-sky-300 border-sky-400/20";
-    if (t.category.includes("Anomaly")) badgeColor = "bg-rose-400/10 text-rose-300 border-rose-400/20";
+    let badgeColor = "bg-[#00cea8]/10 text-[#00cea8] border-[#00cea8]/30";
+    if (t.category.includes("Window")) badgeColor = "bg-[#f8cb46]/10 text-[#f8cb46] border-[#f8cb46]/30";
+    if (t.category.includes("Join")) badgeColor = "bg-[#38bdf8]/10 text-[#38bdf8] border-[#38bdf8]/30";
+    if (t.category.includes("Anomaly")) badgeColor = "bg-rose-500/10 text-rose-300 border-rose-500/30";
 
     div.innerHTML = `
       <div class="flex items-center justify-between">
         <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${badgeColor}">${t.category}</span>
-        <i class="fa-solid fa-arrow-up-right-from-square text-slate-500 hover:text-white transition"></i>
+        <i class="fa-solid fa-arrow-up-right-from-square text-[#aaa6c3] hover:text-white transition"></i>
       </div>
-      <div class="font-bold text-slate-200 mt-1">${t.title}</div>
-      <div class="text-[11px] text-slate-400 line-clamp-2">${t.description}</div>
+      <div class="font-bold text-white mt-1">${t.title}</div>
+      <div class="text-[11px] text-[#aaa6c3] line-clamp-2">${t.description}</div>
     `;
     container.appendChild(div);
   });
@@ -417,8 +421,8 @@ async function runCurrentSql() {
   const timingText = document.getElementById("queryTimingText");
   const rowCount = document.getElementById("resultRowCount");
 
-  statusText.innerText = "Executing query against SQLite...";
-  statusText.className = "text-amber-400 animate-pulse text-xs";
+  statusText.innerText = "Executing query against SQLite 3.50 engine...";
+  statusText.className = "text-[#f8cb46] animate-pulse text-xs";
 
   try {
     const res = await fetch("/api/execute-sql", {
@@ -430,7 +434,7 @@ async function runCurrentSql() {
 
     if (data.status === "success") {
       statusText.innerText = "Execution completed successfully";
-      statusText.className = "text-emerald-400 text-xs font-semibold";
+      statusText.className = "text-[#00cea8] text-xs font-semibold";
       timingText.innerText = `${data.duration_ms} ms`;
       rowCount.innerText = `${data.total_rows} rows`;
 
@@ -458,25 +462,25 @@ function renderSqlResultsTable(columns, rows) {
   const headerRow = document.createElement("tr");
   columns.forEach(col => {
     const th = document.createElement("th");
-    th.className = "py-2.5 px-3 font-semibold uppercase tracking-wider text-[11px] border-b border-slate-800 text-slate-300";
+    th.className = "py-2.5 px-3 font-semibold uppercase tracking-wider text-[11px] border-b border-[#2e265c] text-white";
     th.innerText = col;
     headerRow.appendChild(th);
   });
   thead.appendChild(headerRow);
 
   if (rows.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="${columns.length}" class="py-4 text-center text-slate-500 italic">Zero rows returned.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="${columns.length}" class="py-4 text-center text-[#aaa6c3] italic">Zero rows returned.</td></tr>`;
     return;
   }
 
   rows.forEach((row, i) => {
     const tr = document.createElement("tr");
-    tr.className = i % 2 === 0 ? "bg-slate-950 hover:bg-slate-900" : "bg-slate-900/50 hover:bg-slate-900";
+    tr.className = i % 2 === 0 ? "bg-[#100d25] hover:bg-[#151030]" : "bg-[#050816] hover:bg-[#151030]";
     row.forEach(val => {
       const td = document.createElement("td");
-      td.className = "py-2 px-3 border-b border-slate-800/40";
+      td.className = "py-2 px-3 border-b border-[#2e265c]/40";
       if (typeof val === "number") {
-        td.className += " font-mono text-emerald-400";
+        td.className += " font-mono text-[#00cea8]";
         td.innerText = val.toLocaleString();
       } else {
         td.innerText = val !== null ? val : "NULL";
@@ -495,7 +499,7 @@ function renderSqlError(errMsg) {
   thead.innerHTML = "<tr><th class='py-2 px-3 text-rose-400'>Error Diagnostics</th></tr>";
   tbody.innerHTML = `
     <tr>
-      <td class="p-4 text-rose-300 font-mono text-xs bg-rose-950/20 border border-rose-900/40 rounded-lg">
+      <td class="p-4 text-rose-300 font-mono text-xs bg-rose-950/20 border border-rose-900/40 rounded-xl">
         <i class="fa-solid fa-triangle-exclamation mr-2"></i> ${errMsg}
       </td>
     </tr>
@@ -507,7 +511,7 @@ function copyCurrentSql() {
   if (sql) {
     navigator.clipboard.writeText(sql).then(() => {
       const copyBtn = document.getElementById("copySqlBtn");
-      copyBtn.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i>';
+      copyBtn.innerHTML = '<i class="fa-solid fa-check text-[#00cea8]"></i>';
       setTimeout(() => {
         copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i>';
       }, 1500);
@@ -540,7 +544,7 @@ function exportSqlCsv() {
 }
 
 // -------------------------------------------------------------
-// 4. CHART.JS VISUAL ANALYTICS
+// 5. CHART.JS VISUAL ANALYTICS (ReactJS18 Cosmic Palette)
 // -------------------------------------------------------------
 async function loadDashboardCharts() {
   try {
@@ -576,13 +580,13 @@ function renderItemTypeChart(data) {
         {
           label: "Total Sales ($)",
           data: sales,
-          backgroundColor: "#F8CB46",
+          backgroundColor: "#f8cb46",
           borderRadius: 6
         },
         {
           label: "Est. Gross Profit ($)",
           data: profits,
-          backgroundColor: "#10B981",
+          backgroundColor: "#00cea8",
           borderRadius: 6
         }
       ]
@@ -592,7 +596,7 @@ function renderItemTypeChart(data) {
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          labels: { color: "#94a3b8", font: { size: 10 } }
+          labels: { color: "#aaa6c3", font: { size: 10, family: "Poppins" } }
         },
         tooltip: {
           callbacks: {
@@ -602,16 +606,16 @@ function renderItemTypeChart(data) {
       },
       scales: {
         x: {
-          ticks: { color: "#64748b", font: { size: 9 }, maxRotation: 45, minRotation: 45 },
-          grid: { color: "#1e293b" }
+          ticks: { color: "#aaa6c3", font: { size: 9, family: "Poppins" }, maxRotation: 45, minRotation: 45 },
+          grid: { color: "#2e265c" }
         },
         y: {
           ticks: {
-            color: "#64748b",
-            font: { size: 10 },
+            color: "#aaa6c3",
+            font: { size: 10, family: "Poppins" },
             callback: (v) => "$" + (v / 1000) + "k"
           },
-          grid: { color: "#1e293b" }
+          grid: { color: "#2e265c" }
         }
       }
     }
@@ -632,8 +636,8 @@ function renderOutletSizeChart(data) {
       labels: labels,
       datasets: [{
         data: sales,
-        backgroundColor: ["#10B981", "#F8CB46", "#38BDF8"],
-        borderColor: "#1e293b",
+        backgroundColor: ["#00cea8", "#f8cb46", "#915eff"],
+        borderColor: "#151030",
         borderWidth: 2
       }]
     },
@@ -643,7 +647,7 @@ function renderOutletSizeChart(data) {
       plugins: {
         legend: {
           position: "right",
-          labels: { color: "#94a3b8", font: { size: 11 } }
+          labels: { color: "#aaa6c3", font: { size: 11, family: "Poppins" } }
         },
         tooltip: {
           callbacks: {
@@ -671,7 +675,7 @@ function renderFatContentChart(data) {
       datasets: [{
         label: "Sales ($)",
         data: sales,
-        backgroundColor: ["#38BDF8", "#F43F5E"],
+        backgroundColor: ["#00cea8", "#f43f5e"],
         borderRadius: 8,
         barThickness: 45
       }]
@@ -688,13 +692,14 @@ function renderFatContentChart(data) {
         }
       },
       scales: {
-        x: { ticks: { color: "#cbd5e1" }, grid: { display: false } },
+        x: { ticks: { color: "#f3f3f3", font: { family: "Poppins" } }, grid: { display: false } },
         y: {
           ticks: {
-            color: "#64748b",
+            color: "#aaa6c3",
+            font: { family: "Poppins" },
             callback: (v) => "$" + (v / 1000) + "k"
           },
-          grid: { color: "#1e293b" }
+          grid: { color: "#2e265c" }
         }
       }
     }
@@ -708,7 +713,6 @@ function renderLocationChart(data) {
 
   const labels = data.map(d => `${d.location_type} (${d.sales_percentage}%)`);
   const sales = data.map(d => d.total_sales);
-  const items = data.map(d => d.item_count);
 
   charts.location = new Chart(ctx, {
     type: "bar",
@@ -718,7 +722,7 @@ function renderLocationChart(data) {
         {
           label: "Total Sales ($)",
           data: sales,
-          backgroundColor: "#818CF8",
+          backgroundColor: "#915eff",
           borderRadius: 6
         }
       ]
@@ -727,7 +731,7 @@ function renderLocationChart(data) {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { labels: { color: "#94a3b8" } },
+        legend: { labels: { color: "#aaa6c3", font: { family: "Poppins" } } },
         tooltip: {
           callbacks: {
             label: (ctx) => ` Sales: $${Number(ctx.raw).toLocaleString()}`
@@ -735,13 +739,14 @@ function renderLocationChart(data) {
         }
       },
       scales: {
-        x: { ticks: { color: "#cbd5e1" }, grid: { display: false } },
+        x: { ticks: { color: "#f3f3f3", font: { family: "Poppins" } }, grid: { display: false } },
         y: {
           ticks: {
-            color: "#64748b",
+            color: "#aaa6c3",
+            font: { family: "Poppins" },
             callback: (v) => "$" + (v / 1000) + "k"
           },
-          grid: { color: "#1e293b" }
+          grid: { color: "#2e265c" }
         }
       }
     }
@@ -765,17 +770,17 @@ function renderVintageChart(data) {
         {
           label: "Annual Sales ($)",
           data: sales,
-          borderColor: "#F8CB46",
-          backgroundColor: "rgba(248, 203, 70, 0.15)",
+          borderColor: "#f8cb46",
+          backgroundColor: "rgba(248, 203, 70, 0.12)",
           tension: 0.35,
           fill: true,
-          pointBackgroundColor: "#F8CB46",
+          pointBackgroundColor: "#f8cb46",
           pointRadius: 4
         },
         {
           label: "Cumulative Revenue ($)",
           data: cumulative,
-          borderColor: "#10B981",
+          borderColor: "#00cea8",
           borderDash: [5, 5],
           tension: 0.2,
           fill: false,
@@ -787,7 +792,7 @@ function renderVintageChart(data) {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { labels: { color: "#94a3b8" } },
+        legend: { labels: { color: "#aaa6c3", font: { family: "Poppins" } } },
         tooltip: {
           callbacks: {
             label: (ctx) => ` ${ctx.dataset.label}: $${Number(ctx.raw).toLocaleString()}`
@@ -795,13 +800,14 @@ function renderVintageChart(data) {
         }
       },
       scales: {
-        x: { ticks: { color: "#cbd5e1" }, grid: { color: "#1e293b" } },
+        x: { ticks: { color: "#f3f3f3", font: { family: "Poppins" } }, grid: { color: "#2e265c" } },
         y: {
           ticks: {
-            color: "#64748b",
+            color: "#aaa6c3",
+            font: { family: "Poppins" },
             callback: (v) => "$" + (v / 1000) + "k"
           },
-          grid: { color: "#1e293b" }
+          grid: { color: "#2e265c" }
         }
       }
     }
@@ -826,8 +832,8 @@ function renderScatterChart(data) {
       datasets: [{
         label: "SKU Visibility vs Sales",
         data: scatterData,
-        backgroundColor: "rgba(45, 212, 191, 0.6)",
-        borderColor: "#14B8A6",
+        backgroundColor: "rgba(0, 206, 168, 0.65)",
+        borderColor: "#00cea8",
         pointRadius: 3.5
       }]
     },
@@ -835,7 +841,7 @@ function renderScatterChart(data) {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { labels: { color: "#94a3b8" } },
+        legend: { labels: { color: "#aaa6c3", font: { family: "Poppins" } } },
         tooltip: {
           callbacks: {
             label: (ctx) => {
@@ -847,14 +853,14 @@ function renderScatterChart(data) {
       },
       scales: {
         x: {
-          title: { display: true, text: "Item Visibility Ratio", color: "#64748b", font: { size: 10 } },
-          ticks: { color: "#64748b" },
-          grid: { color: "#1e293b" }
+          title: { display: true, text: "Item Visibility Ratio", color: "#aaa6c3", font: { size: 10, family: "Poppins" } },
+          ticks: { color: "#aaa6c3", font: { family: "Poppins" } },
+          grid: { color: "#2e265c" }
         },
         y: {
-          title: { display: true, text: "Sales ($)", color: "#64748b", font: { size: 10 } },
-          ticks: { color: "#64748b" },
-          grid: { color: "#1e293b" }
+          title: { display: true, text: "Sales ($)", color: "#aaa6c3", font: { size: 10, family: "Poppins" } },
+          ticks: { color: "#aaa6c3", font: { family: "Poppins" } },
+          grid: { color: "#2e265c" }
         }
       }
     }
@@ -862,7 +868,7 @@ function renderScatterChart(data) {
 }
 
 // -------------------------------------------------------------
-// 5. EXECUTIVE BUSINESS REPORT & ACTIONABLE CORRECTIONS
+// 6. EXECUTIVE BUSINESS REPORT & ACTIONABLE CORRECTIONS
 // -------------------------------------------------------------
 async function loadBusinessReport() {
   try {
@@ -885,57 +891,57 @@ function renderPointsToCorrect(points) {
   if (!container) return;
   container.innerHTML = "";
 
-  points.forEach((p, idx) => {
+  points.forEach((p) => {
     const div = document.createElement("div");
-    div.className = "point-box bg-slate-900/90 print:bg-slate-50 p-5 rounded-xl border border-slate-700/80 print:border-slate-300 space-y-3";
+    div.className = "point-box bg-[#100d25] print:bg-slate-50 p-5 rounded-2xl border border-[#2e265c] print:border-slate-300 space-y-3 shadow-md";
 
     let sevBadge = `<span class="px-2.5 py-0.5 rounded text-[10px] font-black bg-rose-500/20 text-rose-300 border border-rose-500/40">HIGH SEVERITY</span>`;
     if (p.severity === "Medium") {
-      sevBadge = `<span class="px-2.5 py-0.5 rounded text-[10px] font-black bg-amber-500/20 text-amber-300 border border-amber-500/40">MEDIUM SEVERITY</span>`;
+      sevBadge = `<span class="px-2.5 py-0.5 rounded text-[10px] font-black bg-[#f8cb46]/20 text-[#f8cb46] border border-[#f8cb46]/40">MEDIUM SEVERITY</span>`;
     }
 
     div.innerHTML = `
-      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 print:border-slate-200 pb-2.5">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[#2e265c] print:border-slate-200 pb-2.5">
         <div class="flex items-center space-x-2">
-          <span class="w-6 h-6 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center font-black text-xs">
+          <span class="w-6 h-6 rounded-full bg-[#f8cb46] text-[#050816] flex items-center justify-center font-black text-xs">
             ${p.id}
           </span>
-          <h3 class="font-bold text-slate-100 print:text-slate-900 text-sm md:text-base">${p.domain}</h3>
+          <h3 class="font-bold text-white print:text-slate-900 text-sm md:text-base">${p.domain}</h3>
         </div>
         ${sevBadge}
       </div>
 
       <!-- Finding & Chart Evidence -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-        <div class="bg-slate-950/70 print:bg-white p-3 rounded-lg border border-slate-800/80 print:border-slate-200">
+        <div class="bg-[#151030] print:bg-white p-3 rounded-xl border border-[#2e265c] print:border-slate-200">
           <strong class="text-rose-400 print:text-rose-700 block mb-1">
             <i class="fa-solid fa-chart-line mr-1"></i> Data Finding (From Visual Charts):
           </strong>
-          <p class="text-slate-300 print:text-slate-700 leading-relaxed">${p.finding}</p>
-          <div class="mt-2 text-[10px] text-slate-500 print:text-slate-500">
+          <p class="text-[#f3f3f3] print:text-slate-700 leading-relaxed">${p.finding}</p>
+          <div class="mt-2 text-[10px] text-[#aaa6c3] print:text-slate-500">
             <strong>Evidence:</strong> ${p.chart_evidence}
           </div>
         </div>
 
-        <div class="bg-slate-950/70 print:bg-white p-3 rounded-lg border border-slate-800/80 print:border-slate-200">
-          <strong class="text-amber-400 print:text-amber-700 block mb-1">
+        <div class="bg-[#151030] print:bg-white p-3 rounded-xl border border-[#2e265c] print:border-slate-200">
+          <strong class="text-[#f8cb46] print:text-amber-700 block mb-1">
             <i class="fa-solid fa-circle-notch mr-1"></i> Root Cause Diagnosis:
           </strong>
-          <p class="text-slate-300 print:text-slate-700 leading-relaxed">${p.root_cause}</p>
+          <p class="text-[#f3f3f3] print:text-slate-700 leading-relaxed">${p.root_cause}</p>
         </div>
       </div>
 
       <!-- Actionable Correction & Expected ROI -->
-      <div class="p-3.5 rounded-lg bg-emerald-950/30 print:bg-emerald-50 border border-emerald-800/40 print:border-emerald-200 text-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
+      <div class="p-3.5 rounded-xl bg-[#151030] print:bg-emerald-50 border border-[#00cea8]/30 print:border-emerald-200 text-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div class="space-y-1">
-          <span class="font-bold text-emerald-400 print:text-emerald-800 flex items-center">
+          <span class="font-bold text-[#00cea8] print:text-emerald-800 flex items-center">
             <i class="fa-solid fa-bullseye mr-1.5"></i> Actionable Business Correction:
           </span>
-          <p class="text-slate-200 print:text-slate-800 leading-relaxed">${p.actionable_correction}</p>
+          <p class="text-white print:text-slate-800 leading-relaxed">${p.actionable_correction}</p>
         </div>
         <div class="md:text-right shrink-0">
-          <span class="text-[10px] uppercase font-bold text-slate-400 print:text-slate-600 block">Expected ROI Impact</span>
-          <span class="text-xs font-black text-emerald-400 print:text-emerald-700">${p.expected_impact}</span>
+          <span class="text-[10px] uppercase font-bold text-[#aaa6c3] print:text-slate-600 block">Expected ROI Impact</span>
+          <span class="text-xs font-black text-[#00cea8] print:text-emerald-700">${p.expected_impact}</span>
         </div>
       </div>
     `;
@@ -962,7 +968,7 @@ function updateSimulation() {
 }
 
 // -------------------------------------------------------------
-// 6. UPLOAD & RESET LOGIC
+// 7. UPLOAD & RESET LOGIC
 // -------------------------------------------------------------
 async function handleFileUpload(e) {
   const file = e.target.files?.[0];
@@ -1005,4 +1011,3 @@ async function handleResetData() {
     alert("Error resetting data: " + err);
   }
 }
-
