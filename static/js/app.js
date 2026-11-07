@@ -37,6 +37,7 @@ function setupEventListeners() {
   window.submitLoginAndEnter = submitLoginAndEnter;
   window.quickGuestLogin = quickGuestLogin;
   window.logoutToLoginPage = logoutToLoginPage;
+  window.toggleSoothingTheme = toggleSoothingTheme;
 
   // SQL buttons
   document.getElementById("runSqlBtn")?.addEventListener("click", runCurrentSql);
@@ -158,23 +159,40 @@ function initStarsCanvas() {
 // 1. LOGIN & PERSONA HANDLERS (ONLY USERNAME)
 // -------------------------------------------------------------
 function checkLoginState() {
+  // Always display the Login Page first so users experience the intro & graphics!
+  const loginPage = document.getElementById("loginPage");
+  const appView = document.getElementById("appView");
+
+  if (loginPage) loginPage.classList.remove("hidden");
+  if (appView) appView.classList.add("hidden");
+
+  // Pre-fill last used username if available
   const saved = localStorage.getItem("blinkit_bi_user");
   if (saved) {
     try {
       const parsed = JSON.parse(saved);
       if (parsed.username) {
-        currentUser = parsed;
-        updateHeaderUserBadge(currentUser.username, currentUser.role);
-        enterDashboardView();
-        return;
+        const input = document.getElementById("loginUsername");
+        if (input) input.value = parsed.username;
+        const role = document.getElementById("loginRole");
+        if (role && parsed.role) role.value = parsed.role;
       }
     } catch (e) {
       console.error(e);
     }
   }
-  // Default: Show Login Page
-  document.getElementById("loginPage")?.classList.remove("hidden");
-  document.getElementById("appView")?.classList.add("hidden");
+}
+
+function toggleSoothingTheme() {
+  const isLight = document.body.classList.toggle("theme-light");
+  const btn = document.getElementById("themeToggleBtn");
+  if (btn) {
+    if (isLight) {
+      btn.innerHTML = '<i class="fa-solid fa-moon mr-1.5 text-indigo-400"></i> Dark Theme';
+    } else {
+      btn.innerHTML = '<i class="fa-solid fa-sun mr-1.5 text-amber-400"></i> Light Theme';
+    }
+  }
 }
 
 function selectPersona(name, role, el) {

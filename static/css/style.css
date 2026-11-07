@@ -1,19 +1,47 @@
 /* ========================================================================= */
-/* BLINKIT ANALYTICS - LUXURY 3D SPACE DESIGN SYSTEM (Inspired by ReactJS18) */
+/* BLINKIT ANALYTICS - SOOTHING EYE-FRIENDLY SPACE DESIGN SYSTEM             */
+/* Inspired by ReactJS18 Graphics & Calming Midnight Palette                */
 /* ========================================================================= */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap");
 
 :root {
-  --primary: #050816;
-  --secondary: #aaa6c3;
-  --tertiary: #151030;
-  --black-100: #100d25;
-  --black-200: #090325;
-  --white-100: #f3f3f3;
-  --violet: #915eff;
-  --cyan: #00cea8;
-  --gold: #f8cb46;
-  --border-subtle: #2e265c;
+  /* Soothing Midnight Dark Theme (Default - Easy on the Eyes) */
+  --bg-main: #0B1120;
+  --bg-surface: #151F32;
+  --bg-card: #1E293B;
+  --bg-subtle: #0F172A;
+  --border-subtle: #293548;
+  --border-glow: rgba(99, 102, 241, 0.25);
+  
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  
+  --accent-amber: #F59E0B;
+  --accent-mint: #10B981;
+  --accent-sky: #38BDF8;
+  --accent-violet: #818CF8;
+  --accent-rose: #FB7185;
+}
+
+/* Light / Pearl Soothing Mode */
+body.theme-light {
+  --bg-main: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-card: #F1F5F9;
+  --bg-subtle: #E2E8F0;
+  --border-subtle: #CBD5E1;
+  --border-glow: rgba(99, 102, 241, 0.2);
+  
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  
+  --accent-amber: #D97706;
+  --accent-mint: #059669;
+  --accent-sky: #0284C7;
+  --accent-violet: #6366F1;
+  --accent-rose: #E11D48;
 }
 
 * {
@@ -25,141 +53,106 @@
 }
 
 body {
-  background-color: #050816;
-  color: #f3f3f3;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
   overflow-x: hidden;
 }
 
-/* Custom Scrollbars */
+/* Custom Soothing Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #050816;
+  background: var(--bg-main);
 }
 ::-webkit-scrollbar-thumb {
-  background: #2e265c;
+  background: var(--border-subtle);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #915eff;
+  background: var(--accent-violet);
 }
 
-/* Gradients from ReactJS18 */
-.green-pink-gradient {
-  background: linear-gradient(90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
+/* Atmospheric Hero Background from ReactJS18 */
+.hero-bg-texture {
+  background-image: url('/static/images/herobg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
+/* Soothing Gradients */
 .violet-gradient {
-  background: linear-gradient(-90deg, #804dee 0%, rgba(60, 51, 80, 0) 100%);
+  background: linear-gradient(180deg, #818CF8 0%, rgba(129, 140, 248, 0) 100%);
 }
 
-.golden-violet-gradient {
-  background: linear-gradient(90deg, #f8cb46 0%, #915eff 100%);
+.green-cyan-gradient {
+  background: linear-gradient(90deg, #10B981 0%, #38BDF8 100%);
 }
 
+.amber-gold-gradient {
+  background: linear-gradient(90deg, #F59E0B 0%, #FBBF24 100%);
+}
+
+/* Iridescent 3D Card Border Wrap from ReactJS18 */
 .card-gradient-border {
-  background: linear-gradient(135deg, rgba(145, 94, 255, 0.4) 0%, rgba(0, 206, 168, 0.2) 50%, rgba(248, 203, 70, 0.3) 100%);
-  padding: 1px;
-  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(129, 140, 248, 0.45) 0%, rgba(16, 185, 129, 0.3) 50%, rgba(245, 158, 11, 0.35) 100%);
+  padding: 1.5px;
+  border-radius: 24px;
 }
 
-.orange-text-gradient {
-  background: linear-gradient(to top, #f12711, #f5af19);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Soothing Glass Cards */
+.soothing-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s ease;
 }
 
-.green-text-gradient {
-  background: linear-gradient(to top, #11998e, #38ef7d);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.soothing-card:hover {
+  border-color: var(--accent-violet);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.35);
 }
 
-.blue-text-gradient {
-  background: linear-gradient(to top, #2f80ed, #56ccf2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.soothing-card-inner {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
 }
 
-.violet-text-gradient {
-  background: linear-gradient(to right, #915eff, #bf61ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.gold-text-gradient {
-  background: linear-gradient(to right, #f8cb46, #fde047);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* 3D Glassmorphic Cards */
-.glass-card {
-  background-color: #151030;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0px 35px 120px -15px #211e35;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.glass-card:hover {
-  border-color: rgba(145, 94, 255, 0.4);
-  transform: translateY(-3px);
-  box-shadow: 0px 40px 140px -10px rgba(145, 94, 255, 0.2);
-}
-
-.glass-card-inner {
-  background-color: #100d25;
-  border: 1px solid #2e265c;
-}
-
-/* Tab buttons */
+/* Tab Navigation buttons */
 .tab-btn {
-  color: #aaa6c3;
+  color: var(--text-secondary);
   border-bottom: 2px solid transparent;
   transition: all 0.2s ease-in-out;
   font-weight: 500;
 }
 .tab-btn:hover {
-  color: #ffffff;
+  color: var(--text-primary);
 }
 .tab-btn.active-tab {
-  color: #f8cb46;
-  border-bottom-color: #f8cb46;
-  background-color: rgba(248, 203, 70, 0.08);
+  color: var(--accent-amber);
+  border-bottom-color: var(--accent-amber);
+  background-color: rgba(245, 158, 11, 0.08);
 }
 
-/* Ambient glow & pulse animations */
-@keyframes pulseGlow {
-  0%, 100% {
-    opacity: 0.35;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.75;
-    transform: scale(1.08);
-  }
-}
-
-.ambient-glow {
-  animation: pulseGlow 7s infinite ease-in-out;
-}
-
-@keyframes floatSlow {
+/* Soothing Floating Animation */
+@keyframes floatGentle {
   0%, 100% {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-6px);
   }
 }
 
-.float-slow {
-  animation: floatSlow 4s infinite ease-in-out;
+.float-gentle {
+  animation: floatGentle 5s infinite ease-in-out;
 }
 
-/* Canvas background for 3D Stars */
+/* Canvas background for gentle stars */
 #starsCanvas {
   position: absolute;
   top: 0;
@@ -174,24 +167,32 @@ body {
 .role-chip {
   cursor: pointer;
   transition: all 0.2s ease;
-  background-color: #100d25;
-  border: 1px solid #2e265c;
-  color: #aaa6c3;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
 }
 .role-chip:hover {
-  border-color: #915eff;
-  color: #ffffff;
+  border-color: var(--accent-violet);
+  color: var(--text-primary);
   transform: translateY(-1px);
 }
 .role-chip.active-chip {
-  background-color: rgba(145, 94, 255, 0.2);
-  border-color: #915eff;
-  color: #c4b5fd;
+  background-color: rgba(129, 140, 248, 0.15);
+  border-color: var(--accent-violet);
+  color: var(--text-primary);
   font-weight: 600;
-  box-shadow: 0 0 15px rgba(145, 94, 255, 0.3);
 }
 
-/* Code & font styles */
+/* Query item in catalog */
+.query-card {
+  transition: all 0.15s ease;
+}
+.query-card:hover {
+  background-color: var(--bg-surface);
+  border-color: var(--accent-amber);
+}
+
+/* Font mono */
 code, pre, .font-mono {
   font-family: "JetBrains Mono", monospace !important;
 }
@@ -200,7 +201,7 @@ code, pre, .font-mono {
 @media print {
   body {
     background-color: #ffffff !important;
-    color: #111827 !important;
+    color: #0f172a !important;
   }
   header, footer, nav, #loginPage, #cleaningTab, #sqlTab, #dashboardTab, .kpi-card, button, input, .print\:hidden, #starsCanvas {
     display: none !important;
@@ -216,7 +217,7 @@ code, pre, .font-mono {
   }
   #printableReport {
     background: #ffffff !important;
-    color: #111827 !important;
+    color: #0f172a !important;
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;

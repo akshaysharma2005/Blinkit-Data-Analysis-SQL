@@ -11,217 +11,215 @@
   <!-- FontAwesome Icons CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="/static/css/style.css">
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            primary: '#050816',
-            secondary: '#aaa6c3',
-            tertiary: '#151030',
-            'black-100': '#100d25',
-            'black-200': '#090325',
-            'white-100': '#f3f3f3',
-            violet: {
-              DEFAULT: '#915eff',
-              glow: '#804dee'
-            },
-            cyan: {
-              DEFAULT: '#00cea8',
-              glow: '#11998e'
-            },
-            amber: {
-              DEFAULT: '#f8cb46',
-              glow: '#f5af19'
-            },
-            border: '#2e265c'
-          },
-          boxShadow: {
-            card: '0px 35px 120px -15px #211e35'
-          }
-        }
-      }
-    }
-  </script>
 </head>
-<body class="bg-[#050816] text-[#f3f3f3] min-h-screen flex flex-col font-sans antialiased selection:bg-[#f8cb46] selection:text-[#050816]">
+<body class="min-h-screen flex flex-col font-sans antialiased selection:bg-amber-400 selection:text-slate-900">
 
   <!-- ========================================================================= -->
-  <!-- 1. 3D COSMIC INTRO LOGIN PAGE (Inspired by ReactJS18 Graphics)             -->
+  <!-- 1. GRAPHICAL USER LOGIN PAGE (ReactJS18 3D Graphic Design)                 -->
   <!-- ========================================================================= -->
-  <div id="loginPage" class="relative min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8 overflow-hidden bg-[#050816]">
+  <div id="loginPage" class="relative min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-10 overflow-hidden hero-bg-texture">
     
-    <!-- 3D Stars Canvas Particle Engine (From ReactJS18 Stars.tsx) -->
+    <!-- 3D Starfield Canvas (ReactJS18 Stars.tsx) -->
     <canvas id="starsCanvas"></canvas>
 
-    <!-- Ambient Glowing Nebulae -->
-    <div class="absolute -top-32 -left-32 w-[550px] h-[550px] bg-[#915eff]/15 rounded-full blur-[140px] pointer-events-none ambient-glow"></div>
-    <div class="absolute -bottom-32 -right-32 w-[550px] h-[550px] bg-[#00cea8]/15 rounded-full blur-[140px] pointer-events-none ambient-glow" style="animation-delay: -3.5s;"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#f8cb46]/10 rounded-full blur-[160px] pointer-events-none"></div>
+    <!-- Ambient Calming Lighting -->
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-    <div class="relative z-10 w-full max-w-xl space-y-6">
+    <!-- Main Container: Dual Column Hero + Login -->
+    <div class="relative z-10 w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
-      <!-- Header Brand & Visual Accent -->
-      <div class="text-center space-y-3">
-        <!-- Floating Pill Badge -->
-        <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#151030]/90 border border-[#915eff]/40 text-[#c4b5fd] text-xs font-medium shadow-[0_0_20px_rgba(145,94,255,0.25)] backdrop-blur-xl">
-          <span class="w-2 h-2 rounded-full bg-[#00cea8] animate-ping"></span>
-          <span>⚡ Blinkit Quick-Commerce 3D Telemetry & SQL Portal</span>
+      <!-- LEFT COLUMN: REACTJS18 3D GRAPHICS & BRAND TELEMETRY -->
+      <div class="lg:col-span-7 space-y-6">
+        
+        <!-- Live Quick-Commerce Telemetry Pill -->
+        <div class="inline-flex items-center space-x-2.5 px-4 py-1.5 rounded-full bg-slate-900/80 border border-indigo-400/30 text-indigo-200 text-xs font-medium shadow-md backdrop-blur-md">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>⚡ Blinkit Quick-Commerce 3D Telemetry Studio</span>
         </div>
 
-        <!-- Brand Name with 3D Icon -->
-        <div class="flex items-center justify-center space-x-3 pt-1">
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#f8cb46] to-[#f5af19] flex items-center justify-center shadow-[0_0_30px_rgba(248,203,70,0.35)] text-[#050816] font-black text-2xl float-slow">
-            ⚡
+        <!-- ReactJS18 Hero Motif: Glowing Violet Dot + Vertical Gradient Beam -->
+        <div class="flex items-start gap-4">
+          <div class="flex flex-col items-center justify-center pt-2">
+            <div class="w-5 h-5 rounded-full bg-indigo-500 shadow-[0_0_20px_#6366f1]"></div>
+            <div class="violet-gradient w-1 h-32 sm:h-44 mt-1 rounded-full"></div>
           </div>
-          <span class="text-4xl sm:text-5xl font-black tracking-tight text-white">blink<span class="text-[#f8cb46]">it</span></span>
-        </div>
-
-        <p class="text-xs sm:text-sm text-[#aaa6c3] max-w-md mx-auto leading-relaxed">
-          Enterprise Data Cleansing, Window Functions & Executive Strategy for 10 Dark Stores.
-        </p>
-
-        <!-- 3D Glass Metrics Ribbon -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2 text-xs font-mono">
-          <div class="p-2.5 rounded-xl bg-[#151030]/90 border border-[#2e265c] text-center shadow-lg">
-            <span class="text-[#aaa6c3] block text-[10px] font-sans uppercase">Total GMV</span>
-            <strong class="text-white text-sm font-bold">$1.20M</strong>
-          </div>
-          <div class="p-2.5 rounded-xl bg-[#151030]/90 border border-[#2e265c] text-center shadow-lg">
-            <span class="text-[#aaa6c3] block text-[10px] font-sans uppercase">Dataset</span>
-            <strong class="text-[#f8cb46] text-sm font-bold">8,523 SKUs</strong>
-          </div>
-          <div class="p-2.5 rounded-xl bg-[#151030]/90 border border-[#2e265c] text-center shadow-lg">
-            <span class="text-[#aaa6c3] block text-[10px] font-sans uppercase">Dark Stores</span>
-            <strong class="text-[#00cea8] text-sm font-bold">10 Hubs</strong>
-          </div>
-          <div class="p-2.5 rounded-xl bg-[#151030]/90 border border-[#2e265c] text-center shadow-lg">
-            <span class="text-[#aaa6c3] block text-[10px] font-sans uppercase">Engine</span>
-            <strong class="text-[#915eff] text-sm font-bold">SQLite 3.50</strong>
+          <div class="space-y-3">
+            <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+              Transform <span class="text-amber-400">8,523</span> Grocery Orders into <span class="bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400 bg-clip-text text-transparent">Scalable Strategy</span>
+            </h1>
+            <p class="text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl">
+              An enterprise quick-commerce analytical suite. We clean raw grocery datasets, execute SQL window functions & multi-table joins, visualize unit economics, and prescribe 6 actionable business corrections.
+            </p>
           </div>
         </div>
+
+        <!-- 4 3D Graphical Telemetry Badges -->
+        <div class="grid grid-cols-2 gap-3 pt-2">
+          <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-700/60 backdrop-blur-md space-y-1">
+            <div class="flex items-center space-x-2 text-amber-400 text-xs font-bold">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              <span>Data Hygiene</span>
+            </div>
+            <div class="text-xs text-slate-300">Cleaned 5 fat classes & imputed 1,463 missing weights.</div>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-700/60 backdrop-blur-md space-y-1">
+            <div class="flex items-center space-x-2 text-emerald-400 text-xs font-bold">
+              <i class="fa-solid fa-database"></i>
+              <span>SQL 3.50 Engine</span>
+            </div>
+            <div class="text-xs text-slate-300">Window <code class="text-emerald-300">OVER()</code>, category joins, and <code class="text-emerald-300">NTILE(4)</code>.</div>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-700/60 backdrop-blur-md space-y-1">
+            <div class="flex items-center space-x-2 text-sky-400 text-xs font-bold">
+              <i class="fa-solid fa-chart-line"></i>
+              <span>6 Visual Dimensions</span>
+            </div>
+            <div class="text-xs text-slate-300">Pareto curves, dark store footprint, and screen clutter.</div>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-700/60 backdrop-blur-md space-y-1">
+            <div class="flex items-center space-x-2 text-indigo-400 text-xs font-bold">
+              <i class="fa-solid fa-bullseye"></i>
+              <span>Executive Prescriptions</span>
+            </div>
+            <div class="text-xs text-slate-300">6 actionable fixes with projected +$180k ARR uplift.</div>
+          </div>
+        </div>
+
+        <!-- Metric Stat Ticker -->
+        <div class="flex items-center space-x-6 text-xs text-slate-400 pt-2 border-t border-slate-800">
+          <div><strong class="text-white text-base font-bold font-mono">$1.20M</strong> <span class="block text-[11px]">Gross Sales</span></div>
+          <div class="h-8 w-px bg-slate-800"></div>
+          <div><strong class="text-amber-400 text-base font-bold font-mono">10 Hubs</strong> <span class="block text-[11px]">Dark Stores</span></div>
+          <div class="h-8 w-px bg-slate-800"></div>
+          <div><strong class="text-emerald-400 text-base font-bold font-mono">100%</strong> <span class="block text-[11px]">Data Quality</span></div>
+        </div>
+
       </div>
 
-      <!-- Main Login Card with Iridescent Gradient Border Wrap (ReactJS18 Style) -->
-      <div class="card-gradient-border shadow-[0px_35px_120px_-15px_#211e35]">
-        <div class="bg-[#151030] rounded-[19px] p-6 sm:p-8 space-y-6">
-          
-          <!-- Card Header with ReactJS18 Dot + Gradient Beam Graphic -->
-          <div class="flex items-start gap-4 border-b border-[#2e265c] pb-5">
-            <div class="flex flex-col items-center justify-center pt-1">
-              <div class="w-4 h-4 rounded-full bg-[#915eff] shadow-[0_0_15px_#915eff]"></div>
-              <div class="violet-gradient w-0.5 h-12 mt-1"></div>
-            </div>
-            <div>
-              <h2 class="text-lg sm:text-xl font-bold text-white tracking-tight">
-                Analyst Portal Authentication
-              </h2>
-              <p class="text-xs text-[#aaa6c3] mt-1">
-                Enter your analyst username to access SQL Window functions, data cleaning audit, and executive fixes.
-              </p>
-            </div>
-          </div>
-
-          <!-- Sign-in Form (ONLY USERNAME - Suggestion Box Removed) -->
-          <div class="space-y-4">
+      <!-- RIGHT COLUMN: STREAMLINED USERNAME LOGIN CARD (ONLY USERNAME) -->
+      <div class="lg:col-span-5">
+        <div class="card-gradient-border shadow-2xl">
+          <div class="bg-slate-900/95 rounded-[22px] p-6 sm:p-8 space-y-6 backdrop-blur-xl">
             
-            <!-- Username Input Field -->
-            <div class="space-y-1.5">
-              <label for="loginUsername" class="block text-xs font-semibold text-[#f3f3f3] flex items-center justify-between">
-                <span>Analyst Username / Name</span>
-                <span class="text-[#915eff] text-[11px] font-mono font-normal"><i class="fa-solid fa-lock text-[10px] mr-1"></i> Authorized Workspace</span>
-              </label>
-
-              <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#aaa6c3]">
-                  <i class="fa-regular fa-user text-sm"></i>
+            <!-- Brand & Form Title -->
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+              <div class="flex items-center space-x-2.5">
+                <div class="w-9 h-9 rounded-xl bg-amber-400 flex items-center justify-center text-slate-950 font-black text-lg">
+                  ⚡
                 </div>
-                <input 
-                  type="text" 
-                  id="loginUsername" 
-                  value="Akshay Sharma" 
-                  class="w-full bg-[#100d25] text-white text-xs sm:text-sm pl-10 pr-4 py-3 rounded-xl border border-[#2e265c] focus:border-[#915eff] focus:ring-2 focus:ring-[#915eff]/30 outline-none transition duration-200 placeholder-[#aaa6c3]/50 shadow-inner" 
-                  placeholder="Enter your username or analyst name..."
+                <div>
+                  <h2 class="text-lg font-bold text-white tracking-tight">Analyst Sign In</h2>
+                  <p class="text-[11px] text-slate-400">Authorized Blinkit Intelligence Workspace</p>
+                </div>
+              </div>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">ONLINE</span>
+            </div>
+
+            <!-- Login Form (ONLY USERNAME) -->
+            <div class="space-y-4">
+              
+              <!-- Username Input Field -->
+              <div class="space-y-1.5">
+                <label for="loginUsername" class="block text-xs font-semibold text-slate-200 flex items-center justify-between">
+                  <span>Analyst Username / Name</span>
+                  <span class="text-indigo-400 text-[10px]"><i class="fa-solid fa-id-badge mr-1"></i> Required</span>
+                </label>
+
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <i class="fa-regular fa-user"></i>
+                  </div>
+                  <input 
+                    type="text" 
+                    id="loginUsername" 
+                    value="Akshay Sharma" 
+                    class="w-full bg-slate-950 text-white text-xs sm:text-sm pl-10 pr-4 py-3 rounded-xl border border-slate-700 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none transition shadow-inner" 
+                    placeholder="Enter your analyst name..."
+                  >
+                </div>
+                <input type="hidden" id="loginRole" value="Lead BI Analyst">
+              </div>
+
+              <!-- Quick Persona Chips (For 1-Click Fast Fill) -->
+              <div class="space-y-2 pt-1">
+                <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400">1-Click Persona Quick Select:</span>
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                  <button type="button" onclick="selectPersona('Akshay Sharma', 'Lead BI Analyst', this)" class="role-chip active-chip p-2.5 rounded-xl border flex items-center space-x-2 text-left">
+                    <span class="w-6 h-6 rounded-lg bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-user-check"></i></span>
+                    <div class="truncate">
+                      <strong class="block text-white text-[11px]">Akshay Sharma</strong>
+                      <span class="block text-[9px] text-slate-400">Lead BI Analyst</span>
+                    </div>
+                  </button>
+
+                  <button type="button" onclick="selectPersona('Aarav Mehta', 'VP Supply Chain', this)" class="role-chip p-2.5 rounded-xl border flex items-center space-x-2 text-left">
+                    <span class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-briefcase"></i></span>
+                    <div class="truncate">
+                      <strong class="block text-white text-[11px]">Aarav Mehta</strong>
+                      <span class="block text-[9px] text-slate-400">VP Supply Chain</span>
+                    </div>
+                  </button>
+
+                  <button type="button" onclick="selectPersona('Priya Patel', 'Store Operations', this)" class="role-chip p-2.5 rounded-xl border flex items-center space-x-2 text-left">
+                    <span class="w-6 h-6 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-warehouse"></i></span>
+                    <div class="truncate">
+                      <strong class="block text-white text-[11px]">Priya Patel</strong>
+                      <span class="block text-[9px] text-slate-400">Store Operations</span>
+                    </div>
+                  </button>
+
+                  <button type="button" onclick="selectPersona('Guest Auditor', 'Guest Analyst', this)" class="role-chip p-2.5 rounded-xl border flex items-center space-x-2 text-left">
+                    <span class="w-6 h-6 rounded-lg bg-sky-500/20 text-sky-300 flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-user-astronaut"></i></span>
+                    <div class="truncate">
+                      <strong class="block text-white text-[11px]">Guest Auditor</strong>
+                      <span class="block text-[9px] text-slate-400">Public Sandbox</span>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="space-y-3 pt-3">
+                <button 
+                  type="button" 
+                  onclick="submitLoginAndEnter()" 
+                  class="w-full py-3.5 px-6 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-amber-400 via-amber-300 to-emerald-400 hover:from-amber-300 hover:to-emerald-300 text-slate-950 shadow-lg shadow-amber-500/20 transition transform hover:-translate-y-0.5 flex items-center justify-center space-x-2"
                 >
+                  <span>🚀 Enter Analytics Studio</span>
+                  <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+                <button 
+                  type="button" 
+                  onclick="quickGuestLogin()" 
+                  class="w-full py-2 text-xs text-slate-400 hover:text-white transition flex items-center justify-center space-x-1"
+                >
+                  <span>Or enter with 1-click Guest Demo</span>
+                  <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                </button>
               </div>
-              <input type="hidden" id="loginRole" value="Lead BI Analyst">
+
             </div>
 
-            <!-- Quick Select Persona Chips (For Instant 1-Click Convenience) -->
-            <div class="space-y-2 pt-1">
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] uppercase font-bold tracking-wider text-[#aaa6c3]">Or Select Analyst Persona:</span>
-                <span class="text-[10px] text-[#aaa6c3]">1-click fill</span>
-              </div>
-              <div class="grid grid-cols-2 gap-2 text-xs">
-                <button type="button" onclick="selectPersona('Akshay Sharma', 'Lead BI Analyst', this)" class="role-chip active-chip p-2.5 rounded-xl border flex items-center space-x-2 text-left">
-                  <span class="w-6 h-6 rounded-lg bg-[#915eff]/20 text-[#915eff] flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-user-check"></i></span>
-                  <div class="truncate">
-                    <strong class="block text-white text-[11px]">Akshay Sharma</strong>
-                    <span class="block text-[9px] text-[#aaa6c3]">Lead BI Analyst</span>
-                  </div>
-                </button>
-                <button type="button" onclick="selectPersona('Aarav Mehta', 'VP Supply Chain', this)" class="role-chip p-2.5 rounded-xl border flex items-center space-x-2 text-left">
-                  <span class="w-6 h-6 rounded-lg bg-[#00cea8]/20 text-[#00cea8] flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-briefcase"></i></span>
-                  <div class="truncate">
-                    <strong class="block text-white text-[11px]">Aarav Mehta</strong>
-                    <span class="block text-[9px] text-[#aaa6c3]">VP Supply Chain</span>
-                  </div>
-                </button>
-                <button type="button" onclick="selectPersona('Priya Patel', 'Dark Store Operations', this)" class="role-chip p-2.5 rounded-xl border flex items-center space-x-2 text-left">
-                  <span class="w-6 h-6 rounded-lg bg-[#f8cb46]/20 text-[#f8cb46] flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-warehouse"></i></span>
-                  <div class="truncate">
-                    <strong class="block text-white text-[11px]">Priya Patel</strong>
-                    <span class="block text-[9px] text-[#aaa6c3]">Store Operations</span>
-                  </div>
-                </button>
-                <button type="button" onclick="selectPersona('Guest Auditor', 'Guest Analyst', this)" class="role-chip p-2.5 rounded-xl border flex items-center space-x-2 text-left">
-                  <span class="w-6 h-6 rounded-lg bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-user-astronaut"></i></span>
-                  <div class="truncate">
-                    <strong class="block text-white text-[11px]">Guest Auditor</strong>
-                    <span class="block text-[9px] text-[#aaa6c3]">Public Sandbox</span>
-                  </div>
-                </button>
-              </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="space-y-3 pt-3">
-              <button 
-                type="button" 
-                onclick="submitLoginAndEnter()" 
-                class="w-full py-3.5 px-6 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-[#f8cb46] via-[#f5af19] to-[#00cea8] hover:from-[#f5af19] hover:to-[#00cea8] text-[#050816] shadow-[0_10px_30px_rgba(248,203,70,0.3)] transition transform hover:-translate-y-0.5 flex items-center justify-center space-x-2"
-              >
-                <span>🚀 Enter Analytics Studio</span>
-                <i class="fa-solid fa-arrow-right"></i>
-              </button>
-
-              <button 
-                type="button" 
-                onclick="quickGuestLogin()" 
-                class="w-full py-2 text-xs text-[#aaa6c3] hover:text-white transition flex items-center justify-center space-x-1"
-              >
-                <span>Quick demo guest login</span>
-                <i class="fa-solid fa-chevron-right text-[10px]"></i>
-              </button>
+            <!-- Footer Badge -->
+            <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+              <span class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> Ready to Ingest & Query</span>
+              <span class="font-mono text-amber-400">8,523 Records</span>
             </div>
 
           </div>
-
-          <!-- Footer Metadata -->
-          <div class="pt-4 border-t border-[#2e265c] flex items-center justify-between text-[11px] text-[#aaa6c3]">
-            <span class="flex items-center"><i class="fa-solid fa-circle-check text-[#00cea8] mr-1.5"></i> SQLite Ingest Engine Ready</span>
-            <span class="font-mono text-[#f8cb46]">8,523 Transactions</span>
-          </div>
-
         </div>
       </div>
 
-      <!-- Copyright Footer -->
-      <div class="text-center text-xs text-[#aaa6c3]/60">
-        Blinkit Business Intelligence Engine • SQLite 3.50 • ReactJS18 Design Aesthetic
-      </div>
+    </div>
+
+    <!-- Page Bottom Note -->
+    <div class="absolute bottom-4 text-center text-xs text-slate-500 z-10">
+      Blinkit Business Intelligence & Analytics Engine • Soothing Eye-Friendly Dark Design
     </div>
   </div>
 
@@ -229,76 +227,81 @@
   <!-- ========================================================================= -->
   <!-- 2. MAIN ANALYTICS DASHBOARD CONTAINER (Visible Post-Login)                -->
   <!-- ========================================================================= -->
-  <div id="appView" class="hidden flex-1 flex flex-col min-h-screen bg-[#050816]">
+  <div id="appView" class="hidden flex-1 flex flex-col min-h-screen">
 
-    <!-- TOP HEADER (Deep Obsidian Space Navbar) -->
-    <header class="bg-[#050816]/95 border-b border-[#2e265c] sticky top-0 z-50 backdrop-blur-xl">
+    <!-- TOP HEADER -->
+    <header class="bg-slate-900/95 border-b border-slate-800 sticky top-0 z-50 backdrop-blur-md">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
         
         <!-- Brand -->
         <div class="flex items-center space-x-3">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#f8cb46] to-[#f5af19] flex items-center justify-center shadow-[0_0_20px_rgba(248,203,70,0.3)] text-[#050816] font-black text-xl">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-400 to-yellow-300 flex items-center justify-center shadow-md shadow-amber-500/20 text-slate-950 font-black text-xl">
             ⚡
           </div>
           <div>
             <div class="flex items-center space-x-2">
-              <span class="text-xl font-black tracking-tight text-white">blink<span class="text-[#f8cb46]">it</span></span>
-              <span class="text-xs px-2 py-0.5 rounded-full bg-[#915eff]/20 text-[#c4b5fd] border border-[#915eff]/30 font-semibold tracking-wide">SQL BI STUDIO</span>
+              <span class="text-xl font-black tracking-tight text-white">blink<span class="text-amber-400">it</span></span>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold tracking-wide">SQL BI STUDIO</span>
             </div>
-            <p class="text-[11px] text-[#aaa6c3]">Data Cleansing • Window Functions • Multi-Table Joins • Strategic Report</p>
+            <p class="text-[11px] text-slate-400">Data Cleansing • Window Functions • Multi-Table Joins • Strategic Report</p>
           </div>
         </div>
 
         <!-- User Profile & Action Buttons -->
         <div class="flex items-center space-x-3">
           <!-- Active Logged User Chip -->
-          <div class="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-[#151030] border border-[#2e265c] text-xs">
-            <div class="w-6 h-6 rounded-full bg-[#915eff]/20 text-[#915eff] flex items-center justify-center font-bold text-[10px]">
+          <div class="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 text-xs">
+            <div class="w-6 h-6 rounded-full bg-amber-400/20 text-amber-300 flex items-center justify-center font-bold text-[10px]">
               <i class="fa-solid fa-user-check"></i>
             </div>
             <div>
               <span id="topLoggedUser" class="font-bold text-white block text-[11px]">Akshay Sharma</span>
-              <span id="topLoggedRole" class="text-[9px] text-[#aaa6c3] block -mt-0.5">Lead BI Analyst</span>
+              <span id="topLoggedRole" class="text-[9px] text-slate-400 block -mt-0.5">Lead BI Analyst</span>
             </div>
           </div>
 
           <!-- Switch User Button -->
-          <button onclick="logoutToLoginPage()" title="Return to Login Page" class="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#151030] hover:bg-[#100d25] text-[#aaa6c3] hover:text-white border border-[#2e265c] transition">
+          <button onclick="logoutToLoginPage()" title="Return to Login Page" class="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition">
             <i class="fa-solid fa-arrow-right-from-bracket mr-1.5 text-rose-400"></i> Switch User
           </button>
 
+          <!-- Soothing Theme Toggle (Dark / Light Soothing) -->
+          <button onclick="toggleSoothingTheme()" id="themeToggleBtn" title="Toggle Eye-Friendly Theme" class="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
+            <i class="fa-solid fa-circle-half-stroke mr-1.5 text-amber-400"></i> Theme
+          </button>
+
           <!-- File Upload Form -->
-          <label for="csvFileInput" class="cursor-pointer inline-flex items-center px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-[#151030] hover:bg-[#100d25] text-[#f3f3f3] border border-[#2e265c] transition shadow-sm">
-            <i class="fa-solid fa-cloud-arrow-up mr-2 text-[#f8cb46]"></i> Upload CSV
+          <label for="csvFileInput" class="cursor-pointer inline-flex items-center px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition shadow-sm">
+            <i class="fa-solid fa-cloud-arrow-up mr-2 text-amber-400"></i> Upload CSV
           </label>
           <input type="file" id="csvFileInput" accept=".csv" class="hidden">
 
           <!-- Reset Button -->
-          <button id="resetDataBtn" class="inline-flex items-center px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-[#151030] hover:bg-[#100d25] text-[#aaa6c3] hover:text-white border border-[#2e265c] transition">
-            <i class="fa-solid fa-rotate-left mr-2 text-[#aaa6c3]"></i> Reset Default
+          <button id="resetDataBtn" class="inline-flex items-center px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition">
+            <i class="fa-solid fa-rotate-left mr-2 text-slate-400"></i> Reset Default
           </button>
 
           <!-- Print / Export Report -->
-          <button onclick="window.printReport()" class="inline-flex items-center px-4 py-1.5 rounded-lg text-xs font-bold bg-gradient-to-r from-[#f8cb46] to-[#f5af19] hover:from-[#f5af19] text-[#050816] shadow-md shadow-amber-500/20 transition">
+          <button onclick="window.printReport()" class="inline-flex items-center px-4 py-1.5 rounded-lg text-xs font-bold bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-md shadow-amber-500/20 transition">
             <i class="fa-solid fa-file-pdf mr-2"></i> Print / PDF Report
           </button>
         </div>
       </div>
 
       <!-- 4 ANALYTICAL NAVIGATION TABS (Strictly Analytical Matter) -->
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-[#2e265c]/60">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-800/80">
         <nav class="flex space-x-2 sm:space-x-8 py-2 overflow-x-auto text-sm font-medium">
           <button onclick="switchTab('cleaningTab')" id="nav-cleaningTab" class="tab-btn active-tab flex items-center px-3.5 py-2 rounded-lg border-b-2 font-medium transition text-xs sm:text-sm">
-            <i class="fa-solid fa-broom mr-2 text-[#f8cb46]"></i> 1. Ingestion & Data Cleaning
+            <i class="fa-solid fa-broom mr-2 text-amber-400"></i> 1. Ingestion & Data Cleaning
           </button>
-          <button onclick="switchTab('sqlTab')" id="nav-sqlTab" class="tab-btn flex items-center px-3.5 py-2 rounded-lg border-b-2 border-transparent text-[#aaa6c3] hover:text-white transition text-xs sm:text-sm">
-            <i class="fa-solid fa-database mr-2 text-[#00cea8]"></i> 2. SQL Functions & Studio
+          <button onclick="switchTab('sqlTab')" id="nav-sqlTab" class="tab-btn flex items-center px-3.5 py-2 rounded-lg border-b-2 border-transparent text-slate-400 hover:text-white transition text-xs sm:text-sm">
+            <i class="fa-solid fa-database mr-2 text-emerald-400"></i> 2. SQL Functions & Studio
           </button>
-          <button onclick="switchTab('dashboardTab')" id="nav-dashboardTab" class="tab-btn flex items-center px-3.5 py-2 rounded-lg border-b-2 border-transparent text-[#aaa6c3] hover:text-white transition text-xs sm:text-sm">
-            <i class="fa-solid fa-chart-line mr-2 text-[#38bdf8]"></i> 3. Visual Analytics Dashboard
+          <button onclick="switchTab('dashboardTab')" id="nav-dashboardTab" class="tab-btn flex items-center px-3.5 py-2 rounded-lg border-b-2 border-transparent text-slate-400 hover:text-white transition text-xs sm:text-sm">
+            <i class="fa-solid fa-chart-line mr-2 text-sky-400"></i> 3. Visual Analytics Dashboard
           </button>
-          <button onclick="switchTab('reportTab')" id="nav-reportTab" class="tab-btn flex items-center px-3.5 py-2 rounded-lg border-b-2 border-transparent text-[#aaa6c3] hover:text-white transition text-xs sm:text-sm">
-            <i class="fa-solid fa-file-contract mr-2 text-[#915eff]"></i> 4. Business Report & Recommendations
+          <button onclick="switchTab('reportTab')" id="nav-reportTab" class="tab-btn flex items-center px-3.5 py-2 rounded-lg border-b-2 border-transparent text-slate-400 hover:text-white transition text-xs sm:text-sm">
+            <i class="fa-solid fa-file-contract mr-2 text-indigo-400"></i> 4. Business Report & Recommendations
           </button>
         </nav>
       </div>
@@ -306,17 +309,17 @@
 
     <!-- Welcome Notification Banner for Logged User -->
     <div id="welcomeBanner" class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4 transition-all duration-300">
-      <div class="p-3.5 rounded-2xl bg-[#151030] border border-[#2e265c] flex items-center justify-between text-xs shadow-lg">
+      <div class="p-3.5 rounded-2xl soothing-card flex items-center justify-between text-xs">
         <div class="flex items-center space-x-2.5">
-          <span class="w-7 h-7 rounded-lg bg-[#915eff]/20 text-[#915eff] flex items-center justify-center font-bold text-xs">
+          <span class="w-7 h-7 rounded-lg bg-amber-400/20 text-amber-300 flex items-center justify-center font-bold text-xs">
             <i class="fa-solid fa-bolt"></i>
           </span>
           <div>
             <span class="font-bold text-white">Welcome, <span id="bannerUserName">Akshay Sharma</span>!</span>
-            <span class="text-[#aaa6c3] ml-1">You are accessing the Blinkit SQL Analytics & Business Intelligence Engine.</span>
+            <span class="text-slate-400 ml-1">You are accessing the Blinkit SQL Analytics & Business Intelligence Engine.</span>
           </div>
         </div>
-        <button onclick="document.getElementById('welcomeBanner').classList.add('hidden')" class="text-[#aaa6c3] hover:text-white">
+        <button onclick="document.getElementById('welcomeBanner').classList.add('hidden')" class="text-slate-400 hover:text-white">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
@@ -327,81 +330,81 @@
 
       <!-- TOP KPI BAR (Persists across dashboard) -->
       <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5">
-        <div class="kpi-card bg-[#151030] p-4 rounded-2xl border border-[#2e265c] hover:border-[#f8cb46]/50 transition shadow-lg">
-          <div class="flex items-center justify-between text-[#aaa6c3] text-xs">
+        <div class="kpi-card soothing-card p-4 rounded-2xl hover:border-amber-400/50 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
             <span>Total Revenue</span>
-            <i class="fa-solid fa-sack-dollar text-[#f8cb46]"></i>
+            <i class="fa-solid fa-sack-dollar text-amber-400"></i>
           </div>
           <div class="mt-2 text-2xl font-black text-white" id="kpi-total-sales">$1.20M</div>
-          <div class="text-[11px] text-[#00cea8] mt-0.5"><i class="fa-solid fa-arrow-trend-up"></i> 8,523 Transactions</div>
+          <div class="text-[11px] text-emerald-400 mt-0.5"><i class="fa-solid fa-arrow-trend-up"></i> 8,523 Transactions</div>
         </div>
 
-        <div class="kpi-card bg-[#151030] p-4 rounded-2xl border border-[#2e265c] hover:border-[#38bdf8]/50 transition shadow-lg">
-          <div class="flex items-center justify-between text-[#aaa6c3] text-xs">
+        <div class="kpi-card soothing-card p-4 rounded-2xl hover:border-sky-400/50 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
             <span>Avg Sale / Item</span>
-            <i class="fa-solid fa-cart-shopping text-[#38bdf8]"></i>
+            <i class="fa-solid fa-cart-shopping text-sky-400"></i>
           </div>
           <div class="mt-2 text-2xl font-black text-white" id="kpi-avg-sales">$140.99</div>
-          <div class="text-[11px] text-[#aaa6c3] mt-0.5">Mean transaction value</div>
+          <div class="text-[11px] text-slate-400 mt-0.5">Mean transaction value</div>
         </div>
 
-        <div class="kpi-card bg-[#151030] p-4 rounded-2xl border border-[#2e265c] hover:border-[#f8cb46]/50 transition shadow-lg">
-          <div class="flex items-center justify-between text-[#aaa6c3] text-xs">
+        <div class="kpi-card soothing-card p-4 rounded-2xl hover:border-amber-400/50 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
             <span>Customer Rating</span>
-            <i class="fa-solid fa-star text-[#f8cb46]"></i>
+            <i class="fa-solid fa-star text-amber-400"></i>
           </div>
           <div class="mt-2 text-2xl font-black text-white flex items-center">
-            <span id="kpi-avg-rating">3.97</span><span class="text-xs text-[#aaa6c3] font-normal ml-1">/ 5.0</span>
+            <span id="kpi-avg-rating">3.97</span><span class="text-xs text-slate-400 font-normal ml-1">/ 5.0</span>
           </div>
-          <div class="text-[11px] text-[#f8cb46] mt-0.5"><i class="fa-solid fa-face-smile"></i> High satisfaction</div>
+          <div class="text-[11px] text-amber-400 mt-0.5"><i class="fa-solid fa-face-smile"></i> High satisfaction</div>
         </div>
 
-        <div class="kpi-card bg-[#151030] p-4 rounded-2xl border border-[#2e265c] hover:border-[#00cea8]/50 transition shadow-lg">
-          <div class="flex items-center justify-between text-[#aaa6c3] text-xs">
+        <div class="kpi-card soothing-card p-4 rounded-2xl hover:border-emerald-400/50 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
             <span>Est. Gross Profit</span>
-            <i class="fa-solid fa-coins text-[#00cea8]"></i>
+            <i class="fa-solid fa-coins text-emerald-400"></i>
           </div>
-          <div class="mt-2 text-2xl font-black text-[#00cea8]" id="kpi-gross-profit">$281.88k</div>
-          <div class="text-[11px] text-[#aaa6c3] mt-0.5"><span id="kpi-margin-pct">23.5%</span> avg margin</div>
+          <div class="mt-2 text-2xl font-black text-emerald-400" id="kpi-gross-profit">$281.88k</div>
+          <div class="text-[11px] text-slate-400 mt-0.5"><span id="kpi-margin-pct">23.5%</span> avg margin</div>
         </div>
 
-        <div class="kpi-card bg-[#151030] p-4 rounded-2xl border border-[#2e265c] hover:border-[#915eff]/50 transition shadow-lg">
-          <div class="flex items-center justify-between text-[#aaa6c3] text-xs">
+        <div class="kpi-card soothing-card p-4 rounded-2xl hover:border-indigo-400/50 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
             <span>Active Hubs</span>
-            <i class="fa-solid fa-warehouse text-[#915eff]"></i>
+            <i class="fa-solid fa-warehouse text-indigo-400"></i>
           </div>
           <div class="mt-2 text-2xl font-black text-white" id="kpi-outlets">10</div>
-          <div class="text-[11px] text-[#aaa6c3] mt-0.5">Across 3 location tiers</div>
+          <div class="text-[11px] text-slate-400 mt-0.5">Across 3 location tiers</div>
         </div>
 
-        <div class="kpi-card bg-[#151030] p-4 rounded-2xl border border-[#2e265c] hover:border-[#00cea8]/50 transition shadow-lg">
-          <div class="flex items-center justify-between text-[#aaa6c3] text-xs">
+        <div class="kpi-card soothing-card p-4 rounded-2xl hover:border-emerald-400/50 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
             <span>Data Hygiene Score</span>
-            <i class="fa-solid fa-shield-halved text-[#00cea8]"></i>
+            <i class="fa-solid fa-shield-halved text-emerald-400"></i>
           </div>
-          <div class="mt-2 text-2xl font-black text-[#00cea8]">100%</div>
-          <div class="text-[11px] text-[#00cea8] mt-0.5"><i class="fa-solid fa-circle-check"></i> Post-Clean Ready</div>
+          <div class="mt-2 text-2xl font-black text-emerald-400">100%</div>
+          <div class="text-[11px] text-emerald-400 mt-0.5"><i class="fa-solid fa-circle-check"></i> Post-Clean Ready</div>
         </div>
       </section>
 
       <!-- TAB 1: DATA INGESTION & CLEANING PIPELINE -->
       <div id="cleaningTab" class="tab-content space-y-6">
-        <div class="bg-[#151030] rounded-3xl border border-[#2e265c] p-6 space-y-6 shadow-card">
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#2e265c] pb-5">
+        <div class="soothing-card rounded-3xl p-6 space-y-6">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-700/60 pb-5">
             <div>
               <h2 class="text-xl font-bold text-white flex items-center">
-                <i class="fa-solid fa-wand-magic-sparkles text-[#f8cb46] mr-2.5"></i>
+                <i class="fa-solid fa-wand-magic-sparkles text-amber-400 mr-2.5"></i>
                 Data Cleaning & Normalization Pipeline
               </h2>
-              <p class="text-sm text-[#aaa6c3] mt-1">
+              <p class="text-sm text-slate-400 mt-1">
                 Automated ingestion, inconsistency resolution, null imputation, and data hygiene audit trail.
               </p>
             </div>
             <div class="flex items-center space-x-2">
-              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#00cea8]/20 text-[#00cea8] border border-[#00cea8]/40">
+              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
                 <i class="fa-solid fa-check mr-1.5"></i> Clean Table: <code>blinkit_cleaned</code>
               </span>
-              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#100d25] text-[#aaa6c3] border border-[#2e265c]">
+              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">
                 Raw Table: <code>blinkit_raw</code>
               </span>
             </div>
@@ -410,53 +413,50 @@
           <!-- 3 Critical Cleaning Pillars Cards -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             <!-- Rule 1 -->
-            <div class="bg-[#100d25] p-5 rounded-2xl border border-[#2e265c] relative overflow-hidden">
-              <div class="absolute top-0 right-0 w-24 h-24 bg-[#f8cb46]/5 rounded-bl-full pointer-events-none"></div>
+            <div class="soothing-card-inner p-5 rounded-2xl border border-slate-700/60 relative overflow-hidden">
               <div class="flex items-center justify-between">
-                <span class="text-xs uppercase tracking-wider font-bold text-[#f8cb46]">Standardization</span>
-                <span class="px-2 py-0.5 text-[10px] font-bold rounded bg-[#f8cb46]/20 text-[#f8cb46]">RULE 1</span>
+                <span class="text-xs uppercase tracking-wider font-bold text-amber-400">Standardization</span>
+                <span class="px-2 py-0.5 text-[10px] font-bold rounded bg-amber-400/20 text-amber-300">RULE 1</span>
               </div>
               <h3 class="font-bold text-white mt-2 text-base">Item Fat Content Discrepancy</h3>
-              <p class="text-xs text-[#aaa6c3] mt-1 leading-relaxed">
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
                 Standardized fragmented categorical codes <code>'LF'</code> (316 rows), <code>'low fat'</code> (112 rows) into <code>'Low Fat'</code>, and <code>'reg'</code> (117 rows) into <code>'Regular'</code>.
               </p>
-              <div class="mt-4 pt-3 border-t border-[#2e265c] text-xs flex justify-between items-center text-[#f3f3f3]">
-                <span class="text-[#aaa6c3]">Categories Unified:</span>
-                <span class="font-mono font-semibold text-[#00cea8]">5 → 2 Clean Classes</span>
+              <div class="mt-4 pt-3 border-t border-slate-700 text-xs flex justify-between items-center text-slate-300">
+                <span class="text-slate-400">Categories Unified:</span>
+                <span class="font-mono font-semibold text-emerald-400">5 → 2 Clean Classes</span>
               </div>
             </div>
 
             <!-- Rule 2 -->
-            <div class="bg-[#100d25] p-5 rounded-2xl border border-[#2e265c] relative overflow-hidden">
-              <div class="absolute top-0 right-0 w-24 h-24 bg-[#38bdf8]/5 rounded-bl-full pointer-events-none"></div>
+            <div class="soothing-card-inner p-5 rounded-2xl border border-slate-700/60 relative overflow-hidden">
               <div class="flex items-center justify-between">
-                <span class="text-xs uppercase tracking-wider font-bold text-[#38bdf8]">Imputation</span>
-                <span class="px-2 py-0.5 text-[10px] font-bold rounded bg-[#38bdf8]/20 text-[#38bdf8]">RULE 2</span>
+                <span class="text-xs uppercase tracking-wider font-bold text-sky-400">Imputation</span>
+                <span class="px-2 py-0.5 text-[10px] font-bold rounded bg-sky-400/20 text-sky-300">RULE 2</span>
               </div>
               <h3 class="font-bold text-white mt-2 text-base">Missing Item Weight Imputation</h3>
-              <p class="text-xs text-[#aaa6c3] mt-1 leading-relaxed">
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
                 Found 1,463 missing values in <code>Item Weight</code>. Imputed null values using conditional category-wise mean weight based on <code>Item Type</code> and product group.
               </p>
-              <div class="mt-4 pt-3 border-t border-[#2e265c] text-xs flex justify-between items-center text-[#f3f3f3]">
-                <span class="text-[#aaa6c3]">Nulls Remaining:</span>
-                <span class="font-mono font-semibold text-[#00cea8]" id="audit-missing-weight">0 / 8,523 (0%)</span>
+              <div class="mt-4 pt-3 border-t border-slate-700 text-xs flex justify-between items-center text-slate-300">
+                <span class="text-slate-400">Nulls Remaining:</span>
+                <span class="font-mono font-semibold text-emerald-400" id="audit-missing-weight">0 / 8,523 (0%)</span>
               </div>
             </div>
 
             <!-- Rule 3 -->
-            <div class="bg-[#100d25] p-5 rounded-2xl border border-[#2e265c] relative overflow-hidden">
-              <div class="absolute top-0 right-0 w-24 h-24 bg-[#915eff]/5 rounded-bl-full pointer-events-none"></div>
+            <div class="soothing-card-inner p-5 rounded-2xl border border-slate-700/60 relative overflow-hidden">
               <div class="flex items-center justify-between">
-                <span class="text-xs uppercase tracking-wider font-bold text-[#915eff]">Anomaly Correction</span>
-                <span class="px-2 py-0.5 text-[10px] font-bold rounded bg-[#915eff]/20 text-[#915eff]">RULE 3</span>
+                <span class="text-xs uppercase tracking-wider font-bold text-indigo-400">Anomaly Correction</span>
+                <span class="px-2 py-0.5 text-[10px] font-bold rounded bg-indigo-400/20 text-indigo-300">RULE 3</span>
               </div>
               <h3 class="font-bold text-white mt-2 text-base">Zero Visibility Metric Repair</h3>
-              <p class="text-xs text-[#aaa6c3] mt-1 leading-relaxed">
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
                 526 active items recorded <code>Item Visibility = 0</code> despite positive sales. Items physically displayed cannot have zero visibility. Imputed with category mean visibility.
               </p>
-              <div class="mt-4 pt-3 border-t border-[#2e265c] text-xs flex justify-between items-center text-[#f3f3f3]">
-                <span class="text-[#aaa6c3]">Zero Visibility Rows:</span>
-                <span class="font-mono font-semibold text-[#00cea8]" id="audit-zero-vis">0 Anomalies Left</span>
+              <div class="mt-4 pt-3 border-t border-slate-700 text-xs flex justify-between items-center text-slate-300">
+                <span class="text-slate-400">Zero Visibility Rows:</span>
+                <span class="font-mono font-semibold text-emerald-400" id="audit-zero-vis">0 Anomalies Left</span>
               </div>
             </div>
           </div>
@@ -465,24 +465,24 @@
           <div class="space-y-3">
             <div class="flex items-center justify-between">
               <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center">
-                <i class="fa-solid fa-code-compare text-[#f8cb46] mr-2"></i>
+                <i class="fa-solid fa-code-compare text-amber-400 mr-2"></i>
                 Live Sample Inspection: Raw vs Cleaned Records
               </h3>
-              <span class="text-xs text-[#aaa6c3]">First 5 records from SQLite tables</span>
+              <span class="text-xs text-slate-400">First 5 records from SQLite tables</span>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <!-- Raw Table View -->
-              <div class="bg-[#100d25] p-4 rounded-2xl border border-rose-900/40">
+              <div class="soothing-card-inner p-4 rounded-2xl border border-rose-900/40">
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-xs font-bold text-rose-400 flex items-center">
                     <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Raw Ingested Data (<code>blinkit_raw</code>)
                   </span>
-                  <span class="text-[11px] text-[#aaa6c3]">Contains dirty values & nulls</span>
+                  <span class="text-[11px] text-slate-400">Contains dirty values & nulls</span>
                 </div>
                 <div class="overflow-x-auto max-h-56">
-                  <table class="w-full text-[11px] text-left text-[#f3f3f3] divide-y divide-[#2e265c]" id="rawSampleTable">
-                    <thead class="text-[#aaa6c3] bg-[#050816]/60 sticky top-0">
+                  <table class="w-full text-[11px] text-left text-slate-200 divide-y divide-slate-800" id="rawSampleTable">
+                    <thead class="text-slate-400 bg-slate-900/60 sticky top-0">
                       <tr>
                         <th class="py-2 px-2">Item ID</th>
                         <th class="py-2 px-2">Fat Content</th>
@@ -491,7 +491,7 @@
                         <th class="py-2 px-2">Sales</th>
                       </tr>
                     </thead>
-                    <tbody class="divide-y divide-[#2e265c]/50 font-mono" id="rawSampleBody">
+                    <tbody class="divide-y divide-slate-800 font-mono" id="rawSampleBody">
                       <!-- Populated via JS -->
                     </tbody>
                   </table>
@@ -499,16 +499,16 @@
               </div>
 
               <!-- Cleaned Table View -->
-              <div class="bg-[#100d25] p-4 rounded-2xl border border-emerald-900/40">
+              <div class="soothing-card-inner p-4 rounded-2xl border border-emerald-900/40">
                 <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-[#00cea8] flex items-center">
+                  <span class="text-xs font-bold text-emerald-400 flex items-center">
                     <i class="fa-solid fa-circle-check mr-1.5"></i> Cleaned & Standardized (<code>blinkit_cleaned</code>)
                   </span>
-                  <span class="text-[11px] text-[#aaa6c3]">Ready for SQL joins & analytics</span>
+                  <span class="text-[11px] text-slate-400">Ready for SQL joins & analytics</span>
                 </div>
                 <div class="overflow-x-auto max-h-56">
-                  <table class="w-full text-[11px] text-left text-[#f3f3f3] divide-y divide-[#2e265c]" id="cleanSampleTable">
-                    <thead class="text-[#aaa6c3] bg-[#050816]/60 sticky top-0">
+                  <table class="w-full text-[11px] text-left text-slate-200 divide-y divide-slate-800" id="cleanSampleTable">
+                    <thead class="text-slate-400 bg-slate-900/60 sticky top-0">
                       <tr>
                         <th class="py-2 px-2">Item ID</th>
                         <th class="py-2 px-2">Fat Content</th>
@@ -517,7 +517,7 @@
                         <th class="py-2 px-2">Sales</th>
                       </tr>
                     </thead>
-                    <tbody class="divide-y divide-[#2e265c]/50 font-mono" id="cleanSampleBody">
+                    <tbody class="divide-y divide-slate-800 font-mono" id="cleanSampleBody">
                       <!-- Populated via JS -->
                     </tbody>
                   </table>
@@ -535,12 +535,12 @@
 
           <!-- Left Column: Pre-built SQL Catalog & Schema -->
           <div class="lg:col-span-4 space-y-4">
-            <div class="bg-[#151030] rounded-3xl border border-[#2e265c] p-5 space-y-4 shadow-card">
-              <div class="flex items-center justify-between border-b border-[#2e265c] pb-3">
+            <div class="soothing-card rounded-3xl p-5 space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-700/60 pb-3">
                 <h3 class="font-bold text-white text-sm flex items-center">
-                  <i class="fa-solid fa-list-check text-[#f8cb46] mr-2"></i> SQL Function Catalog
+                  <i class="fa-solid fa-list-check text-amber-400 mr-2"></i> SQL Function Catalog
                 </h3>
-                <span class="text-[11px] text-[#aaa6c3]">Click to load</span>
+                <span class="text-[11px] text-slate-400">Click to load</span>
               </div>
 
               <!-- Query Categories -->
@@ -550,33 +550,33 @@
             </div>
 
             <!-- SQLite Schema Guide -->
-            <div class="bg-[#151030] rounded-3xl border border-[#2e265c] p-5 text-xs space-y-2 shadow-card">
+            <div class="soothing-card rounded-3xl p-5 text-xs space-y-2">
               <h4 class="font-bold text-white flex items-center">
-                <i class="fa-solid fa-table-cells text-[#38bdf8] mr-2"></i> Available Tables & Schema
+                <i class="fa-solid fa-table-cells text-sky-400 mr-2"></i> Available Tables & Schema
               </h4>
-              <div class="space-y-1.5 text-[#aaa6c3] font-mono text-[11px]">
-                <div><strong class="text-[#00cea8]">blinkit_cleaned</strong> (Item Fat Content, Item Identifier, Item Type, Outlet Establishment Year, Outlet Identifier, Outlet Location Type, Outlet Size, Outlet Type, Item Visibility, Item Weight, Sales, Rating)</div>
-                <div><strong class="text-[#38bdf8]">category_benchmarks</strong> (Item Type, Category Code, Target Margin Pct, Perishability Tier, Strategic Priority)</div>
-                <div><strong class="text-[#915eff]">outlet_benchmarks</strong> (Outlet Identifier, Hub Name, Target Sales Monthly, Operating Cost Tier, Quick Commerce SLA Mins, Cold Storage Capacity CuFt)</div>
+              <div class="space-y-1.5 text-slate-400 font-mono text-[11px]">
+                <div><strong class="text-emerald-400">blinkit_cleaned</strong> (Item Fat Content, Item Identifier, Item Type, Outlet Establishment Year, Outlet Identifier, Outlet Location Type, Outlet Size, Outlet Type, Item Visibility, Item Weight, Sales, Rating)</div>
+                <div><strong class="text-sky-400">category_benchmarks</strong> (Item Type, Category Code, Target Margin Pct, Perishability Tier, Strategic Priority)</div>
+                <div><strong class="text-indigo-400">outlet_benchmarks</strong> (Outlet Identifier, Hub Name, Target Sales Monthly, Operating Cost Tier, Quick Commerce SLA Mins, Cold Storage Capacity CuFt)</div>
               </div>
             </div>
           </div>
 
           <!-- Right Column: Interactive SQL Runner & Results -->
           <div class="lg:col-span-8 space-y-4">
-            <div class="bg-[#151030] rounded-3xl border border-[#2e265c] p-5 space-y-4 shadow-card">
-              <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[#2e265c] pb-3">
+            <div class="soothing-card rounded-3xl p-5 space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-700/60 pb-3">
                 <div>
                   <h3 class="font-bold text-white text-base flex items-center">
-                    <i class="fa-solid fa-terminal text-[#00cea8] mr-2"></i> Interactive SQL Console
+                    <i class="fa-solid fa-terminal text-emerald-400 mr-2"></i> Interactive SQL Console
                   </h3>
-                  <p class="text-xs text-[#aaa6c3]">Execute Window functions, Joins, CTEs, and aggregations live against SQLite 3.50 engine.</p>
+                  <p class="text-xs text-slate-400">Execute Window functions, Joins, CTEs, and aggregations live against SQLite 3.50 engine.</p>
                 </div>
                 <div class="flex items-center space-x-2">
-                  <button id="runSqlBtn" class="inline-flex items-center px-4 py-2 rounded-xl text-xs font-bold bg-[#00cea8] hover:bg-[#00cea8]/90 text-[#050816] shadow-md shadow-emerald-500/20 transition">
+                  <button id="runSqlBtn" class="inline-flex items-center px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-md shadow-emerald-500/20 transition">
                     <i class="fa-solid fa-play mr-1.5"></i> Run SQL Query
                   </button>
-                  <button id="copySqlBtn" class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-semibold bg-[#100d25] hover:bg-[#151030] text-[#f3f3f3] border border-[#2e265c] transition">
+                  <button id="copySqlBtn" class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
                     <i class="fa-regular fa-copy"></i>
                   </button>
                 </div>
@@ -584,36 +584,36 @@
 
               <!-- SQL Text Area Editor -->
               <div class="relative">
-                <textarea id="sqlQueryInput" rows="7" class="w-full bg-[#100d25] text-[#00cea8] font-mono text-xs sm:text-sm p-4 rounded-2xl border border-[#2e265c] focus:border-[#915eff] focus:ring-1 focus:ring-[#915eff] outline-none resize-y" placeholder="Write any SQL query here..."></textarea>
+                <textarea id="sqlQueryInput" rows="7" class="w-full bg-slate-950 text-emerald-300 font-mono text-xs sm:text-sm p-4 rounded-2xl border border-slate-700 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none resize-y" placeholder="Write any SQL query here..."></textarea>
               </div>
 
               <!-- Query Metadata & Stats -->
-              <div class="flex items-center justify-between text-xs text-[#aaa6c3] px-1">
+              <div class="flex items-center justify-between text-xs text-slate-400 px-1">
                 <span id="queryStatusText">Ready to execute</span>
-                <span id="queryTimingText" class="font-mono text-[#aaa6c3]">0.00 ms</span>
+                <span id="queryTimingText" class="font-mono text-slate-400">0.00 ms</span>
               </div>
 
               <!-- Results Table Container -->
-              <div class="border border-[#2e265c] rounded-2xl overflow-hidden bg-[#100d25]">
-                <div class="flex items-center justify-between px-4 py-2.5 bg-[#050816] border-b border-[#2e265c] text-xs">
+              <div class="border border-slate-700 rounded-2xl overflow-hidden bg-slate-950">
+                <div class="flex items-center justify-between px-4 py-2.5 bg-slate-900 border-b border-slate-800 text-xs">
                   <span class="font-semibold text-white flex items-center">
-                    <i class="fa-solid fa-table mr-2 text-[#f8cb46]"></i> Query Output
+                    <i class="fa-solid fa-table mr-2 text-amber-400"></i> Query Output
                   </span>
                   <div class="flex items-center space-x-3">
-                    <span id="resultRowCount" class="text-[#aaa6c3]">0 rows</span>
-                    <button id="exportCsvBtn" class="text-[#f8cb46] hover:text-[#f8cb46]/80 font-medium">
+                    <span id="resultRowCount" class="text-slate-400">0 rows</span>
+                    <button id="exportCsvBtn" class="text-amber-400 hover:text-amber-300 font-medium">
                       <i class="fa-solid fa-download mr-1"></i> Export CSV
                     </button>
                   </div>
                 </div>
 
                 <div class="overflow-x-auto max-h-[380px] p-2">
-                  <table class="w-full text-left text-xs text-[#f3f3f3] divide-y divide-[#2e265c]" id="sqlResultsTable">
-                    <thead class="text-[#aaa6c3] bg-[#050816] sticky top-0" id="sqlResultsHead">
+                  <table class="w-full text-left text-xs text-slate-200 divide-y divide-slate-800" id="sqlResultsTable">
+                    <thead class="text-slate-400 bg-slate-900 sticky top-0" id="sqlResultsHead">
                       <tr><th class="py-2 px-3">Execute a query above to see results</th></tr>
                     </thead>
-                    <tbody class="divide-y divide-[#2e265c]/60 font-mono text-[11px]" id="sqlResultsBody">
-                      <tr><td class="py-3 px-3 text-[#aaa6c3] italic">No query executed yet. Select a template on the left or type SQL.</td></tr>
+                    <tbody class="divide-y divide-slate-800 font-mono text-[11px]" id="sqlResultsBody">
+                      <tr><td class="py-3 px-3 text-slate-400 italic">No query executed yet. Select a template on the left or type SQL.</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -629,16 +629,16 @@
       <div id="dashboardTab" class="tab-content hidden space-y-6">
 
         <!-- Header Bar -->
-        <div class="bg-[#151030] rounded-3xl border border-[#2e265c] p-5 flex flex-wrap items-center justify-between gap-4 shadow-card">
+        <div class="soothing-card rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
           <div>
             <h2 class="text-xl font-bold text-white flex items-center">
-              <i class="fa-solid fa-chart-pie text-[#38bdf8] mr-2.5"></i>
+              <i class="fa-solid fa-chart-pie text-sky-400 mr-2.5"></i>
               Visual Analytics & Multi-Dimensional Charts
             </h2>
-            <p class="text-xs text-[#aaa6c3] mt-1">Deep visualization of sales drivers, consumer preferences, outlet efficiency, and assortment mix.</p>
+            <p class="text-xs text-slate-400 mt-1">Deep visualization of sales drivers, consumer preferences, outlet efficiency, and assortment mix.</p>
           </div>
           <div class="flex items-center space-x-2 text-xs">
-            <span class="text-[#aaa6c3]"><i class="fa-solid fa-circle-info text-[#f8cb46] mr-1"></i> Charts dynamically generated from SQL aggregations</span>
+            <span class="text-slate-400"><i class="fa-solid fa-circle-info text-amber-400 mr-1"></i> Charts dynamically generated from SQL aggregations</span>
           </div>
         </div>
 
@@ -646,150 +646,150 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
           <!-- Chart 1: Sales by Item Type (Horizontal Bar) -->
-          <div class="chart-card bg-[#151030] rounded-3xl border border-[#2e265c] p-5 flex flex-col justify-between shadow-card">
+          <div class="chart-card soothing-card rounded-3xl p-5 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-2">
                 <h3 class="font-bold text-white text-sm flex items-center">
-                  <i class="fa-solid fa-chart-bar text-[#f8cb46] mr-2"></i> 1. Sales & Revenue by Item Type
+                  <i class="fa-solid fa-chart-bar text-amber-400 mr-2"></i> 1. Sales & Revenue by Item Type
                 </h3>
-                <span class="text-[11px] px-2 py-0.5 rounded bg-[#f8cb46]/10 text-[#f8cb46] font-semibold border border-[#f8cb46]/20">Pareto Drivers</span>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-amber-400/10 text-amber-300 font-semibold border border-amber-400/20">Pareto Drivers</span>
               </div>
-              <p class="text-xs text-[#aaa6c3] mb-3">Identifies top-earning grocery categories (Fruits, Snacks, Household) vs underperforming niches.</p>
+              <p class="text-xs text-slate-400 mb-3">Identifies top-earning grocery categories (Fruits, Snacks, Household) vs underperforming niches.</p>
               <div class="h-64 relative">
                 <canvas id="itemTypeChart"></canvas>
               </div>
             </div>
             <!-- Chart Business Insight Callout -->
-            <div class="mt-4 p-3 rounded-2xl bg-[#100d25] border border-[#f8cb46]/30 text-xs">
-              <span class="font-bold text-[#f8cb46] flex items-center mb-1">
+            <div class="mt-4 p-3 rounded-2xl soothing-card-inner border border-amber-500/30 text-xs">
+              <span class="font-bold text-amber-400 flex items-center mb-1">
                 <i class="fa-solid fa-lightbulb mr-1.5"></i> Business Diagram Insight:
               </span>
-              <p class="text-[#f3f3f3] text-[11px] leading-relaxed">
+              <p class="text-slate-200 text-[11px] leading-relaxed">
                 <strong>Fruits & Veg ($178k)</strong> and <strong>Snack Foods ($172k)</strong> account for nearly 30% of entire gross revenue. Meanwhile, <strong>Seafood ($9k)</strong> and <strong>Breakfast ($15k)</strong> exhibit lowest turnover, representing prime targets for shelf-space rationalization.
               </p>
             </div>
           </div>
 
           <!-- Chart 2: Percentage of Sales by Outlet Size (Donut - Window Function) -->
-          <div class="chart-card bg-[#151030] rounded-3xl border border-[#2e265c] p-5 flex flex-col justify-between shadow-card">
+          <div class="chart-card soothing-card rounded-3xl p-5 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-2">
                 <h3 class="font-bold text-white text-sm flex items-center">
-                  <i class="fa-solid fa-chart-pie text-[#00cea8] mr-2"></i> 2. Sales Share by Outlet Size (SQL Window OVER)
+                  <i class="fa-solid fa-chart-pie text-emerald-400 mr-2"></i> 2. Sales Share by Outlet Size (SQL Window OVER)
                 </h3>
-                <span class="text-[11px] px-2 py-0.5 rounded bg-[#00cea8]/10 text-[#00cea8] font-semibold border border-[#00cea8]/20">Window % Share</span>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 font-semibold border border-emerald-500/20">Window % Share</span>
               </div>
-              <p class="text-xs text-[#aaa6c3] mb-3">Reveals revenue contribution by store layout footprint: Medium (42.3%), Small (37.0%), High (20.7%).</p>
+              <p class="text-xs text-slate-400 mb-3">Reveals revenue contribution by store layout footprint: Medium (42.3%), Small (37.0%), High (20.7%).</p>
               <div class="h-64 relative flex items-center justify-center">
                 <canvas id="outletSizeChart"></canvas>
               </div>
             </div>
             <!-- Chart Business Insight Callout -->
-            <div class="mt-4 p-3 rounded-2xl bg-[#100d25] border border-[#00cea8]/30 text-xs">
-              <span class="font-bold text-[#00cea8] flex items-center mb-1">
+            <div class="mt-4 p-3 rounded-2xl soothing-card-inner border border-emerald-500/30 text-xs">
+              <span class="font-bold text-emerald-400 flex items-center mb-1">
                 <i class="fa-solid fa-lightbulb mr-1.5"></i> Business Diagram Insight:
               </span>
-              <p class="text-[#f3f3f3] text-[11px] leading-relaxed">
+              <p class="text-slate-200 text-[11px] leading-relaxed">
                 <strong>Medium Outlets</strong> are the most productive format, capturing <strong>42.27% ($507.9k)</strong> of total sales. High/Mega stores generate only 20.72%, demonstrating diminishing returns for oversized footprints in quick commerce.
               </p>
             </div>
           </div>
 
           <!-- Chart 3: Fat Content Demand & Sales Preference (Bar / Pie) -->
-          <div class="chart-card bg-[#151030] rounded-3xl border border-[#2e265c] p-5 flex flex-col justify-between shadow-card">
+          <div class="chart-card soothing-card rounded-3xl p-5 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-2">
                 <h3 class="font-bold text-white text-sm flex items-center">
                   <i class="fa-solid fa-heart-pulse text-rose-400 mr-2"></i> 3. Consumer Preference: Fat Content Distribution
                 </h3>
-                <span class="text-[11px] px-2 py-0.5 rounded bg-rose-400/10 text-rose-300 font-semibold border border-rose-500/20">Health Shift</span>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-rose-500/10 text-rose-300 font-semibold border border-rose-500/20">Health Shift</span>
               </div>
-              <p class="text-xs text-[#aaa6c3] mb-3">Post-cleaning comparison of Low Fat ($776k) vs Regular ($425k) grocery sales.</p>
+              <p class="text-xs text-slate-400 mb-3">Post-cleaning comparison of Low Fat ($776k) vs Regular ($425k) grocery sales.</p>
               <div class="h-64 relative">
                 <canvas id="fatContentChart"></canvas>
               </div>
             </div>
             <!-- Chart Business Insight Callout -->
-            <div class="mt-4 p-3 rounded-2xl bg-[#100d25] border border-rose-500/30 text-xs">
+            <div class="mt-4 p-3 rounded-2xl soothing-card-inner border border-rose-500/30 text-xs">
               <span class="font-bold text-rose-400 flex items-center mb-1">
                 <i class="fa-solid fa-lightbulb mr-1.5"></i> Business Diagram Insight:
               </span>
-              <p class="text-[#f3f3f3] text-[11px] leading-relaxed">
+              <p class="text-slate-200 text-[11px] leading-relaxed">
                 <strong>Low Fat items generate 64.6% of overall sales volume</strong>. Consumers overwhelmingly prefer healthier grocery options across all locations, signaling strong profitability for expanding organic and low-calorie private labels.
               </p>
             </div>
           </div>
 
           <!-- Chart 4: Sales by Outlet Location Type (Grouped Bar) -->
-          <div class="chart-card bg-[#151030] rounded-3xl border border-[#2e265c] p-5 flex flex-col justify-between shadow-card">
+          <div class="chart-card soothing-card rounded-3xl p-5 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-2">
                 <h3 class="font-bold text-white text-sm flex items-center">
-                  <i class="fa-solid fa-map-location-dot text-[#38bdf8] mr-2"></i> 4. Geographic Distribution: Sales by Location Tier
+                  <i class="fa-solid fa-map-location-dot text-sky-400 mr-2"></i> 4. Geographic Distribution: Sales by Location Tier
                 </h3>
-                <span class="text-[11px] px-2 py-0.5 rounded bg-[#38bdf8]/10 text-[#38bdf8] font-semibold border border-[#38bdf8]/20">Tier 1 vs 2 vs 3</span>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-sky-500/10 text-sky-300 font-semibold border border-sky-500/20">Tier 1 vs 2 vs 3</span>
               </div>
-              <p class="text-xs text-[#aaa6c3] mb-3">Compares revenue generated across Tier 1 (Metro), Tier 2 (Developing), and Tier 3 (Regional) hubs.</p>
+              <p class="text-xs text-slate-400 mb-3">Compares revenue generated across Tier 1 (Metro), Tier 2 (Developing), and Tier 3 (Regional) hubs.</p>
               <div class="h-64 relative">
                 <canvas id="locationChart"></canvas>
               </div>
             </div>
             <!-- Chart Business Insight Callout -->
-            <div class="mt-4 p-3 rounded-2xl bg-[#100d25] border border-[#38bdf8]/30 text-xs">
-              <span class="font-bold text-[#38bdf8] flex items-center mb-1">
+            <div class="mt-4 p-3 rounded-2xl soothing-card-inner border border-sky-500/30 text-xs">
+              <span class="font-bold text-sky-400 flex items-center mb-1">
                 <i class="fa-solid fa-lightbulb mr-1.5"></i> Business Diagram Insight:
               </span>
-              <p class="text-[#f3f3f3] text-[11px] leading-relaxed">
+              <p class="text-slate-200 text-[11px] leading-relaxed">
                 <strong>Tier 3 cities generate the highest volume ($478k / 39.8%)</strong>, outperforming Tier 1 ($336k / 28.0%). Quick-commerce delivery has lower brick-and-mortar superstore competition in Tier 3, presenting massive scale potential.
               </p>
             </div>
           </div>
 
           <!-- Chart 5: Establishment Vintage Curve (Line Chart) -->
-          <div class="chart-card bg-[#151030] rounded-3xl border border-[#2e265c] p-5 flex flex-col justify-between shadow-card">
+          <div class="chart-card soothing-card rounded-3xl p-5 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-2">
                 <h3 class="font-bold text-white text-sm flex items-center">
-                  <i class="fa-solid fa-timeline text-[#915eff] mr-2"></i> 5. Establishment Vintage & Longevity Curve
+                  <i class="fa-solid fa-timeline text-indigo-400 mr-2"></i> 5. Establishment Vintage & Longevity Curve
                 </h3>
-                <span class="text-[11px] px-2 py-0.5 rounded bg-[#915eff]/10 text-[#c4b5fd] font-semibold border border-[#915eff]/20">Vintage Cohort</span>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 font-semibold border border-indigo-500/20">Vintage Cohort</span>
               </div>
-              <p class="text-xs text-[#aaa6c3] mb-3">Tracks revenue performance by outlet launch year (from legacy 2011 hubs to newer 2022 centers).</p>
+              <p class="text-xs text-slate-400 mb-3">Tracks revenue performance by outlet launch year (from legacy 2011 hubs to newer 2022 centers).</p>
               <div class="h-64 relative">
                 <canvas id="vintageChart"></canvas>
               </div>
             </div>
             <!-- Chart Business Insight Callout -->
-            <div class="mt-4 p-3 rounded-2xl bg-[#100d25] border border-[#915eff]/30 text-xs">
-              <span class="font-bold text-[#915eff] flex items-center mb-1">
+            <div class="mt-4 p-3 rounded-2xl soothing-card-inner border border-indigo-500/30 text-xs">
+              <span class="font-bold text-indigo-400 flex items-center mb-1">
                 <i class="fa-solid fa-lightbulb mr-1.5"></i> Business Diagram Insight:
               </span>
-              <p class="text-[#f3f3f3] text-[11px] leading-relaxed">
+              <p class="text-slate-200 text-[11px] leading-relaxed">
                 Mature outlets established in 2018 (including Supermarket Type 3 OUT027) generated peak sales ($345k). Newer stores opened in 2020-2022 require accelerated local customer acquisition and dispatch tuning to reach maturity.
               </p>
             </div>
           </div>
 
           <!-- Chart 6: Visibility vs Sales Scatter (Quadrant Diagnostics) -->
-          <div class="chart-card bg-[#151030] rounded-3xl border border-[#2e265c] p-5 flex flex-col justify-between shadow-card">
+          <div class="chart-card soothing-card rounded-3xl p-5 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-2">
                 <h3 class="font-bold text-white text-sm flex items-center">
                   <i class="fa-solid fa-eye text-teal-400 mr-2"></i> 6. Merchandising Quadrant: Item Visibility vs Sales
                 </h3>
-                <span class="text-[11px] px-2 py-0.5 rounded bg-teal-400/10 text-teal-300 font-semibold border border-teal-500/20">Digital Shelf Efficiency</span>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-teal-500/10 text-teal-300 font-semibold border border-teal-500/20">Digital Shelf Efficiency</span>
               </div>
-              <p class="text-xs text-[#aaa6c3] mb-3">Scatter plot isolating over-promoted low-sales items vs under-promoted cash cows.</p>
+              <p class="text-xs text-slate-400 mb-3">Scatter plot isolating over-promoted low-sales items vs under-promoted cash cows.</p>
               <div class="h-64 relative">
                 <canvas id="scatterChart"></canvas>
               </div>
             </div>
             <!-- Chart Business Insight Callout -->
-            <div class="mt-4 p-3 rounded-2xl bg-[#100d25] border border-teal-500/30 text-xs">
+            <div class="mt-4 p-3 rounded-2xl soothing-card-inner border border-teal-500/30 text-xs">
               <span class="font-bold text-teal-400 flex items-center mb-1">
                 <i class="fa-solid fa-lightbulb mr-1.5"></i> Business Diagram Insight:
               </span>
-              <p class="text-[#f3f3f3] text-[11px] leading-relaxed">
+              <p class="text-slate-200 text-[11px] leading-relaxed">
                 Identifies <strong>"Screen Clutter" anomalies</strong>: Items with visibility >0.15 yielding less than $100 in sales take valuable screen estate away from high-converting products. Algorithmic ranking needs conversion-weighting.
               </p>
             </div>
@@ -802,23 +802,23 @@
       <div id="reportTab" class="tab-content hidden space-y-6">
         
         <!-- Printable Report Container -->
-        <div id="printableReport" class="bg-[#151030] rounded-3xl border border-[#2e265c] p-6 md:p-8 space-y-8 print:p-0 print:border-none print:bg-white print:text-black shadow-card">
+        <div id="printableReport" class="soothing-card rounded-3xl p-6 md:p-8 space-y-8 print:p-0 print:border-none print:bg-white print:text-black">
 
           <!-- Report Header -->
-          <div class="border-b border-[#2e265c] pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="border-b border-slate-700/60 pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <div class="flex items-center space-x-2">
-                <span class="text-2xl font-black text-white print:text-black">blink<span class="text-[#f8cb46]">it</span></span>
-                <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#f8cb46]/20 text-[#f8cb46] font-bold border border-[#f8cb46]/30">EXECUTIVE STRATEGY DOSSIER</span>
+                <span class="text-2xl font-black text-white print:text-black">blink<span class="text-amber-400">it</span></span>
+                <span class="text-xs px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 font-bold border border-amber-400/30">EXECUTIVE STRATEGY DOSSIER</span>
               </div>
               <h1 class="text-2xl font-black text-white print:text-slate-900 mt-2">
                 Blinkit Sales & Supply-Chain Optimization Report
               </h1>
-              <p class="text-xs text-[#aaa6c3] print:text-slate-600 mt-1">
+              <p class="text-xs text-slate-400 print:text-slate-600 mt-1">
                 Data-Driven Diagnostics, SQL Function Analytics, and 6 Strategic Points to Correct in the Business
               </p>
             </div>
-            <div class="text-left md:text-right text-xs text-[#aaa6c3] print:text-slate-600 space-y-1">
+            <div class="text-left md:text-right text-xs text-slate-400 print:text-slate-600 space-y-1">
               <div><strong>Report Date:</strong> <span id="reportDate">November 2026</span></div>
               <div><strong>Scope:</strong> 8,523 Transactions • 10 Outlets • 16 Product Categories</div>
               <div><strong>Evaluation:</strong> SQL Window Functions, Multi-Table Joins & Cross-Tabulations</div>
@@ -826,29 +826,29 @@
           </div>
 
           <!-- Executive Summary Section -->
-          <div class="bg-[#100d25] print:bg-slate-100 p-6 rounded-2xl border border-[#2e265c] print:border-slate-300 space-y-3">
-            <h2 class="text-base font-bold text-[#f8cb46] print:text-amber-700 flex items-center">
-              <i class="fa-solid fa-compass text-[#f8cb46] mr-2"></i> Executive Summary & Core Diagnosis
+          <div class="soothing-card-inner print:bg-slate-100 p-6 rounded-2xl border border-slate-700/60 print:border-slate-300 space-y-3">
+            <h2 class="text-base font-bold text-amber-400 print:text-amber-700 flex items-center">
+              <i class="fa-solid fa-compass text-amber-400 mr-2"></i> Executive Summary & Core Diagnosis
             </h2>
-            <p class="text-xs md:text-sm text-[#f3f3f3] print:text-slate-800 leading-relaxed">
+            <p class="text-xs md:text-sm text-slate-200 print:text-slate-800 leading-relaxed">
               Our comprehensive SQL analytics across <strong>$1.20M in total gross sales</strong> reveal robust top-line traction (average rating <strong>3.97 / 5.0</strong>), but significant structural inefficiencies in <strong>outlet format productivity</strong>, <strong>shelf-space allocation</strong>, and <strong>digital merchandising</strong>. By leveraging window functions, category margin joins, and scatter quadrant diagnostics, we have uncovered that <strong>42% of revenue is concentrated in medium outlets</strong>, <strong>Tier 3 cities outpace metro Tier 1 by 42% in total volume</strong>, and <strong>low-fat goods generate nearly double the revenue of regular items</strong>.
             </p>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-xs">
-              <div class="p-3 bg-[#151030] print:bg-white rounded-xl border border-[#2e265c] print:border-slate-300">
-                <span class="text-[#aaa6c3] print:text-slate-600 block">Total Sales Volume</span>
+              <div class="p-3 soothing-card print:bg-white rounded-xl">
+                <span class="text-slate-400 print:text-slate-600 block">Total Sales Volume</span>
                 <span class="text-base font-black text-white print:text-black">$1,201,681.72</span>
               </div>
-              <div class="p-3 bg-[#151030] print:bg-white rounded-xl border border-[#2e265c] print:border-slate-300">
-                <span class="text-[#aaa6c3] print:text-slate-600 block">Est. Gross Margin</span>
-                <span class="text-base font-black text-[#00cea8] print:text-emerald-700">$281,879 (23.5%)</span>
+              <div class="p-3 soothing-card print:bg-white rounded-xl">
+                <span class="text-slate-400 print:text-slate-600 block">Est. Gross Margin</span>
+                <span class="text-base font-black text-emerald-400 print:text-emerald-700">$281,879 (23.5%)</span>
               </div>
-              <div class="p-3 bg-[#151030] print:bg-white rounded-xl border border-[#2e265c] print:border-slate-300">
-                <span class="text-[#aaa6c3] print:text-slate-600 block">Low Fat Market Share</span>
-                <span class="text-base font-black text-[#f8cb46] print:text-amber-700">64.7% ($776.3k)</span>
+              <div class="p-3 soothing-card print:bg-white rounded-xl">
+                <span class="text-slate-400 print:text-slate-600 block">Low Fat Market Share</span>
+                <span class="text-base font-black text-amber-400 print:text-amber-700">64.7% ($776.3k)</span>
               </div>
-              <div class="p-3 bg-[#151030] print:bg-white rounded-xl border border-[#2e265c] print:border-slate-300">
-                <span class="text-[#aaa6c3] print:text-slate-600 block">Tier 3 Sales Dominance</span>
-                <span class="text-base font-black text-[#38bdf8] print:text-sky-700">39.8% ($478.1k)</span>
+              <div class="p-3 soothing-card print:bg-white rounded-xl">
+                <span class="text-slate-400 print:text-slate-600 block">Tier 3 Sales Dominance</span>
+                <span class="text-base font-black text-sky-400 print:text-sky-700">39.8% ($478.1k)</span>
               </div>
             </div>
           </div>
@@ -860,7 +860,7 @@
                 <i class="fa-solid fa-triangle-exclamation text-rose-400 mr-2"></i>
                 6 Strategic Points to Correct in the Business
               </h2>
-              <span class="text-xs text-[#aaa6c3] print:text-slate-600">Synthesized from charts, window functions & SQL joins</span>
+              <span class="text-xs text-slate-400 print:text-slate-600">Synthesized from charts, window functions & SQL joins</span>
             </div>
 
             <div class="space-y-4" id="pointsToCorrectContainer">
@@ -871,12 +871,12 @@
           <!-- Prioritized Strategic Action Matrix Table -->
           <div class="space-y-3">
             <h2 class="text-base font-bold text-white print:text-black flex items-center">
-              <i class="fa-solid fa-table-list text-[#00cea8] mr-2"></i>
+              <i class="fa-solid fa-table-list text-emerald-400 mr-2"></i>
               Business Corrective Action Plan & ROI Roadmap
             </h2>
-            <div class="overflow-x-auto rounded-2xl border border-[#2e265c] print:border-slate-300">
-              <table class="w-full text-left text-xs text-[#f3f3f3] print:text-slate-800 divide-y divide-[#2e265c] print:divide-slate-300">
-                <thead class="bg-[#100d25] print:bg-slate-200 text-white print:text-slate-900 font-bold">
+            <div class="overflow-x-auto rounded-2xl border border-slate-700 print:border-slate-300">
+              <table class="w-full text-left text-xs text-slate-200 print:text-slate-800 divide-y divide-slate-700 print:divide-slate-300">
+                <thead class="bg-slate-900 print:bg-slate-200 text-white print:text-slate-900 font-bold">
                   <tr>
                     <th class="py-3 px-3">#</th>
                     <th class="py-3 px-3">Business Area</th>
@@ -886,54 +886,54 @@
                     <th class="py-3 px-3">Target KPI Uplift</th>
                   </tr>
                 </thead>
-                <tbody class="divide-y divide-[#2e265c]/60 print:divide-slate-200 bg-[#151030]/50 print:bg-white text-[11px] font-sans">
+                <tbody class="divide-y divide-slate-800 print:divide-slate-200 bg-slate-900/40 print:bg-white text-[11px] font-sans">
                   <tr>
-                    <td class="py-3 px-3 font-bold text-[#f8cb46]">1</td>
+                    <td class="py-3 px-3 font-bold text-amber-400">1</td>
                     <td class="py-3 px-3 font-semibold text-white print:text-black">Retail Format Strategy</td>
                     <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold">HIGH</span></td>
                     <td class="py-3 px-3">Transform low-performing Grocery Stores into 10-Min Micro Dark Stores with curated top 1,200 SKUs.</td>
-                    <td class="py-3 px-3 text-[#aaa6c3]">Outlet Type Bar Chart & Benchmark JOIN</td>
-                    <td class="py-3 px-3 text-[#00cea8] font-bold">+24% Sales Density & 11 min SLA</td>
+                    <td class="py-3 px-3 text-slate-400">Outlet Type Bar Chart & Benchmark JOIN</td>
+                    <td class="py-3 px-3 text-emerald-400 font-bold">+24% Sales Density & 11 min SLA</td>
                   </tr>
                   <tr>
-                    <td class="py-3 px-3 font-bold text-[#f8cb46]">2</td>
+                    <td class="py-3 px-3 font-bold text-amber-400">2</td>
                     <td class="py-3 px-3 font-semibold text-white print:text-black">Geographic Expansion</td>
                     <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold">HIGH</span></td>
                     <td class="py-3 px-3">Shift 60% of new hub expansion Capex to Tier 2 & Tier 3 cities where consumer demand is highest.</td>
-                    <td class="py-3 px-3 text-[#aaa6c3]">Location Tier Chart ($478k in Tier 3)</td>
-                    <td class="py-3 px-3 text-[#00cea8] font-bold">+$180,000 ARR & lower rent costs</td>
+                    <td class="py-3 px-3 text-slate-400">Location Tier Chart ($478k in Tier 3)</td>
+                    <td class="py-3 px-3 text-emerald-400 font-bold">+$180,000 ARR & lower rent costs</td>
                   </tr>
                   <tr>
-                    <td class="py-3 px-3 font-bold text-[#f8cb46]">3</td>
+                    <td class="py-3 px-3 font-bold text-amber-400">3</td>
                     <td class="py-3 px-3 font-semibold text-white print:text-black">Category & Cold Chain</td>
                     <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold">MEDIUM</span></td>
                     <td class="py-3 px-3">Trim low-turnover Seafood & Breakfast by 50%; reallocate cold storage to high-margin Snacks & Produce.</td>
-                    <td class="py-3 px-3 text-[#aaa6c3]">Item Type Pareto & Margin JOIN</td>
-                    <td class="py-3 px-3 text-[#00cea8] font-bold">+$35k Net Margin & 12% lower spoilage</td>
+                    <td class="py-3 px-3 text-slate-400">Item Type Pareto & Margin JOIN</td>
+                    <td class="py-3 px-3 text-emerald-400 font-bold">+$35k Net Margin & 12% lower spoilage</td>
                   </tr>
                   <tr>
-                    <td class="py-3 px-3 font-bold text-[#f8cb46]">4</td>
+                    <td class="py-3 px-3 font-bold text-amber-400">4</td>
                     <td class="py-3 px-3 font-semibold text-white print:text-black">App Merchandising</td>
                     <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold">HIGH</span></td>
                     <td class="py-3 px-3">Demote low-converting high-visibility items (>0.12); elevate high-velocity Low Fat snacks in app UI.</td>
-                    <td class="py-3 px-3 text-[#aaa6c3]">Visibility vs Sales Scatter Plot</td>
-                    <td class="py-3 px-3 text-[#00cea8] font-bold">+8.5% Checkout Conversion & +$60k GMV</td>
+                    <td class="py-3 px-3 text-slate-400">Visibility vs Sales Scatter Plot</td>
+                    <td class="py-3 px-3 text-emerald-400 font-bold">+8.5% Checkout Conversion & +$60k GMV</td>
                   </tr>
                   <tr>
-                    <td class="py-3 px-3 font-bold text-[#f8cb46]">5</td>
+                    <td class="py-3 px-3 font-bold text-amber-400">5</td>
                     <td class="py-3 px-3 font-semibold text-white print:text-black">Assortment & Private Label</td>
                     <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold">MEDIUM</span></td>
                     <td class="py-3 px-3">Launch Blinkit Private Label in Low Fat dry snacks, clean dairy, and breakfast essentials.</td>
-                    <td class="py-3 px-3 text-[#aaa6c3]">Fat Content Preference (64.7% share)</td>
-                    <td class="py-3 px-3 text-[#00cea8] font-bold">Margin expansion from 23.5% to 26.2%</td>
+                    <td class="py-3 px-3 text-slate-400">Fat Content Preference (64.7% share)</td>
+                    <td class="py-3 px-3 text-emerald-400 font-bold">Margin expansion from 23.5% to 26.2%</td>
                   </tr>
                   <tr>
-                    <td class="py-3 px-3 font-bold text-[#f8cb46]">6</td>
+                    <td class="py-3 px-3 font-bold text-amber-400">6</td>
                     <td class="py-3 px-3 font-semibold text-white print:text-black">Operational Blueprint</td>
-                    <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-[#915eff]/20 text-[#c4b5fd] font-bold">MEDIUM</span></td>
+                    <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-bold">MEDIUM</span></td>
                     <td class="py-3 px-3">Replicate warehouse layout and batch-picking routing of flagship OUT027 ($345k) across all outlets.</td>
-                    <td class="py-3 px-3 text-[#aaa6c3]">Establishment Vintage & Hub Ranking</td>
-                    <td class="py-3 px-3 text-[#00cea8] font-bold">+19% Pick-Pack Dispatch Efficiency</td>
+                    <td class="py-3 px-3 text-slate-400">Establishment Vintage & Hub Ranking</td>
+                    <td class="py-3 px-3 text-emerald-400 font-bold">+19% Pick-Pack Dispatch Efficiency</td>
                   </tr>
                 </tbody>
               </table>
@@ -941,37 +941,37 @@
           </div>
 
           <!-- Interactive ROI Uplift Calculator -->
-          <div class="bg-gradient-to-r from-[#100d25] to-[#151030] p-6 rounded-2xl border border-[#2e265c] print:hidden space-y-4 shadow-lg">
+          <div class="soothing-card p-6 rounded-2xl print:hidden space-y-4">
             <div class="flex items-center justify-between">
               <h3 class="font-bold text-white text-sm flex items-center">
-                <i class="fa-solid fa-calculator text-[#f8cb46] mr-2"></i>
+                <i class="fa-solid fa-calculator text-amber-400 mr-2"></i>
                 Interactive Revenue Uplift & Correction Impact Simulator
               </h3>
-              <span class="text-xs text-[#f8cb46] font-semibold">Simulate business growth</span>
+              <span class="text-xs text-amber-400 font-semibold">Simulate business growth</span>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 items-center">
               <div>
-                <label class="text-xs text-[#aaa6c3] block mb-1">Estimated Conversion & Assortment Uplift: <span id="upliftPctLabel" class="text-[#f8cb46] font-bold">12%</span></label>
-                <input type="range" id="upliftRange" min="5" max="30" value="12" class="w-full accent-[#f8cb46] cursor-pointer">
-                <div class="flex justify-between text-[10px] text-[#aaa6c3] mt-1">
+                <label class="text-xs text-slate-400 block mb-1">Estimated Conversion & Assortment Uplift: <span id="upliftPctLabel" class="text-amber-400 font-bold">12%</span></label>
+                <input type="range" id="upliftRange" min="5" max="30" value="12" class="w-full accent-amber-400 cursor-pointer">
+                <div class="flex justify-between text-[10px] text-slate-400 mt-1">
                   <span>Conservative (5%)</span>
                   <span>Target (12%)</span>
                   <span>Aggressive (30%)</span>
                 </div>
               </div>
-              <div class="p-3 bg-[#100d25] rounded-xl border border-[#2e265c] text-center">
-                <span class="text-xs text-[#aaa6c3] block">Projected Incremental GMV</span>
-                <span class="text-xl font-black text-[#00cea8]" id="simGmvUplift">+$144,201.80</span>
+              <div class="p-3 soothing-card-inner rounded-xl text-center">
+                <span class="text-xs text-slate-400 block">Projected Incremental GMV</span>
+                <span class="text-xl font-black text-emerald-400" id="simGmvUplift">+$144,201.80</span>
               </div>
-              <div class="p-3 bg-[#100d25] rounded-xl border border-[#2e265c] text-center">
-                <span class="text-xs text-[#aaa6c3] block">Projected Net Gross Profit Uplift</span>
-                <span class="text-xl font-black text-[#f8cb46]" id="simProfitUplift">+$38,213.48</span>
+              <div class="p-3 soothing-card-inner rounded-xl text-center">
+                <span class="text-xs text-slate-400 block">Projected Net Gross Profit Uplift</span>
+                <span class="text-xl font-black text-amber-400" id="simProfitUplift">+$38,213.48</span>
               </div>
             </div>
           </div>
 
           <!-- Report Sign-off Footer -->
-          <div class="pt-6 border-t border-[#2e265c] flex flex-col sm:flex-row items-center justify-between text-xs text-[#aaa6c3] print:text-slate-600 gap-2">
+          <div class="pt-6 border-t border-slate-700/60 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 print:text-slate-600 gap-2">
             <div>Prepared by: <strong>Blinkit Business Intelligence & Analytics Engine</strong></div>
             <div>Powered by: SQLite 3.50 Window Functions, Joins & Advanced Aggregations</div>
           </div>
@@ -982,7 +982,7 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-[#050816] border-t border-[#2e265c] py-4 text-center text-xs text-[#aaa6c3] print:hidden mt-auto">
+    <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center text-xs text-slate-400 print:hidden mt-auto">
       <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
         <div>Blinkit Data Analysis & SQL Intelligence System • All algorithms operational</div>
         <div class="flex items-center space-x-4">
