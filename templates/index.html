@@ -37,14 +37,14 @@
   <!-- TOP HEADER -->
   <header class="bg-slate-950/90 border-b border-slate-800 sticky top-0 z-50 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
-      <!-- Brand -->
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-400 to-yellow-300 flex items-center justify-center shadow-lg shadow-amber-500/20 text-slate-950 font-black text-xl">
+      <!-- Brand (Click to go to Overview & Intro) -->
+      <div onclick="switchTab('introTab')" class="flex items-center space-x-3 cursor-pointer group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-400 to-yellow-300 flex items-center justify-center shadow-lg shadow-amber-500/20 text-slate-950 font-black text-xl group-hover:scale-105 transition">
           ⚡
         </div>
         <div>
           <div class="flex items-center space-x-2">
-            <span class="text-xl font-black tracking-tight text-white">blink<span class="text-amber-400">it</span></span>
+            <span class="text-xl font-black tracking-tight text-white group-hover:text-amber-400 transition">blink<span class="text-amber-400">it</span></span>
             <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold tracking-wide">SQL BI & DIAGNOSTICS</span>
           </div>
           <p class="text-xs text-slate-400">Data Cleansing • Advanced SQL Studio • Visual Insights • Strategic Report</p>
@@ -74,7 +74,10 @@
     <!-- NAVIGATION TABS -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-800/60">
       <nav class="flex space-x-2 sm:space-x-8 py-2 overflow-x-auto text-sm font-medium">
-        <button onclick="switchTab('cleaningTab')" id="nav-cleaningTab" class="tab-btn active-tab flex items-center px-3 py-2 rounded-lg border-b-2 font-medium transition text-xs sm:text-sm">
+        <button onclick="switchTab('introTab')" id="nav-introTab" class="tab-btn active-tab flex items-center px-3 py-2 rounded-lg border-b-2 font-medium transition text-xs sm:text-sm">
+          <i class="fa-solid fa-bolt mr-2 text-amber-400"></i> Overview & Intro
+        </button>
+        <button onclick="switchTab('cleaningTab')" id="nav-cleaningTab" class="tab-btn flex items-center px-3 py-2 rounded-lg border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition text-xs sm:text-sm">
           <i class="fa-solid fa-broom mr-2 text-amber-400"></i> 1. Ingestion & Data Cleaning
         </button>
         <button onclick="switchTab('sqlTab')" id="nav-sqlTab" class="tab-btn flex items-center px-3 py-2 rounded-lg border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition text-xs sm:text-sm">
@@ -93,8 +96,294 @@
   <!-- MAIN BODY CONTAINER -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
+    <!-- TAB 0: INTRO & GRAPHICAL OVERVIEW PAGE -->
+    <div id="introTab" class="tab-content space-y-8">
+
+      <!-- Hero Banner with Ambient Lighting & Quick-Commerce Graphic -->
+      <section class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-slate-900 via-slate-900/95 to-slate-950 border border-slate-800 p-6 md:p-10 shadow-2xl">
+        <!-- Ambient Glowing Orbs -->
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none ambient-glow"></div>
+        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none ambient-glow" style="animation-delay: -3s;"></div>
+
+        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <!-- Left Hero Copy -->
+          <div class="lg:col-span-7 space-y-5">
+            <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-slate-800/90 border border-amber-400/30 text-amber-300 text-xs font-semibold shadow-inner">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              <span>⚡ Blinkit Quick-Commerce Telemetry & Strategic Diagnostics</span>
+            </div>
+
+            <h1 class="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
+              Transform Raw Grocery Data into <span class="bg-gradient-to-r from-amber-400 via-yellow-300 to-emerald-400 bg-clip-text text-transparent">High-Velocity Business Decisions</span>
+            </h1>
+
+            <p class="text-sm md:text-base text-slate-300 leading-relaxed max-w-2xl">
+              An enterprise-grade analytical platform reading, standardizing, and diagnosing <strong>8,523 grocery transactions</strong> across <strong>10 fulfillment dark stores</strong>. We clean dirty category codes and missing weights, execute advanced SQL window functions and multi-table joins, visualize unit economics, and prescribe <strong>6 actionable business corrections</strong> to optimize store formats and scale GMV.
+            </p>
+
+            <!-- Quick Action Jump Buttons -->
+            <div class="flex flex-wrap items-center gap-3 pt-2">
+              <button onclick="switchTab('cleaningTab')" class="inline-flex items-center px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-lg shadow-amber-500/25 transition transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-broom mr-2"></i> 1. Ingestion & Cleaning
+              </button>
+              <button onclick="switchTab('sqlTab')" class="inline-flex items-center px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-lg shadow-emerald-500/25 transition transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-terminal mr-2"></i> 2. SQL Studio
+              </button>
+              <button onclick="switchTab('dashboardTab')" class="inline-flex items-center px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-sky-500 hover:bg-sky-400 text-slate-950 shadow-lg shadow-sky-500/25 transition transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-chart-pie mr-2"></i> 3. Visual Charts
+              </button>
+              <button onclick="switchTab('reportTab')" class="inline-flex items-center px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg shadow-indigo-500/25 transition transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-file-contract mr-2"></i> 4. Business Report
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Graphical Illustration: 10-Minute Dark Store Fulfillment Telemetry -->
+          <div class="lg:col-span-5 relative flex justify-center">
+            <div class="w-full max-w-md bg-slate-950/80 rounded-2xl border border-slate-700/80 p-5 shadow-2xl relative overflow-hidden backdrop-blur-md">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+                <div class="flex items-center space-x-2">
+                  <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+                  <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                  <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                  <span class="text-xs text-slate-400 font-mono ml-2">darkstore-telemetry.sys</span>
+                </div>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono font-bold">LIVE METRICS</span>
+              </div>
+
+              <!-- Graphic Cards in Dashboard Mockup -->
+              <div class="space-y-3">
+                <!-- Delivery Pulse -->
+                <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+                  <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-lg bg-amber-400/20 text-amber-300 flex items-center justify-center font-bold text-sm">
+                      <i class="fa-solid fa-motorcycle"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-slate-200">10-Min Quick SLA</div>
+                      <div class="text-[11px] text-slate-400">Order-to-Doorstep dispatch</div>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-xs font-mono font-bold text-emerald-400">11.4 mins</div>
+                    <div class="text-[10px] text-slate-500">98.2% on-time</div>
+                  </div>
+                </div>
+
+                <!-- Catalog Velocity -->
+                <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+                  <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-lg bg-emerald-400/20 text-emerald-300 flex items-center justify-center font-bold text-sm">
+                      <i class="fa-solid fa-basket-shopping"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-slate-200">Low Fat Shift</div>
+                      <div class="text-[11px] text-slate-400">Consumer wellness demand</div>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-xs font-mono font-bold text-amber-400">64.7% Share</div>
+                    <div class="text-[10px] text-slate-500">$776.3k GMV</div>
+                  </div>
+                </div>
+
+                <!-- Tier 3 Dominance -->
+                <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+                  <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-lg bg-sky-400/20 text-sky-300 flex items-center justify-center font-bold text-sm">
+                      <i class="fa-solid fa-map-pin"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-slate-200">Tier 3 Dominance</div>
+                      <div class="text-[11px] text-slate-400">Regional dark store scale</div>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-xs font-mono font-bold text-sky-400">39.8% Volume</div>
+                    <div class="text-[10px] text-slate-500">$478.1k GMV</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Graphic status bar -->
+              <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+                <span class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> SQLite 3.50 Engine Online</span>
+                <span class="font-mono text-amber-400">8,523 Records</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 4-STEP ANALYTICAL ARCHITECTURE WORKFLOW (Visual Flowchart Graphic) -->
+      <section class="space-y-4">
+        <div class="text-center space-y-1">
+          <h2 class="text-xl md:text-2xl font-black text-white flex items-center justify-center">
+            <i class="fa-solid fa-diagram-project text-amber-400 mr-2"></i>
+            End-to-End Quick-Commerce Analytical Pipeline
+          </h2>
+          <p class="text-xs text-slate-400 max-w-xl mx-auto">
+            From raw data hygiene to SQL window math, diagnostic chart synthesis, and strategic executive corrections.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+          <!-- Step 1 Node -->
+          <div onclick="switchTab('cleaningTab')" class="workflow-node bg-slate-800/80 p-5 rounded-2xl border border-slate-700/80 cursor-pointer hover:border-amber-400 space-y-3 relative group">
+            <div class="flex items-center justify-between">
+              <span class="w-8 h-8 rounded-xl bg-amber-400/20 text-amber-300 flex items-center justify-center font-black text-sm">01</span>
+              <span class="text-[10px] uppercase tracking-wider font-bold text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded">CLEANSE</span>
+            </div>
+            <h3 class="font-bold text-white text-sm group-hover:text-amber-400 transition">Data Ingestion & Hygiene</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Standardizes 5 fragmented fat categories into 2 clean classes, imputes 1,463 missing item weights, and fixes 526 zero-visibility entry anomalies.
+            </p>
+            <div class="pt-2 text-[11px] font-semibold text-amber-400 flex items-center">
+              Explore Cleaning Rules <i class="fa-solid fa-arrow-right ml-1.5 text-[10px]"></i>
+            </div>
+          </div>
+
+          <!-- Step 2 Node -->
+          <div onclick="switchTab('sqlTab')" class="workflow-node bg-slate-800/80 p-5 rounded-2xl border border-slate-700/80 cursor-pointer hover:border-emerald-400 space-y-3 relative group">
+            <div class="flex items-center justify-between">
+              <span class="w-8 h-8 rounded-xl bg-emerald-400/20 text-emerald-300 flex items-center justify-center font-black text-sm">02</span>
+              <span class="text-[10px] uppercase tracking-wider font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded">QUERY</span>
+            </div>
+            <h3 class="font-bold text-white text-sm group-hover:text-emerald-400 transition">Advanced SQL Functions</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Runs Window Functions (<code class="text-emerald-400">OVER</code>, <code class="text-emerald-400">RANK</code>, <code class="text-emerald-400">ROW_NUMBER</code>, <code class="text-emerald-400">NTILE</code>) and multi-table <code class="text-emerald-400">JOIN</code>s against category & hub benchmarks.
+            </p>
+            <div class="pt-2 text-[11px] font-semibold text-emerald-400 flex items-center">
+              Open SQL Console <i class="fa-solid fa-arrow-right ml-1.5 text-[10px]"></i>
+            </div>
+          </div>
+
+          <!-- Step 3 Node -->
+          <div onclick="switchTab('dashboardTab')" class="workflow-node bg-slate-800/80 p-5 rounded-2xl border border-slate-700/80 cursor-pointer hover:border-sky-400 space-y-3 relative group">
+            <div class="flex items-center justify-between">
+              <span class="w-8 h-8 rounded-xl bg-sky-400/20 text-sky-300 flex items-center justify-center font-black text-sm">03</span>
+              <span class="text-[10px] uppercase tracking-wider font-bold text-sky-400 bg-sky-400/10 px-2 py-0.5 rounded">VISUALIZE</span>
+            </div>
+            <h3 class="font-bold text-white text-sm group-hover:text-sky-400 transition">Visual Diagnostics Suite</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Synthesizes 6 Chart.js dimensions: category Pareto curves, outlet size market share, location tiers, vintage curves, and screen clutter scatter.
+            </p>
+            <div class="pt-2 text-[11px] font-semibold text-sky-400 flex items-center">
+              View Dynamic Charts <i class="fa-solid fa-arrow-right ml-1.5 text-[10px]"></i>
+            </div>
+          </div>
+
+          <!-- Step 4 Node -->
+          <div onclick="switchTab('reportTab')" class="workflow-node bg-slate-800/80 p-5 rounded-2xl border border-slate-700/80 cursor-pointer hover:border-indigo-400 space-y-3 relative group">
+            <div class="flex items-center justify-between">
+              <span class="w-8 h-8 rounded-xl bg-indigo-400/20 text-indigo-300 flex items-center justify-center font-black text-sm">04</span>
+              <span class="text-[10px] uppercase tracking-wider font-bold text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded">PRESCRIBE</span>
+            </div>
+            <h3 class="font-bold text-white text-sm group-hover:text-indigo-400 transition">Strategic Business Report</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Prescribes 6 prioritized corrective actions with root causes, expected ROI roadmap, and interactive revenue uplift simulator.
+            </p>
+            <div class="pt-2 text-[11px] font-semibold text-indigo-400 flex items-center">
+              Read Executive Report <i class="fa-solid fa-arrow-right ml-1.5 text-[10px]"></i>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 CRITICAL BUSINESS PROBLEMS IDENTIFIED & RESOLVED -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div>
+            <h2 class="text-lg md:text-xl font-bold text-white flex items-center">
+              <i class="fa-solid fa-magnifying-glass-chart text-rose-400 mr-2"></i>
+              Core Strategic Dilemmas Uncovered by the Analytics
+            </h2>
+            <p class="text-xs text-slate-400">Key business anomalies discovered across the 8,523 orders and 10 dark stores.</p>
+          </div>
+          <button onclick="switchTab('reportTab')" class="text-xs text-amber-400 hover:text-amber-300 font-semibold hidden sm:inline-block">
+            See all 6 corrections <i class="fa-solid fa-arrow-right ml-1"></i>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Dilemma 1 -->
+          <div class="p-5 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-rose-400 flex items-center">
+                <i class="fa-solid fa-store-slash mr-1.5"></i> Format Inefficiency
+              </span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold">8.7% SALES SHARE</span>
+            </div>
+            <h4 class="font-bold text-white text-sm">Grocery Store Catalog Bloat (OUT010 & OUT019)</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Traditional grocery storefronts attempt to carry the full Supermarket catalog (>5,000 SKUs), causing high stockouts and slow picking. <em>Correction:</em> Pivot them to 10-minute micro dark stores holding only top 1,200 fast-moving items.
+            </p>
+          </div>
+
+          <!-- Dilemma 2 -->
+          <div class="p-5 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-sky-400 flex items-center">
+                <i class="fa-solid fa-city mr-1.5"></i> Regional Expansion
+              </span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-bold">39.8% SALES SHARE</span>
+            </div>
+            <h4 class="font-bold text-white text-sm">Tier 3 City Demand Outpaces Metro Tier 1</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Tier 3 regional hubs generate $478.1k, beating Tier 1 metro hubs ($336.4k) due to lower organized retail competition. <em>Correction:</em> Allocate 60% of new dark store Capex into Tier 2 & Tier 3 regional centers with 35% lower commercial leases.
+            </p>
+          </div>
+
+          <!-- Dilemma 3 -->
+          <div class="p-5 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-amber-400 flex items-center">
+                <i class="fa-solid fa-snowflake mr-1.5"></i> Cold Storage Spoilage
+              </span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold">&lt;2.0% TURNOVER</span>
+            </div>
+            <h4 class="font-bold text-white text-sm">Low-Velocity Seafood & Breakfast Spoilage Risk</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Seafood and Breakfast occupy expensive refrigerated dark store volume but generate less than $22k combined. <em>Correction:</em> Trim low-moving seafood SKUs by 50% and reassign cold storage to high-margin Snacks and Fresh Produce.
+            </p>
+          </div>
+
+          <!-- Dilemma 4 -->
+          <div class="p-5 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-emerald-400 flex items-center">
+                <i class="fa-solid fa-mobile-screen mr-1.5"></i> App Merchandising
+              </span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">500+ CLUTTER SKUs</span>
+            </div>
+            <h4 class="font-bold text-white text-sm">High-Visibility Cannibalization on Digital Shelves</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Scatter diagnostics reveal 500+ items with high UI visibility (>0.12) generating below-average sales. <em>Correction:</em> Implement conversion-weighted feed ranking to demote duds and prioritize high-velocity Low Fat snacks.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CALL TO ACTION BANNER: "DIVE INTO THE MATTER" -->
+      <section class="p-6 md:p-8 rounded-3xl bg-gradient-to-r from-amber-500/10 via-slate-900 to-emerald-500/10 border border-amber-500/30 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="space-y-1">
+          <h3 class="text-xl font-bold text-white">Ready to Dive into the Analytics & Code?</h3>
+          <p class="text-xs text-slate-400">Switch tabs above or click below to inspect raw cleaning data, execute SQL queries, or review the strategic report.</p>
+        </div>
+        <div class="flex items-center space-x-3 shrink-0">
+          <button onclick="switchTab('cleaningTab')" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-md shadow-amber-500/20 transition">
+            Explore Matter Now <i class="fa-solid fa-arrow-right ml-1.5"></i>
+          </button>
+        </div>
+      </section>
+
+    </div>
+
     <!-- TOP KPI BAR (Persists across dashboard) -->
     <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5">
+
       <div class="kpi-card bg-slate-800/80 p-4 rounded-xl border border-slate-700/70 hover:border-amber-400/50 transition">
         <div class="flex items-center justify-between text-slate-400 text-xs">
           <span>Total Revenue</span>
@@ -153,7 +442,7 @@
     </section>
 
     <!-- TAB 1: DATA INGESTION & CLEANING PIPELINE -->
-    <div id="cleaningTab" class="tab-content space-y-6">
+    <div id="cleaningTab" class="tab-content hidden space-y-6">
       <div class="bg-slate-800/70 rounded-2xl border border-slate-700 p-6 space-y-6">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-700/70 pb-5">
           <div>

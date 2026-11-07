@@ -32,12 +32,41 @@
 }
 
 /* Card hover transitions */
-.kpi-card, .chart-card {
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+.kpi-card, .chart-card, .feature-card, .workflow-node {
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
-.kpi-card:hover, .chart-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+.kpi-card:hover, .chart-card:hover, .feature-card:hover, .workflow-node:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px -8px rgba(0, 0, 0, 0.4);
+}
+
+/* Ambient glow & pulse animations */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.ambient-glow {
+  animation: pulseGlow 6s infinite ease-in-out;
+}
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.float-slow {
+  animation: floatSlow 4s infinite ease-in-out;
 }
 
 /* Query item in catalog */
@@ -55,7 +84,7 @@
     background-color: #ffffff !important;
     color: #111827 !important;
   }
-  header, footer, nav, #cleaningTab, #sqlTab, #dashboardTab, .kpi-card, button, input, .print\:hidden {
+  header, footer, nav, #introTab, #cleaningTab, #sqlTab, #dashboardTab, .kpi-card, button, input, .print\:hidden {
     display: none !important;
   }
   #reportTab {
@@ -95,4 +124,3 @@
     color: #0f172a !important;
   }
 }
-
