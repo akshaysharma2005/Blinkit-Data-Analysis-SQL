@@ -12,3 +12,4 @@ from app import app
 # 'app' is the WSGI Flask application instance
 if __name__ == "__main__":
     app.run()
+

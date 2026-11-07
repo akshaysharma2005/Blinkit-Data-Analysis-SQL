@@ -15,6 +15,7 @@ app = Flask(
     template_folder=TEMPLATES_DIR,
     static_folder=STATIC_DIR
 )
+app.url_map.strict_slashes = False
 
 # Support Vercel / serverless environments where root filesystem is read-only
 IS_SERVERLESS = bool(os.environ.get("VERCEL")) or not os.access(BASE_DIR, os.W_OK)
@@ -164,6 +165,9 @@ except Exception as e:
     print(f"Database boot notice: {e}")
 
 @app.route("/")
+@app.route("/index")
+@app.route("/api/index")
+@app.route("/api")
 def index():
     return render_template("index.html")
 
