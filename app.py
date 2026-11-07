@@ -5,11 +5,26 @@ import pandas as pd
 import numpy as np
 from flask import Flask, request, jsonify, render_template, send_from_directory
 
-app = Flask(__name__, template_folder="templates", static_folder="static")
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+STATIC_DIR = os.path.join(BASE_DIR, "static")
 DATA_DIR = os.path.join(BASE_DIR, "data")
-DB_PATH = os.path.join(BASE_DIR, "blinkit_analytics.db")
+
+app = Flask(
+    __name__,
+    template_folder=TEMPLATES_DIR,
+    static_folder=STATIC_DIR
+)
+
+# Support Vercel / serverless environments where root filesystem is read-only
+IS_SERVERLESS = bool(os.environ.get("VERCEL")) or not os.access(BASE_DIR, os.W_OK)
+if IS_SERVERLESS:
+    DB_PATH = "/tmp/blinkit_analytics.db"
+    UPLOAD_DIR = "/tmp"
+else:
+    DB_PATH = os.path.join(BASE_DIR, "blinkit_analytics.db")
+    UPLOAD_DIR = DATA_DIR
+
 DEFAULT_CSV_PATH = os.path.join(DATA_DIR, "BlinkIT_Grocery_Data.csv")
 CATEGORY_BENCHMARKS_PATH = os.path.join(DATA_DIR, "category_benchmarks.csv")
 OUTLET_BENCHMARKS_PATH = os.path.join(DATA_DIR, "outlet_benchmarks.csv")
@@ -17,6 +32,8 @@ OUTLET_BENCHMARKS_PATH = os.path.join(DATA_DIR, "outlet_benchmarks.csv")
 cleaning_audit = {}
 
 def get_db_connection():
+    if not os.path.exists(DB_PATH):
+        initialize_database()
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
@@ -139,8 +156,12 @@ def initialize_database(csv_path=DEFAULT_CSV_PATH):
     conn.commit()
     conn.close()
 
-# Initialize DB on boot
-initialize_database()
+# Initialize DB on boot if not already present
+try:
+    if not os.path.exists(DB_PATH):
+        initialize_database()
+except Exception as e:
+    print(f"Database boot notice: {e}")
 
 @app.route("/")
 def index():
@@ -566,7 +587,7 @@ def upload_file():
         return jsonify({"status": "error", "message": "Selected file has no name"}), 400
 
     try:
-        save_path = os.path.join(DATA_DIR, "custom_uploaded_data.csv")
+        save_path = os.path.join(UPLOAD_DIR, "custom_uploaded_data.csv")
         file.save(save_path)
         initialize_database(save_path)
         return jsonify({

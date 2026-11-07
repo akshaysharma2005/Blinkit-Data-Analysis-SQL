@@ -1,0 +1,12 @@
+.git
+.gitignore
+.DS_Store
+__pycache__/
+*.pyc
+*.db
+reactjs18-3d-portfolio-main/
+Blinkit-analysis.pbix
+image.png
+BlinkIT_Grocery_Data.csv
+.env
+.venv/
