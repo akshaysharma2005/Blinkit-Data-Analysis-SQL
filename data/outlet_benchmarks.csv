@@ -1,0 +1,12 @@
+Outlet Identifier,Hub Name,Target Sales Monthly,Operating Cost Tier,Quick Commerce SLA Mins,Cold Storage Capacity CuFt
+OUT010,Blinkit Hub 10 - Suburban West,45000,Low,18,1200
+OUT013,Blinkit Mega Center 13 - East Metro,220000,High,12,8500
+OUT017,Blinkit Express 17 - Central Tier 2,160000,Medium,15,4500
+OUT018,Blinkit Super Center 18 - South Park,175000,Medium,14,5500
+OUT019,Blinkit Local 19 - North Tier 1,40000,Low,12,1000
+OUT027,Blinkit Flagship Hub 27 - Metro Prime,320000,High,10,12000
+OUT035,Blinkit Express 35 - Tier 2 Hub,165000,Medium,15,4800
+OUT045,Blinkit Distribution 45 - Mid Valley,170000,Medium,14,5000
+OUT046,Blinkit Express 46 - Metro Downtown,160000,Medium,11,4600
+OUT049,Blinkit Core 49 - Urban Central,180000,Medium,12,5200
+

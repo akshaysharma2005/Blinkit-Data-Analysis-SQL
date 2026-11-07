@@ -1,0 +1,18 @@
+Item Type,Category Code,Target Margin Pct,Perishability Tier,Strategic Priority
+Fruits and Vegetables,FV,22.5,High,Traffic Driver
+Snack Foods,SN,26.0,Low,High Margin Driver
+Household,HH,28.5,Low,Basket Builder
+Frozen Foods,FF,24.0,Medium,Volume Growth
+Dairy,DA,16.5,High,Staple Retention
+Canned,CN,21.0,Low,Steady Earner
+Baking Goods,BG,23.5,Low,Seasonal Booster
+Health and Hygiene,HH2,31.0,Low,High Profit Engine
+Meat,MT,18.0,High,Premium Anchor
+Soft Drinks,SD,25.0,Low,Impulse Add-on
+Breads,BR,17.5,High,Daily Essential
+Hard Drinks,HD,22.0,Low,Occasion Spender
+Others,OT,19.0,Low,General Variety
+Starchy Foods,SF,20.0,Medium,Core Staple
+Breakfast,BK,24.5,Low,Morning Peak
+Seafood,SE,27.0,High,Niche Gourmet
+

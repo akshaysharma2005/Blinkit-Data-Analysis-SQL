@@ -1,0 +1,98 @@
+/* Custom Styling for Blinkit SQL BI Platform */
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Tab buttons */
+.tab-btn {
+  color: #94a3b8;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease-in-out;
+}
+.tab-btn:hover {
+  color: #f8fafc;
+}
+.tab-btn.active-tab {
+  color: #f8cb46;
+  border-bottom-color: #f8cb46;
+  background-color: rgba(248, 203, 70, 0.08);
+}
+
+/* Card hover transitions */
+.kpi-card, .chart-card {
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.kpi-card:hover, .chart-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* Query item in catalog */
+.query-card {
+  transition: all 0.15s ease;
+}
+.query-card:hover {
+  background-color: #1e293b;
+  border-color: #f8cb46;
+}
+
+/* Print Styles for Executive Report */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+  }
+  header, footer, nav, #cleaningTab, #sqlTab, #dashboardTab, .kpi-card, button, input, .print\:hidden {
+    display: none !important;
+  }
+  #reportTab {
+    display: block !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  #printableReport {
+    background: #ffffff !important;
+    color: #111827 !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+  .print\:text-black {
+    color: #000000 !important;
+  }
+  .print\:text-slate-800 {
+    color: #1e293b !important;
+  }
+  .print\:bg-white {
+    background-color: #ffffff !important;
+  }
+  .print\:bg-slate-100 {
+    background-color: #f1f5f9 !important;
+  }
+  .print\:border-slate-300 {
+    border-color: #cbd5e1 !important;
+  }
+  .point-box {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    border: 1px solid #cbd5e1 !important;
+    background: #f8fafc !important;
+    color: #0f172a !important;
+  }
+}
+
